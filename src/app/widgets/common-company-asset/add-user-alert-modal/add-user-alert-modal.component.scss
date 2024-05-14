@@ -1,0 +1,22 @@
+table.borderles td,
+table.borderles th {
+  border-color: transparent !important;
+}
+
+// * {
+//     font-family: Times New Roman, Times, serif;
+// }
+
+// button:hover#cancel {
+//     background-color: #f11;
+//     font-weight: bolder;
+// }
+
+// button:hover#submit {
+//     background-color: #1f1;
+//     font-weight: bolder;
+// }
+
+button:disabled {
+  opacity: 0.5;
+}

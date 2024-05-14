@@ -1,0 +1,68 @@
+<ng-container *ngIf="source$ | progress | async as payload">
+  <ngx-skeleton-loader
+    *ngIf="payload.loading"
+    [count]="5"
+  ></ngx-skeleton-loader>
+  <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+
+  <ng-container *ngIf="payload.value">
+    <!-- <div class="card"> -->
+
+    <div
+      class="p-3"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: formFontColor || 'black',
+        border: '1px solid ' + formBgColor,
+        'background-color': formBgColor
+      }"
+    >
+      <div *ngIf="!edit" class="row clearfix" style="margin-bottom: 1em">
+        <div class="col-md-6">
+          <app-title title="User Details" size="md"></app-title>
+        </div>
+        <div class="col-md-6" *ngIf="permission$ | async as payload">
+          <button
+            type="button"
+            *ngIf="payload.security.users.updater && !edit"
+            class="float-end"
+            (click)="edit = !edit"
+            [ngStyle]="{
+              backgroundColor: '#fff',
+              width: '10em',
+              color: '#' + (primaryColour || '3D95F7'),
+              fontSize: '16px',
+              border: '1px solid #' + (primaryColour || '3D95F7'),
+              borderRadius: '10px',
+              height: '35px'
+            }"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <app-corporate-user-detail-view
+          *ngIf="!edit"
+          [user]="payload.value?.user"
+          [groups]="payload.value?.groups"
+          (onClose)="cancelHandler()"
+        >
+        </app-corporate-user-detail-view>
+      </div>
+      <!-- </div> -->
+
+      <app-corporate-user-detail-form
+        *ngIf="edit"
+        [company]="company"
+        [user]="payload.value?.user"
+        [groups]="payload.value?.groups"
+        (onCancel)="cancelHandler()"
+        (onSave)="saveHandler($event)"
+        (onGroupChanged)="groupsChangedHandler($event)"
+      >
+      </app-corporate-user-detail-form>
+    </div>
+    <!-- </div> -->
+  </ng-container>
+</ng-container>

@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+      <div
+        class="card shadow col-sm-11 col-xs-11 col-md-11 col-lg-11 col-xl-11"
+        style="min-height: 500px;"
+      >
+        <div style="margin-left: 16px">
+          <app-title title="Device Use Case" size="lg"></app-title>
+        </div>
+        <div class="card-body" style="overflow: auto">
+          <div class="row mb-4">
+            <!-- <div class="col-12"> -->
+            <div class="col-md-6 col-xl-4 mb-2" *ngFor="let device of useCaseIcon">
+              <div
+                [routerLink]="['../devices', device.useCaseId]"
+                class="card cursor mb-2 mt-2 justify-content-center"
+              >
+                <div class="card-body justify-content-center align-items-center">
+                  <div class="row mb-2">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                      <label
+                        class="form-check-label justify-content-center align-items-center"
+                        style="white-space: nowrap;"
+                        >Use Case</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                      <span>
+                        {{ device.useCaseName }}
+                      </span>
+                      <mat-icon
+                      class="material-symbols-outlined float-end justify-content-center align-items-center"
+                    >
+                      {{ device.icon }}
+                    </mat-icon>
+                    </div>
+                  </div>
+  
+                  <div class="row mb-2">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                      <label class="form-check-label">Quantity</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                      <span>
+                        {{ device.deviceQty }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

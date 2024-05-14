@@ -1,0 +1,510 @@
+<!-- <section class="login">
+  <div class="container">
+    <div
+      class="login-form login-background"
+      style="
+        border-radius: 5px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+          rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+      "
+    >
+      <div class="mb-3 d-flex justify-content-center">
+        <span
+          style="
+            padding: 4px;
+            margin: 8px auto;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: blue;
+          "
+        >
+          LOGIN
+        </span>
+      </div>
+      <form [formGroup]="loginForm">
+        <div class="mb-3 d-flex justify-content-center">
+          <div class="col-9">
+            <div class="input-group mb-3">
+              <span class="input-group-text">
+                <fa-icon [icon]="['fas', 'user']"></fa-icon>
+              </span>
+              <input
+                type="text"
+                placeholder="Login ID"
+                class="form-control"
+                formControlName="userId"
+                aria-placeholder="enter the loginId"
+              />
+            </div>
+            <div
+              *ngIf="
+                loginForm.get('userId').invalid &&
+                (loginForm.get('userId').dirty ||
+                  loginForm.get('userId').touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="loginForm.get('userId').errors.required">
+                Login Id is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 row d-flex justify-content-center">
+          <div class="col-9 px-2">
+            <div class="input-group mb-3">
+              <span class="input-group-text">
+                <fa-icon [icon]="['fas', 'lock']"></fa-icon>
+              </span>
+              <input
+                type="password"
+                placeholder="Password"
+                class="form-control"
+                formControlName="password"
+                aria-placeholder="enter your password"
+              />
+            </div>
+            <div
+              *ngIf="
+                loginForm.get('password').invalid &&
+                (loginForm.get('password').dirty ||
+                  loginForm.get('password').touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="loginForm.get('password').errors.required">
+                Password is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-5">
+            <div>
+              <a [routerLink]="['../forgot-password']">Forgot Password?</a>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="button">
+              <button
+                class="btn btn-success float-end"
+                [disabled]="!loginForm.valid || isLoading"
+                (click)="login()"
+                id="submit"
+              >
+                <div
+                  *ngIf="isLoading"
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                >
+                  <span class="sr-only">Loading...</span>
+                </div>
+                Login
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section> -->
+
+<section class="vh-100" style="max-height: 83vh !important">
+  <!-- <img
+src="assets/images/Smart-City.jpg"
+class="img-fluid"
+style="
+  max-height: 100vh !important;
+"
+/> -->
+  <img
+    src="assets/images/Smart-City.jpg"
+    class="img bg-image"
+    style="height: 100% !important; width: 100% !important"
+  />
+  <div class="container bg-text">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div
+        class="px-0 col col-md-8 d-flex d-flex justify-content-center align-items-center"
+        style="max-height: 80vh !important"
+      >
+        <!-- <div class="col-md-5 col-lg-5 d-none d-md-block px-0"
+        style="max-height: 83vh !important"
+      >
+        <img
+          src="assets/images/Rectangle 11.png"
+          alt="login form"
+          class="img-fluid"
+          style="
+            border-radius: 1rem 0 0 1rem;
+            max-height: 76vh !important;
+            width: 71vh;
+          "
+        />
+      </div> -->
+        <!-- <div
+          class="col-md-5 col-lg-5 d-none d-md-block px-0"
+          style="max-height: 100% !important"
+        >
+          <img
+            src="assets/images/Rectangle 11.png"
+            alt="login form"
+            class="img-fluid"
+            style="
+              border-radius: 1rem 0 0 1rem;
+              max-height: 100% !important;
+              width: 71vh;
+            "
+          />
+        </div> -->
+        <div
+          class="white col-md-10 col-lg-7 justify-content-center align-items-center px-0"
+          style="
+            max-height: 100% !important;
+            border-radius: 1rem 1rem 1rem 1rem;
+          "
+        >
+          <div class="px-0 mx-0" style="height: 100% !important">
+            <div class="row g-0 px-0 py-0 mx-0" style="height: 100%">
+              <div
+                class="d-flex d-md-block justify-content-center align-items-center"
+                style="border-radius: 0 1rem 1rem 0"
+                [ngStyle]="{
+                  border: '1px solid ' + formBgColor,
+                  'background-color': formBgColor,
+                  color: formFontColor || 'black'
+                }"
+              >
+                <div
+                  class="p-4 p-lg-5 text-black justify-content-center align-items-center"
+                  style="height: 100% !important"
+                  [ngStyle]="{
+                    border: '1px solid ' + formBgColor,
+                    'background-color': formBgColor,
+                    color: formFontColor || 'black'
+                  }"
+                >
+                  <form [formGroup]="loginForm">
+                    <h5
+                      class="fw-bolder mb-2 pb-3"
+                      style="
+                        left: 660.92px;
+                        top: 278.96px;
+
+                        font-family: 'Roboto';
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 25.75px;
+                        line-height: 30px;
+                      "
+                    [ngStyle]="{
+                      'font-family': formFont,
+                      color: formFontColor || 'black'
+                    }">
+                      Sign into your account
+                    </h5>
+                    <!-- <div class="field" style="border: 1px solid red;"> -->
+                    <mat-form-field
+                      class="my-form-field"
+                      appearance="outline"
+                      [ngStyle]="{
+                        color: formFontColor || 'black',
+                        'background-color': formBgColor
+                      }"
+                    >
+                      <mat-label
+                        class="form-label"
+                        style="
+                          left: 0%;
+                          right: 83.02%;
+                          top: 0%;
+                          bottom: 91.33%;
+
+                          font-style: normal;
+                          font-weight: 400;
+                          font-size: 13.7333px;
+                          line-height: 16px;
+                        "
+                        [ngStyle]="{
+                          'font-family': formFont || 'Times New Roman, Times, serif',
+                          color: formFontColor || 'black',
+                          'background-color': formBgColor
+                        }"
+                        >Login ID</mat-label
+                      >
+                      <input
+                        formControlName="userId"
+                        matInput
+                        type="text"
+                        name="userId"
+                        [ngStyle]="{
+                          'font-family': formFont || 'Times New Roman, Times, serif',
+                          color: formFontColor || 'black',
+                          'background-color': formBgColor
+                        }"
+                      />
+                    </mat-form-field>
+                    <!-- </div> -->
+                    <div
+                      *ngIf="
+                        loginForm.get('userId').invalid &&
+                        (loginForm.get('userId').dirty ||
+                          loginForm.get('userId').touched)
+                      "
+                      class="alert alert-danger"
+                    >
+                      <div *ngIf="loginForm.get('userId').errors.required">
+                        *Login ID is required.
+                      </div>
+                    </div>
+                      <!-- style="
+                        padding-top: 5px !important;
+                        padding-bottom: 0px !important;
+                        margin-bottom: 15px;
+                      " -->
+                    <mat-form-field
+                      class="my-form-field"
+                      appearance="outline"
+                      [ngStyle]="{
+                        color: formFontColor || 'black',
+                        'background-color': formBgColor
+                      }"
+                    >
+                      <mat-label
+                        class="form-label"
+                        style="
+                          left: 0%;
+                          right: 83.02%;
+                          top: 0%;
+                          bottom: 91.33%;
+
+                          font-style: normal;
+                          font-weight: 400;
+                          font-size: 13.7333px;
+                          line-height: 16px;
+                        "
+                        [ngStyle]="{
+                          'font-family': formFont || 'Times New Roman, Times, serif',
+                          color: formFontColor || 'black',
+                          'background-color': formBgColor
+                        }"
+                        >Password</mat-label
+                      >
+                      <input
+                        matInput
+                        [type]="showPassword ? 'text' : 'password'"
+                        name="password"
+                        formControlName="password"
+                        [ngStyle]="{
+                          'font-family': formFont || 'Times New Roman, Times, serif',
+                          color: formFontColor || 'black',
+                          'background-color': formBgColor
+                        }"
+                      />
+                      <mat-icon
+                        class="justify-content-center align-items-center"
+                        matSuffix
+                        (click)="togglePasswordVisibility()"
+                      >
+                        {{ showPassword ? "visibility_off" : "visibility" }}
+                      </mat-icon>
+                    </mat-form-field>
+                    <div
+                      *ngIf="
+                        loginForm.get('password').invalid &&
+                        (loginForm.get('password').dirty ||
+                          loginForm.get('password').touched)
+                      "
+                      class="alert alert-danger"
+                    >
+                      <div *ngIf="loginForm.get('password').errors.required">
+                        *Password is required.
+                      </div>
+                    </div>
+                    <div class="forget_passord col-5 float-end mt-2 ms-2 mb-2">
+                      <a
+                        [routerLink]="['../forgot-password']"
+                        class="small text-muted float-end ms-4"
+                        >Forgot password?</a
+                      >
+                    </div>
+                    <button
+                      mat-raised-button
+                      type="submit"
+                      color="primary"
+                      [disabled]="!loginForm.valid || isLoading"
+                      (click)="login()"
+                      id="submit"
+                      class="btn pt-1 btn-block"
+                      type="button"
+                      [style]="{
+                        opacity: !loginForm.valid || isLoading ? '0.5' : ''
+                      }"
+                    >
+                      <div
+                        *ngIf="isLoading"
+                        class="spinner-border spinner-border-sm"
+                        role="status"
+                      >
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                      Login now
+                    </button>
+                  </form>
+                  <!-- <form
+                    [formGroup]="loginForm"
+                  >
+                    <h5
+                      class="fw-bolder mb-2 pb-3"
+                      style="
+                        left: 660.92px;
+                        top: 278.96px;
+
+                        font-family: 'Roboto';
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 25.75px;
+                        line-height: 30px;
+                      "
+                    >
+                      Sign into your account
+                    </h5>
+
+                    <label
+                      class="form-label"
+                      style="
+                        left: 0%;
+                        right: 83.02%;
+                        top: 0%;
+                        bottom: 91.33%;
+
+                        font-family: 'Roboto';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 13.7333px;
+                        line-height: 16px;
+                      "
+                      >Login ID</label
+                    >
+
+                    <div class="form-outline mb-4">
+                      <input
+                        type="text"
+                        placeholder="Login ID"
+                        class="form-control form-control-lg"
+                        formControlName="userId"
+                        aria-placeholder="enter the
+                    loginId"
+                        [style]="{
+                          border:
+                            loginForm.get('userId').invalid &&
+                            (loginForm.get('userId').dirty ||
+                              loginForm.get('userId').touched)
+                              ? '1px solid red'
+                              : ''
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          loginForm.get('userId').invalid &&
+                          (loginForm.get('userId').dirty ||
+                            loginForm.get('userId').touched)
+                        "
+                        class="alert alert-danger mt-1"
+                      >
+                        <div *ngIf="loginForm.get('userId').errors.required">
+                          *Login ID is required.
+                        </div>
+                      </div>
+                    </div>
+
+                    <label
+                      class="form-label"
+                      style="
+                        left: 0%;
+                        right: 83.02%;
+                        top: 0%;
+                        bottom: 91.33%;
+
+                        font-family: 'Roboto';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 13.7333px;
+                        line-height: 16px;
+                      "
+                      >Password</label
+                    >
+                    
+
+                    <div class="form-outline mb-4">
+                      <input
+                        type="password"
+                        placeholder="Password"
+                        class="form-control form-control-lg"
+                        formControlName="password"
+                        aria-placeholder="enter your password"
+                        [style]="{
+                          border:
+                            loginForm.get('userId').invalid &&
+                            (loginForm.get('userId').dirty ||
+                              loginForm.get('userId').touched)
+                              ? '1px solid red'
+                              : ''
+                        }"
+                      >
+                      <mat-icon matSuffix>
+                        visibility
+                    </mat-icon>
+                      <div
+                        *ngIf="
+                          loginForm.get('password').invalid &&
+                          (loginForm.get('password').dirty ||
+                            loginForm.get('password').touched)
+                        "
+                        class="alert alert-danger mt-1"
+                      >
+                        <div *ngIf="loginForm.get('password').errors.required">
+                          *Password is required.
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="forget_passord col-5 float-end ms-2 mb-2">
+                      <a
+                        [routerLink]="['../forgot-password']"
+                        class="small text-muted float-end ms-4"
+                        style="color: #3d95f7 !important; text-decoration: none"
+                        >Forgot password?</a
+                      >
+                    </div>
+                      <button
+                        [disabled]="!loginForm.valid || isLoading"
+                        (click)="login()"
+                        id="submit"
+                        class="btn pt-1 btn-block"
+                        type="button"
+                        [style]="{
+                          opacity: !loginForm.valid || isLoading ? '0.5' : ''
+                        }"
+                      >
+                        <div
+                          *ngIf="isLoading"
+                          class="spinner-border spinner-border-sm"
+                          role="status"
+                        >
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                        Login now
+                      </button>
+                  </form> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

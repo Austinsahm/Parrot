@@ -1,0 +1,67 @@
+<mat-form-field
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: whiteLabel ? '' : formFontColor,
+    'background-color': whiteLabel ? '' : formBgColor
+  }"
+  appearance="outline"
+  [formControl]="control"
+  (blur)="onBlur.emit()"
+  [required]="required"
+  ngDefaultControl
+>
+  <mat-label
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: whiteLabel ? '' : formFontColor
+    }"
+    >{{ placeholder || "Select..." }}
+  </mat-label>
+  <mat-select
+    (selectionChange)="onSelectionChange($event)"
+    [value]="defaultOption?.key"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: whiteLabel ? '' : formFontColor
+    }"
+  >
+    <mat-select-trigger>
+      <span
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif',
+          color: whiteLabel ? '' : formFontColor
+        }"
+      >
+        {{ defaultOption?.label }}
+      </span>
+    </mat-select-trigger>
+    <mat-option
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: whiteLabel ? '' : formFontColor
+      }"
+      value=""
+      disabled
+      selected
+      *ngIf="!options?.length"
+    >
+      {{
+        loading
+          ? loadingMessage || "Loading..."
+          : emptyMessage || "Nothing to select..."
+      }}
+    </mat-option>
+    <mat-option
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: whiteLabel ? '' : formFontColor,
+        'background-color': whiteLabel ? '' : formBgColor
+      }"
+      *ngFor="let option of options; trackBy: trackByFn"
+      [value]="option.key"
+      [disabled]="option.disabled"
+    >
+      {{ option.label }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

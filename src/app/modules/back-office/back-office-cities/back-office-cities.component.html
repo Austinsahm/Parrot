@@ -1,0 +1,42 @@
+<div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-bottom: 1em;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <strong style="font-size: 1.2em;">City Directory</strong>
+            <button class="btn btn-secondary float-end" (click)="addCityHandler()">Add City
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="cites$ | async as payload">
+        <ngx-skeleton-loader [count]="5" *ngIf="payload.loading"></ngx-skeleton-loader>
+        <app-control-error *ngIf="payload.error">{{ payload.error.message }}</app-control-error>
+
+        <ngx-datatable *ngIf="payload.value" class="bootstrap table-bordered table-striped table-hover" #assetsListTable
+            [rows]="payload.value" [headerHeight]="50" [footerHeight]="50" [limit]="10"
+            [loadingIndicator]="payload.loading" [columnMode]="'force'" [rowHeight]="'auto'">
+
+            <ngx-datatable-column name="City Name" prop="cityName">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <a href="javascript:void(0);">
+                        {{ row.cityName }}
+                    </a>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Description" prop="description">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.description }}
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="State" prop="stateName">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.stateName }}
+                </ng-template>
+            </ngx-datatable-column>
+
+        </ngx-datatable>
+    </div>
+</div>

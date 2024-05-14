@@ -1,0 +1,19 @@
+.shadow {
+  // box-shadow: 0 8px 12px 0 rgba(34, 60, 80, 0.16);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.cursor {
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 8px 12px 0 rgba(34, 60, 80, 0.16);
+  
+  // border: 1px solid black;
+}
+
+.cursor:hover{
+  // box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
+}

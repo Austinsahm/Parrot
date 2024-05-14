@@ -1,0 +1,60 @@
+<div
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: formFontColor || 'black'
+  }"
+>
+  <select
+    class="form-control"
+    [formControl]="control"
+    (blur)="onBlur.emit()"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: whiteLabel ? '' : formFontColor,
+      'background-color': whiteLabel ? '' : formBgColor,
+      'border-bottom': whiteLabel ? '' : '1px solid ' + formFontColor
+    }"
+  >
+    <option
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: formFontColor || 'black',
+        'background-color': whiteLabel ? '' : formBgColor      }"
+      ngValue=""
+      disabled
+      selected
+      *ngIf="!options?.length"
+    >
+      {{
+        loading
+          ? loadingMessage || "Loading..."
+          : emptyMessage || "Nothing to select..."
+      }}
+    </option>
+    <ng-container *ngIf="options?.length">
+      <option
+        ngValue=""
+        disabled
+        selected
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif',
+          color: formFontColor || 'black',
+          'background-color': whiteLabel ? '' : formBgColor        }"
+      >
+        {{ placeholder || "Select..." }}
+      </option>
+      <option
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif',
+          color: whiteLabel ? '' : formFontColor,
+          'background-color': whiteLabel ? '' : formBgColor
+        }"
+        *ngFor="let option of options; trackBy: trackByFn"
+        [ngValue]="option.key"
+        [disabled]="option.disabled"
+      >
+        {{ option.label }}
+      </option>
+    </ng-container>
+  </select>
+</div>

@@ -1,0 +1,13 @@
+// button:hover#cancel {
+//     font-weight: bolder;
+//     background-color: red;
+// }
+
+// button:hover#submit {
+//     font-weight: bolder;
+//     background-color: green;
+// }
+
+button:disabled {
+  opacity: 0.5;
+}

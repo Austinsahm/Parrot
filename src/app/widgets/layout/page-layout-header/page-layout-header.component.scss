@@ -1,0 +1,126 @@
+.top-header {
+  width: 100%;
+  // float: left;
+  // background-color: #2FD5B4;
+  text-align: center;
+  padding: 10px 0px;
+  // position: relative;
+  // border-bottom: 2px solid #000;
+  height: 5rem;
+  // display: flex;
+  // align-items: center;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  z-index: 2;
+}
+
+.top-header h1 {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.top-header .button {
+  // width: 14%;
+  float: right;
+  // margin: 25px 0;
+}
+
+.logo {
+  margin-left: 3.5em;
+  height: 100%;
+}
+
+.logo .image {
+  position: relative;
+  width: 100%;
+}
+
+.logo .image img {
+  transition: all 0.3s;
+  max-height: 35px;
+  // border-radius: 7px;
+}
+
+.logo:hover .image img {
+  transform: scale(1.1);
+}
+
+.logo h5 {
+  font-family: "Caveat", cursive;
+  font-size: 24px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+}
+
+.logo a {
+  color: #000000;
+  transition: all 0.3s;
+}
+
+.logo:hover a {
+  color: #fff20e;
+}
+
+.info {
+  float: right;
+  text-align: left;
+}
+
+.info div {
+  color: #880011;
+  font-size: 18px;
+  font-weight: 500;
+  display: block;
+}
+
+.info div span {
+  // color: #ff7c21;
+  margin-left: 10px;
+}
+
+.top-header h2 {
+  font-size: 1.3em;
+  margin-left: 0.5em;
+  float: left;
+  // margin-top: 6px;
+}
+
+.info .SaviPro-IoT_Image {
+  position: relative;
+  float: right;
+}
+
+// .SaviPro-IoT_Image img {
+//   transition: all 0.3s;
+//   max-height: 170px;
+//   border-radius: 7px;
+// }
+
+// .SaviPro-IoT_Image:hover {
+//   transform: scale(1.1);
+// }
+
+mat-toolbar {
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.details {
+  display: flex !important;
+}
+
+.data {
+  display: flex !important;
+  flex-direction: column;
+  height: 10px;
+}

@@ -1,0 +1,35 @@
+.form-margin{
+  margin-top:5.6px;
+}
+.maps {
+  height: 60vh;
+  background-color: transparent;
+  opacity: 0;
+  transition: opacity 150ms ease-in;
+}
+
+.maps.visible {
+  opacity: 1;
+}
+
+.center {
+  display: flex;
+  align-content: center;
+}
+
+mat-form-field {
+  width: 80%;
+  font-size: small;
+  font-weight: normal;
+}
+
+.pano {
+  position: absolute;
+  bottom: 18px;
+  left: 5%;
+  z-index: 5;
+  // padding: 5px;
+  text-align: center;
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+}

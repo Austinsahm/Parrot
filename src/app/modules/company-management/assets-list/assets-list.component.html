@@ -1,0 +1,60 @@
+<div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <input type="text" [formControl]="searchField" style="padding:4px;margin:8px auto;"
+             placeholder="Search..."/>
+      <button class="btn btn-secondary float-end"
+              style="background-color: #a7dce3!important;"
+              (click)="addAsset()">Add device
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="assets$ | progress | async as payload">
+
+    <ngx-datatable class="bootstrap table-bordered table-striped table-hover" #assetsListTable
+                   [rows]="payload.value"
+                   [headerHeight]="50"
+                   [footerHeight]="50"
+                   [limit]="10"
+                   [loadingIndicator]="payload.loading"
+                   [columnMode]="'force'"
+                   [rowHeight]="'auto'">
+
+      <ngx-datatable-column name="Asset" prop="assetName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <a href="javascript:void(0);" (click)="goToAssetDetail(row)" placement="top" [ngbTooltip]="row.assetId">
+            {{row['assetName']}}
+          </a>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Organization" prop="companyName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{row['companyName']}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Asset Type" prop="assetTypeName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{row['assetTypeName']}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Location" prop="locationName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{row['locationName']}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Status" prop="statusName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{row['statusName']}}
+        </ng-template>
+      </ngx-datatable-column>
+
+    </ngx-datatable>
+  </div>
+</div>

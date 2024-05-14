@@ -1,0 +1,77 @@
+<div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+      <span
+        style="
+          padding: 4px;
+          margin: 8px auto;
+          font-size: 1.2em;
+          font-weight: bold;
+        "
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif',
+          color: '#' + (formColor || 'ff9900')
+        }"
+      >
+        Geolocation Directory
+      </span>
+      <!--<input type="text" class="float-end" placeholder="Search..." [formControl]="searchField" /> -->
+    </div>
+  </div>
+</div>
+
+<div class="row" style="height: 60vh">
+  <div
+    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+    *ngIf="geolocations$ | progress | async as payload"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }"
+  >
+    <ngx-skeleton-loader
+      *ngIf="payload.loading"
+      [count]="5"
+    ></ngx-skeleton-loader>
+    <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+    <ng-container *ngIf="payload.value">
+      <ngx-datatable
+        class="bootstrap table-bordered table-striped table-hover"
+        #companyListTable
+        [rows]="payload.value"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [limit]="10"
+        [columnMode]="'force'"
+        [loadingIndicator]="payload.loading"
+        [rowHeight]="'auto'"
+        style="font-size: 15px !important"
+      >
+        <ngx-datatable-column name="Manuf Device ID" prop="manufDeviceId">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <a
+              href="javascript:void(0);"
+              (click)="openDetails(row)"
+              placement="top"
+              [ngbTooltip]="row.deviceId"
+            >
+              {{ row["manufDeviceId"] }}
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Device Name" prop="deviceName">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row["deviceName"] }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Owner" prop="owner">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row["dashboardOwner"] }}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </ng-container>
+  </div>
+</div>

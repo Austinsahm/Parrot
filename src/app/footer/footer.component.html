@@ -1,0 +1,15 @@
+<ng-container *ngIf="company$ | progress | async as payload">
+  <footer
+    class="page-footer font-small"
+    [ngStyle]="{
+      'background-color': '#' + (payload.value?.footerColour || 'a7dce3')
+    }"
+  >
+    <div class="footer-copyright text-center py-3 clearfix">
+      © Copyright 2020 DataNucleus Inc
+      <span class="float-end" style="font-weight: bolder; padding-right: 2em"
+        >Build #: 0.0.17</span
+      >
+    </div>
+  </footer>
+</ng-container>

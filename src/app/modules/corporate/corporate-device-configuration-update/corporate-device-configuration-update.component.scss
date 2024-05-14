@@ -1,0 +1,38 @@
+.form-segment {
+  border: 1px dashed #ddd;
+  margin-bottom: 1.2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+ngx-datatable {
+  width: 100%;
+}
+
+.option-padder {
+  padding: 0.6em;
+  margin-left: 1em;
+}
+
+// input {
+//   border: none;
+//   outline: none;
+//   border-bottom: 1px solid black;
+//   border-radius: 5px;
+// }
+
+button:disabled {
+  opacity: 0.5;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--input-border) !important;
+}
+
+::ng-deep .mat-select-arrow {
+  color: var(--input-border) !important;
+}

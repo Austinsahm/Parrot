@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col clearfix">
+            <h3 class="float-start">{{ reportTitile  }}</h3>
+            <div class="float-end">
+                <!-- <button title="Print" type="button" class="btn btn-light" (click)="onPrint.emit()">
+                    <i class="material-icons">print</i>
+                </button>
+                <button title="Save" type="button" class="btn btn-light" (click)="onSave.emit()">
+                    <i class="material-icons">save</i>
+                </button>
+                <button title="Export" type="button" class="btn btn-light" (click)="onExport.emit()">
+                    <i class="material-icons">import_export</i>
+                </button>
+                <button title="Delete" type="button" class="btn btn-light" (click)="onDelete.emit()">
+                    <i class="material-icons">delete</i>
+                </button> -->
+                <strong *ngIf="curPage && totalPages" style="margin-left: 1em;">
+                    pg {{ curPage }} of {{ totalPages }}
+                </strong>
+            </div>
+        </div>
+    </div>
+</div>

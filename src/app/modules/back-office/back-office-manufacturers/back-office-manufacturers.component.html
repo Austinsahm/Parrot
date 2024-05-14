@@ -1,0 +1,36 @@
+<div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-bottom: 1em;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <strong style="font-size: 1.2em;">Manufacturer Directory</strong>
+            <button class="btn btn-secondary float-end" (click)="addHandler()">Add Manufacturer
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="manufacturers$ | async as payload">
+        <ngx-skeleton-loader [count]="5" *ngIf="payload.loading"></ngx-skeleton-loader>
+        <app-control-error *ngIf="payload.error">{{ payload.error.message }}</app-control-error>
+
+        <ngx-datatable *ngIf="payload.value" class="bootstrap table-bordered table-striped table-hover" #assetsListTable
+            [rows]="payload.value" [headerHeight]="50" [footerHeight]="50" [limit]="10"
+            [loadingIndicator]="payload.loading" [columnMode]="'force'" [rowHeight]="'auto'">
+
+            <ngx-datatable-column name="Manufacturer Name" prop="manufacturerName">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <a href="javascript:void(0);">
+                        {{ row.manufacturerName }}
+                    </a>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Description" prop="manufacturerDescription">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.manufacturerDescription }}
+                </ng-template>
+            </ngx-datatable-column>
+
+        </ngx-datatable>
+    </div>
+</div>

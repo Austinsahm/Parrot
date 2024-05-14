@@ -1,0 +1,63 @@
+<ng-container *ngIf="moreDetails$ | progress | async as payload">
+  <ng-container>
+    <div class="modal-header">
+      <app-title title="{{ deviceName }}" size="md"></app-title>
+    </div>
+    <div class="modal-body">
+      <!-- <app-control-error *ngIf="payload.error">{{
+        payload.error.message
+      }}</app-control-error> -->
+      <app-control-error *ngIf="payload.error"
+        >Data not avaliable</app-control-error
+      >
+
+      <div *ngIf="payload.loading">
+        <ngx-skeleton-loader
+          style="outline: none"
+          [count]="5"
+        ></ngx-skeleton-loader>
+      </div>
+      <div *ngIf="payload.value">
+        <div class="row mb-3" *ngFor="let item of payload.value">
+          <div class="col-md-8">
+            {{ item.attribute }}
+          </div>
+          <div class="col-md-4">
+            {{ changeAttributeName(item) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="row">
+          <div class="col-sm-12 col-xs-12">
+            <!-- <button
+              type="button"
+              class="btn btn-secondary float-end"
+              aria-label="Close"
+              (click)="closeHandler()"
+            >
+              OK
+            </button> -->
+            <button
+              class="float-end"
+              [ngStyle]="{
+                backgroundColor: '#' + (primaryColour || '3D95F7'),
+                width: '7em',
+                color: '#ffffff',
+                fontSize: '12px',
+                border: '0',
+                borderRadius: '10px',
+                height: '35px'
+              }"
+              (click)="closeHandler()"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

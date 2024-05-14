@@ -1,0 +1,19 @@
+<div class="main-header">
+  <div class="container">
+    <div class="navbar-expand-md navbar">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"
+              (click)="isCollapsed = !isCollapsed">
+        <span class="navbar-toggler-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </button>
+      <ul class="collapse navbar-collapse navbar-menu" [class.show]="!isCollapsed" id="collapsibleNavbar">
+
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/company-management']" routerLinkActive="active">Company Management</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/device-management']" routerLinkActive="active">Device Management</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/reports']" routerLinkActive="active">Reports</a></li>
+        <li class="nav-item"><a class="nav-link" href="" >Utility</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/security']" routerLinkActive="active">Security</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,18 @@
+// input {
+//   border: none;
+//   border-bottom: 1px solid black;
+//   border-radius: 5px;
+// }
+// button{
+//     font-family: Times New Roman, Times, serif;
+// }
+button.btn-danger:hover {
+  background-color: red;
+}
+button.btn-success:hover {
+  background-color: green;
+}
+
+button:disabled {
+  opacity: 0.7;
+}

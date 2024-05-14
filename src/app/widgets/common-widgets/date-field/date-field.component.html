@@ -1,0 +1,14 @@
+<input
+  class="form-control"
+  #dateField
+  readonly
+  [minDate]="min"
+  [maxDate]="max"
+  [placeholder]="placeholder || 'Enter date'"
+  name="dp"
+  [formControl]="control"
+  ngbDatepicker
+  #d="ngbDatepicker"
+  (click)="d.toggle()"
+  (blur)="onTouched()"
+/>

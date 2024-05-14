@@ -1,0 +1,31 @@
+<!-- <app-report-actions></app-report-actions> -->
+<div id="print-target">
+  <!-- <app-report-header [reportTitile]="reportTitile" (onPrint)="onPrint.emit()" (onSave)="onSave.emit()"
+    (onExport)="onExport.emit()" (onDelete)="onDelete.emit()" [curPage]="reportTable.offset + 1"
+    [totalPages]="pages" style="color: #FF7C21;"></app-report-header> -->
+
+  <app-report-header
+    [curPage]="reportTable.offset + 1"
+    [totalPages]="pages"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif'
+    }"
+  ></app-report-header>
+  <ngx-datatable
+    #reportTable
+    class="bootstrap table-bordered table-striped table-hover"
+    #deviceListTable
+    [rows]="report?.rows"
+    [columns]="report?.columns"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [limit]="limit"
+    [loadingIndicator]="false"
+    [columnMode]="'force'"
+    [rowHeight]="'auto'"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif'
+    }"
+  >
+  </ngx-datatable>
+</div>

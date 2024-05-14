@@ -1,0 +1,219 @@
+<app-empty-data
+  *ngIf="customError | async as e; else data"
+  template="Oops, We hit a snag"
+  [text]="e"
+></app-empty-data>
+
+<ng-template #data>
+  <div
+    class="container-fluid"
+    style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+  >
+    <div class="row justify-content-center align-items-center">
+      <div class="row mb-2">
+        <loaders-css
+          *ngIf="isLoading"
+          [loader]="loader"
+          [scale]="3"
+          [bgColor]="bgColor"
+          [color]="color"
+          style="height: 200px; background-color: white"
+        ></loaders-css>
+
+        <div class="col-md-4 cursor" *ngIf="userStatTypeCharts.length">
+          <app-card>
+            <span
+              style="font-weight: bolder; font-size: 1.3em; margin-left: 26px"
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: '#' + (formColor || 'ff9900')
+              }"
+            >
+              User Type
+            </span>
+            <ng-container *ngIf="userStatTypeCharts.length && !isLoading">
+              <div [routerLink]="['../users']">
+                <app-ignite-bar-chart
+                  [data]="userStatTypeCharts"
+                  [brushes]="chartColours"
+                ></app-ignite-bar-chart>
+                <p>
+                  {{ userStatTypeCharts[0].label }}:
+                  <span> {{ userStatTypeCharts[0].value }} </span>
+                </p>
+              </div></ng-container
+            >
+
+            <ng-container *ngIf="!userStatTypeCharts.length && !isLoading">
+              <app-empty-data
+                text="Cannot fetch User at the moment"
+              ></app-empty-data>
+            </ng-container>
+          </app-card>
+        </div>
+
+        <div class="col-md-4 cursor" *ngIf="userStatStatusCharts.length">
+          <app-card>
+            <span
+              style="font-weight: bolder; font-size: 1.3em; margin-left: 26px"
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: '#' + (formColor || 'ff9900')
+              }"
+            >
+              User Status
+            </span>
+            <ng-container *ngIf="userStatStatusCharts.length && !isLoading">
+              <div [routerLink]="['../users']">
+                <app-ignite-bar-chart
+                  [data]="userStatStatusCharts"
+                  [brushes]="chartColours"
+                ></app-ignite-bar-chart>
+                <p>
+                  {{ userStatStatusCharts[0].label | titlecase }}:
+                  <span> {{ userStatStatusCharts[0].value }} </span>
+                </p>
+                <p>
+                  {{ userStatStatusCharts[1].label | titlecase }}:
+                  <span> {{ userStatStatusCharts[1].value }} </span>
+                </p>
+              </div></ng-container
+            >
+            <ng-container *ngIf="!userStatStatusCharts.length && !isLoading">
+              <app-empty-data
+                text="Cannot fetch User at the moment"
+              ></app-empty-data>
+            </ng-container>
+          </app-card>
+        </div>
+
+        <div class="col-md-4 cursor" *ngIf="locationStatCharts.length">
+          <app-card>
+            <span
+              style="font-weight: bolder; font-size: 1.3em; margin-left: 26px"
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: '#' + (formColor || 'ff9900')
+              }"
+            >
+              Location
+            </span>
+            <ng-container *ngIf="locationStatCharts.length && !isLoading">
+              <div [routerLink]="['../locations']">
+                <app-ignite-bar-chart
+                  [data]="locationStatCharts"
+                  [brushes]="chartColours"
+                ></app-ignite-bar-chart>
+                <p>
+                  {{ locationStatCharts[0].label | titlecase }}:
+                  <span> {{ locationStatCharts[0].value }} </span>
+                </p>
+                <p>
+                  {{ locationStatCharts[1].label | titlecase }}:
+                  <span> {{ locationStatCharts[1].value }} </span>
+                </p>
+              </div></ng-container
+            >
+            <ng-container *ngIf="!locationStatCharts.length && !isLoading">
+              <app-empty-data
+                text="Company location cannot be fetched"
+              ></app-empty-data
+            ></ng-container>
+          </app-card>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-4 cursor" *ngIf="assetStatCharts.length">
+          <app-card title="Asset">
+            <!-- <span
+            style="font-weight: bolder; font-size: 1.3em; margin-left: 26px"
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif',
+              color: '#' + (formColor || 'ff9900')
+            }"
+          >
+            Asset
+          </span> -->
+            <ng-container *ngIf="assetStatCharts.length && !isLoading">
+              <div [routerLink]="['../assets']">
+                <app-ignite-bar-chart
+                  [data]="assetStatCharts"
+                  [brushes]="chartColours"
+                ></app-ignite-bar-chart>
+                <p class="value">
+                  {{ assetStatCharts[0].label | titlecase }}:
+                  <span> {{ assetStatCharts[0].value }} </span>
+                </p>
+                <p class="value">
+                  {{ assetStatCharts[1].label | titlecase }}:
+                  <span> {{ assetStatCharts[1].value }} </span>
+                </p>
+              </div></ng-container
+            >
+            <ng-container *ngIf="!assetStatCharts.length && !isLoading">
+              <app-empty-data text="Assets cannot be fetched"></app-empty-data>
+            </ng-container>
+          </app-card>
+        </div>
+
+        <div class="col-md-4 cursor" *ngIf="deviceStatChart.length">
+          <app-card>
+            <span
+              style="font-weight: bolder; font-size: 1.3em; margin-left: 26px"
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: '#' + (formColor || 'ff9900')
+              }"
+            >
+              Devices
+            </span>
+            <ng-container *ngIf="deviceStatChart.length && !isLoading">
+              <div [routerLink]="['../use-cases']">
+                <app-pie-guage-chart
+                  [data]="deviceStatChart"
+                  [brushes]="chartColours"
+                ></app-pie-guage-chart></div
+            ></ng-container>
+            <ng-container *ngIf="!deviceStatChart.length && !isLoading">
+              <app-empty-data text="Devices cannot be fetched"></app-empty-data
+            ></ng-container>
+          </app-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- <p>Summary</p>  -->
+<!-- <br/><br/> -->
+<!-- <div class="card-header border-0" style="font-family: Times New Roman, Times, serif; background-color: inherit !important; font-weight: bolder; color: #ff9900;">Summary</div>  -->
+<!-- <app-bar-chart
+  [attribute]="userStatTypeCharts.attribute"
+  [xAxesValues]="userStatTypeCharts.xAxesValues"
+  [yAxesValues]="userStatTypeCharts.yAxesValues"
+></app-bar-chart>
+<strong>{{ userStatTypeCharts.attribute }}</strong> -->
+<!-- <app-bar-chart
+  [attribute]="userStatStatusCharts.attribute"
+  [xAxesValues]="userStatStatusCharts.xAxesValues"
+  [yAxesValues]="userStatStatusCharts.yAxesValues"
+></app-bar-chart>
+<strong>{{ userStatStatusCharts.attribute }}</strong> -->
+<!-- <app-bar-chart
+  [attribute]="assetStatCharts.attribute"
+  [xAxesValues]="assetStatCharts.xAxesValues"
+  [yAxesValues]="assetStatCharts.yAxesValues"
+></app-bar-chart>
+<strong>{{ assetStatCharts.attribute }}</strong> -->
+<!-- <app-bar-chart
+  [attribute]="locationStatCharts.attribute"
+  [xAxesValues]="locationStatCharts.xAxesValues"
+  [yAxesValues]="locationStatCharts.yAxesValues"
+></app-bar-chart>
+<strong>{{ locationStatCharts.attribute }}</strong> -->
+<!-- <app-pie-chart-main
+  [labels]="deviceStatChart.labels"
+  [values]="deviceStatChart.values"
+></app-pie-chart-main>
+<strong>{{ deviceStatChart.attribute }}</strong>
+</div> -->

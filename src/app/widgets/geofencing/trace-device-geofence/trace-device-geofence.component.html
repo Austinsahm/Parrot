@@ -1,0 +1,194 @@
+<div
+  class="row mb-1 py-1 border rounded"
+  [ngStyle]="{
+    border: '1px solid ' + formFontColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+  [formGroup]="form"
+>
+  <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2 pe-0">
+    <app-combo-select-field
+      [defaultOption]="taskOptions[1]"
+      placeholder="Geofencing Task"
+      [options]="taskOptions"
+      (selectionChange)="onGeofencingTask($event)"
+    ></app-combo-select-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 pe-0">
+    <app-device-category-field
+      placeholder="Device Category"
+      [selectable]="true"
+      [subdomain]="companyId"
+      (selectionChange)="onDeviceCategory($event)"
+    ></app-device-category-field>
+  </div>
+
+  <ng-container *ngIf="!isDeviceCategory; else category">
+    <div class="ps-2 col-xs-12 col-sm-5 col-md-3 col-lg-3 pe-0">
+      <app-dashboard-device-field
+        placeholder="Device"
+        [selectable]="true"
+        (selectionChange)="onDeviceId($event)"
+      >
+      </app-dashboard-device-field>
+    </div>
+  </ng-container>
+
+  <ng-template #category>
+    <div
+      class="col-sm-5 col-xs-12 col-md-3 col-lg-3 pe-0"
+      *ngIf="deviceIdOptions$ | progress | async as payload"
+    >
+      <app-combo-select-field
+        placeholder="Device"
+        [options]="payload.value"
+        [loading]="payload.loading"
+        (selectionChange)="onDeviceId($event)"
+      >
+      </app-combo-select-field></div
+  ></ng-template>
+
+  <div class="col-xs-10 col-sm-5 col-md-3 col-lg-3 pe-0">
+    <app-combo-select-field
+      placeholder="Geodata Source"
+      [options]="geodataSourceOptions"
+      (selectionChange)="onGeodataSource($event)"
+    ></app-combo-select-field>
+  </div>
+
+  <div
+    [ngClass]="{
+      'col-sm-6 col-md-3 col-lg-3': geodataDisplay === 'motion_tracker',
+      'col-sm-6 col-md-4 col-lg-4': geodataDisplay !== 'motion_tracker'
+    }"
+  >
+    <app-combo-select-field
+      placeholder="Geodata Display"
+      [options]="geodataDisplayOptions"
+      (selectionChange)="onGeodataDisplay($event)"
+    ></app-combo-select-field>
+  </div>
+
+  <div
+    class="col-sm-6 ml-2"
+    [ngClass]="{
+      'col-md-3 col-lg-4': geodataDisplay === 'motion_tracker',
+      'col-md-5 col-lg-5': geodataDisplay !== 'motion_tracker'
+    }"
+  >
+    <!-- [style.--input-border]="'1px solid ' + formFontColor" -->
+    <mat-form-field class="form-margin" appearance="outline">
+      <mat-label
+        [ngStyle]="{
+          color: formFontColor || 'black'
+        }"
+        >Date range</mat-label
+      >
+      <mat-date-range-input
+        [max]="today"
+        [rangePicker]="picker"
+        [ngStyle]="{
+          color: formFontColor || 'black',
+          'background-color': formBgColor
+        }"
+      >
+        <input
+          matStartDate
+          readonly
+          formControlName="startDate"
+          placeholder="Start date"
+        />
+        <input
+          matEndDate
+          readonly
+          formControlName="endDate"
+          placeholder="End date"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker"
+        [ngStyle]="{
+          color: formFontColor || 'black',
+          'background-color': formBgColor
+        }"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+  </div>
+
+  <div
+    *ngIf="geodataDisplay === 'motion_tracker'"
+    class="ps-0 row col-sm-6 col-md-4 col-lg-3 mt-1 pe-0"
+  >
+    <div class="ps-0 col-8 pe-0">
+      <app-combo-select-field
+        placeholder="Marker Icons"
+        [options]="markerIconOptions"
+        (selectionChange)="onMarkerIcon($event)"
+      >
+      </app-combo-select-field>
+    </div>
+    <div class="ps-0 col-4 pe-0">
+      <app-combo-select-field
+        placeholder="Speed"
+        [options]="markerSpeeedOptions"
+        [defaultOption]="markerSpeeedOptions[2]"
+        (selectionChange)="onMarkerSpeed($event)"
+      >
+      </app-combo-select-field>
+    </div>
+  </div>
+
+  <div
+    [ngClass]="{
+      'col-sm-6 col-md-1 col-lg-1': geodataDisplay === 'motion_tracker',
+      'col-sm-6 col-md-3 col-lg-3': geodataDisplay !== 'motion_tracker'
+    }"
+    class="mt-1 pe-0 center"
+  >
+    <button
+      [disabled]="!isDeviceId || !geodataSource || !geodataDisplay"
+      type="button"
+      class="btn mt-2"
+      (click)="search()"
+    >
+      <mat-icon class="search">search</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="maps" #map (click)="updateMapView()"></div>
+    <div class="pano" [ngClass]="geofenceSourceResult && 'bottom'">
+      <button *ngIf="showPanorama" (click)="toggleView()">
+        {{ !togglePanoramaState ? "Street View" : "Map View" }}
+      </button>
+    </div>
+  </div>
+
+  <div class="row mt-1" *ngIf="geofenceSourceResult">
+    <div
+      style="font-size: small"
+      class="col-md-4"
+      *ngFor="let sourceResult of geofenceSourceResult"
+      [ngSwitch]="sourceResult.dataSource"
+    >
+      <div *ngSwitchCase="'WIFI'">
+        <span class="wifi"></span>
+        <span class="ms-2">WIFI</span>
+      </div>
+      <div *ngSwitchCase="'SIGFOX'">
+        <span class="sigfox"></span>
+        <span class="ms-2">SIGFOX</span>
+      </div>
+      <div class="col-4" *ngSwitchCase="'GPS'">
+        <span class="gps"></span>
+        <span class="ms-2">GPS</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<div [formGroup]="form">
+  <div class="row mb-3">
+    <label class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-4">
+      <strong>From</strong>
+    </div>
+    <div class="col-sm-4">
+      <strong>To</strong>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label class="col-sm-2 col-form-label">Company</label>
+    <div class="col-sm-4">
+      <app-company-field
+        [subdomain]="company?.companyId"
+        formControlName="fromCompany"
+        placeholder="Select company"
+      ></app-company-field>
+      <app-control-error
+        *ngIf="
+          form.get('fromCompany').invalid && form.get('fromCompany').touched
+        "
+      >
+        <span *ngIf="form.get('fromCompany').errors.required"
+          >This field is required.</span
+        >
+      </app-control-error>
+    </div>
+    <div class="col-sm-4">
+      <app-company-field
+        [subdomain]="company?.companyId"
+        formControlName="toCompany"
+        placeholder="Select company"
+      ></app-company-field>
+      <app-control-error
+        *ngIf="form.get('toCompany').invalid && form.get('toCompany').touched"
+      >
+        <span *ngIf="form.get('toCompany').errors.required"
+          >This field is required.</span
+        >
+      </app-control-error>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label class="col-sm-2 col-form-label">Device Date</label>
+    <div class="col-sm-4">
+      <app-date-field
+        #fromDate
+        [max]="toDate?.rawValue"
+        formControlName="from"
+        placeholder="From"
+      >
+      </app-date-field>
+      <app-control-error
+        *ngIf="form.get('from').invalid && form.get('from').touched"
+      >
+        <span *ngIf="form.get('from').errors.required"
+          >This field is required.</span
+        >
+      </app-control-error>
+    </div>
+    <div class="col-sm-4">
+      <app-date-field
+        #toDate
+        [min]="fromDate?.rawValue"
+        formControlName="to"
+        placeholder="To"
+      ></app-date-field>
+      <app-control-error
+        *ngIf="form.get('to').invalid && form.get('to').touched"
+      >
+        <span *ngIf="form.get('to').errors.required"
+          >This field is required.</span
+        >
+      </app-control-error>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label class="col-sm-2 col-form-label">Device Status</label>
+    <div class="col-sm-4">
+      <app-status-field formControlName="statusId"></app-status-field>
+      <app-control-error
+        *ngIf="form.get('statusId').invalid && form.get('statusId').touched"
+      >
+        <span *ngIf="form.get('statusId').errors.required"
+          >This field is required.</span
+        >
+      </app-control-error>
+    </div>
+  </div>
+</div>

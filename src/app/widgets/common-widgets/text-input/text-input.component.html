@@ -1,0 +1,16 @@
+<input ngDefaultControl 
+  class="form-control"
+  [formControl]="formControl"
+  [placeholder]="placeholder"
+  [type]="type"
+  [readOnly]="readOnly"
+  [ngStyle]="{
+    color: formFontColor || 'black',
+    'background-color': formBgColor,
+    border: '1px solid ' + formFontColor
+  }"
+/>
+
+<app-control-error *ngIf="formControl.errors?.required"
+  >This field is required.</app-control-error
+>

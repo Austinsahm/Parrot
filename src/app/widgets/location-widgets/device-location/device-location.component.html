@@ -1,0 +1,9 @@
+<div class="map-container">
+    <div class="maps" #map (click)="updateMapView()"></div>
+    <div class="pano">
+      <button *ngIf="showPanorama" (click)="toggleView()">
+        {{ !togglePanoramaState ? "Street View" : "Map View" }}
+      </button>
+    </div>
+  </div>
+  

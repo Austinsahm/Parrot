@@ -1,0 +1,141 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <!-- <div class="" style="padding-right: 0px; padding-left: 0px"> -->
+    <!-- <div class="card col-12"> -->
+    <!-- <div class="card-body" > -->
+    <a (click)="back()"
+      ><mat-icon style="cursor: pointer; color: black">arrow_back</mat-icon>
+    </a>
+    <br />
+
+    <div
+      class="card-body col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+      style="padding-top: 0px; padding-left: 0px; padding-bottom: 0px"
+      *ngIf="userTypes$ | progress | async as payload"
+    >
+      <div
+        class="card box"
+        style="
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        "
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+      >
+        <!-- <strong
+          class="card-header"
+          style="font-weight: bolder; font-size: 1.3em;"
+          [ngStyle]="{
+            'font-family': formFont || 'Times New Roman, Times, serif',
+            color: '#' + (formColor || 'ff9900')
+          }"
+          >User Types</strong
+        >
+        <br /> -->
+        <app-title class="card-header" title="User Types" size="md"></app-title>
+        <div class="card-body">
+          <ngx-datatable
+            class="bootstrap table-bordered table-striped table-hover"
+            #companyListTable
+            [rows]="payload.value"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [limit]="10"
+            [columnMode]="'force'"
+            [loadingIndicator]="payload.loading"
+            [rowHeight]="'auto'"
+          >
+            <ngx-datatable-column name="First Name" prop="firstName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["firstName"] }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Last Name" prop="lastName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["lastName"] }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Label" prop="label">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["label"] }}
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="card-body col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+      style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px"
+      *ngIf="userStatus$ | progress | async as payload"
+    >
+      <div
+        class="card box"
+        style="
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        "
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+      >
+        <!-- <strong
+            class="card-header"
+            style="font-weight: bolder; font-size: 1.3em"
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif',
+              color: '#' + (formColor || 'ff9900')
+            }"
+            >User Status</strong
+          >
+          <br /> -->
+        <app-title
+          class="card-header"
+          title="User Status"
+          size="md"
+        ></app-title>
+        <div class="card-body">
+          <ngx-datatable
+            class="bootstrap table-bordered table-striped table-hover"
+            #companyListTable
+            [rows]="payload.value"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [limit]="10"
+            [columnMode]="'force'"
+            [loadingIndicator]="payload.loading"
+            [rowHeight]="'auto'"
+          >
+            <ngx-datatable-column name="First Name" prop="firstName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["firstName"] }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Last Name" prop="lastName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["lastName"] }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Label" prop="label">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["label"] }}
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
+  </div>
+</div>

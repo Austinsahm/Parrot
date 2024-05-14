@@ -1,0 +1,135 @@
+// div {
+//   font-family: Times New Roman, Times, serif;
+// }
+
+.icon-size {
+  font-size: 1.8em;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.timesNewRoman {
+  font-family: "Times New Roman", Times, serif;
+}
+
+button:hover#submit {
+  background-color: #1f1;
+  font-weight: bolder;
+}
+
+// input {
+//   border: none;
+//   outline: none;
+//   border-bottom: 1px solid black;
+//   border-radius: 0;
+//   background-color: inherit;
+// }
+
+.search {
+  font-size: 36px;
+}
+
+.card {
+  box-shadow: 0 8px 12px 0 rgba(34, 60, 80, 0.16);
+}
+
+.card:hover {
+  transform: scale(1.02);
+  transition: all 0.2s ease-in-out;
+}
+
+.mat-icon-button {
+  width: 17px;
+}
+
+.icon-btn {
+  border: 0;
+  padding: 0;
+  background-color: inherit;
+}
+
+.bg-image {
+  /* The image used */
+  // background-image: url("photographer.jpg");
+
+  /* Add the blur effect */
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Position text in the middle of the page/image */
+.bg-text {
+  // background-color: rgb(0,0,0); /* Fallback color */
+  // background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: rgb(55, 39, 39);
+  font-weight: bold;
+  // border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 50%;
+  padding: 20px;
+  text-align: center;
+}
+
+//   .material-symbols-outlined {
+//     font-variation-settings:
+//     'FILL' 1,
+//     'wght' 700,
+//     'GRAD' 0,
+//     'opsz' 48
+//   }
+
+.spinner {
+  height: 300px;
+  margin-bottom: 1em;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 1002;
+  width: 50vw;
+  height: 15vh;
+}
+
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.logo {
+  margin-left: 10px;
+  margin-top: -5px;
+}
+
+.sig {
+  width: 15px;
+}
+
+.other {
+  width: 60px;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+.humidity {
+  color: blue;
+  width: 10px;
+}

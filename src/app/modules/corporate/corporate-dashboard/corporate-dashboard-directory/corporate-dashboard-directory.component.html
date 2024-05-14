@@ -1,0 +1,65 @@
+<div *ngIf="permission$ | async as payload">
+	<div *ngIf="payload.dashboards.dashboardDesign.menuAccess">
+		<div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+			<div class="row" >
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+					<span style="padding:4px;margin:8px auto; font-size: 1.2em; font-weight: bold;"
+						[ngStyle]="{
+							'background-color': '#' + (formBgColor || 'eee'),
+							'font-family': formFont || 'Times New Roman, Times, serif',
+							'color': '#' + (formColor || 'ff9900')
+						}"
+					>
+						Dashboard Directory
+					</span>
+					<button *ngIf="payload.dashboards.dashboardDesign.creater" class="btn btn-secondary float-end" (click)="goToAddDashboard()" >Add Dashboard</button>
+					<!--<input type="text" class="float-end" placeholder="Search..." [formControl]="searchField" /> -->
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="height: 60vh">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="dashboards$ | progress | async as payload"
+			[ngStyle]="{
+				'background-color': '#' + (formBgColor || 'eee'),
+				'color': '#' + (formColor || 'ff9900'),
+				'font-family': formFont || 'Times New Roman, Times, serif'
+			  }"
+			>
+				<ngx-skeleton-loader *ngIf="payload.loading" [count]="5"></ngx-skeleton-loader>
+				<app-control-error *ngIf="payload.error">{{ payload.error.message }}</app-control-error>
+				<ng-container *ngIf="payload.value"
+			  		
+				>
+					<ngx-datatable class="bootstrap table-bordered table-striped table-hover" #companyListTable
+						[rows]="payload.value" [headerHeight]="50" [footerHeight]="50" [limit]="10" [columnMode]="'force'"
+						[loadingIndicator]="payload.loading" [rowHeight]="'auto'"
+						style="font-size: 15px !important;">
+
+						<ngx-datatable-column name="Dashboard Name" prop="dashboardName">
+							<ng-template let-row="row" ngx-datatable-cell-template>
+								<a href="javascript:void(0);" (click)="openDetails(row)" placement="top"
+									[ngbTooltip]="row.deviceId">
+									{{row['dashboardName']}}
+								</a>
+							</ng-template>
+						</ngx-datatable-column>
+
+						<ngx-datatable-column name="Manufacturer Device ID" prop="manufDeviceId">
+							<ng-template let-row="row" ngx-datatable-cell-template>
+								{{row['manufDeviceId']}}
+							</ng-template>
+						</ngx-datatable-column>
+						
+						<ngx-datatable-column name="Owner" prop="owner">
+							<ng-template let-row="row" ngx-datatable-cell-template>
+								{{row['dashboardOwner']}}
+							</ng-template>
+						</ngx-datatable-column>
+
+					</ngx-datatable>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>

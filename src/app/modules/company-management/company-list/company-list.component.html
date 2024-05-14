@@ -1,0 +1,60 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <!-- <div
+      class=""
+      style="
+        max-width: 1090px;
+      "
+    > -->
+
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <!-- <div class="card-header font-weight-bold" style="font-weight: bolder; font-size: 1.3em;"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }">Company List</div> -->
+
+      <!-- <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> -->
+      <div class="card col-12" style="width: 90vw; overflow-x: hidden">
+        <div class="card-body box">
+          <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="row justify-content-center align-items-center">
+              <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <!-- <span
+            style="font-weight: bold; font-size: 2em; margin-left: 26px"
+          >
+            Company List
+          </span> -->
+                <!-- </div> -->
+
+                <!-- <div class="card-body" style="overflow: auto; border: 1px solid red;"> -->
+                <app-company-vertical-organogram
+                  *ngIf="viewMode === 'ORGANOGRAM_VTC'"
+                  (newCompany)="goToAddCompany()"
+                  (detailCompany)="goToCompanyInformation($event)"
+                ></app-company-vertical-organogram>
+
+                <app-company-organogram
+                  *ngIf="viewMode === 'ORGANOGRAM_HOR'"
+                  (newCompany)="goToAddCompany()"
+                  (detailCompany)="goToCompanyInformation($event)"
+                ></app-company-organogram>
+
+                <app-company-list-table-format
+                  *ngIf="viewMode === 'TABULAR'"
+                  (addCompany)="goToAddCompany()"
+                  (detailCompany)="goToCompanyInformation($event)"
+                ></app-company-list-table-format>
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+  </div>
+</div>

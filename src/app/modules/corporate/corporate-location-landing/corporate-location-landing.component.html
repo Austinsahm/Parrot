@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <!-- <br/>
+    <a [routerLink]="['../']" > Back </a>
+    <br/> -->
+
+  <div class="row justify-content-center align-items-center">
+    <div
+      class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+      *ngIf="location$ | progress | async as payload"
+    >
+      <div
+        class="card"
+        style="
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        "
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+      >
+        <strong
+          class="card-header font-weight-bold"
+          style="font-weight: bolder; font-size: 1.3em"
+          [ngStyle]="{
+            'font-family': formFont || 'Times New Roman, Times, serif',
+            color: '#' + (formColor || 'ff9900')
+          }"
+          >Location Statistics Details</strong
+        >
+        <!-- <app-card title="Location Statistics Details"> -->
+          <!-- <strong>Location Statistics Details</strong> <br/> -->
+          <div class="card-body">
+          <ngx-datatable
+            class="bootstrap table-bordered table-striped table-hover"
+            #companyListTable
+            [rows]="payload.value"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [limit]="10"
+            [columnMode]="'force'"
+            [loadingIndicator]="payload.loading"
+            [rowHeight]="'auto'"
+          >
+            <ngx-datatable-column name="Name" prop="name">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["name"] }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Status" prop="status">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["status"] }}
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        <!-- </app-card> -->
+    </div>
+      </div>
+    </div>
+  </div>
+</div>

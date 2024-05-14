@@ -1,0 +1,81 @@
+:host ::ng-deep .p-organizationchart {
+  .partner {
+    background-color: #e9286f;
+    color: #f5efef;
+    padding: 0.5em 1em;
+    border: 0px;
+  }
+
+  .first {
+    background-color: black;
+    color: #f5efef;
+    padding: 0.5em 1em;
+    border: 0px;
+  }
+
+  .corporate {
+    background-color: #ba2db8;
+    color: #f5efef;
+    padding: 0.5em 1em;
+    border: 0px;
+  }
+
+  .individual {
+    background-color: #2dba34;
+    color: #f5efef;
+    padding: 0.5em 1em;
+    border: 0px;
+  }
+
+  .uncl {
+    background-color: #bab82d;
+    color: #f5efef;
+    padding: 0.5em 1em;
+    border: 0px;
+  }
+
+  .all {
+    background-color: #2dbaa5;
+    color: #f5efef;
+    padding: 0.5em 1em;
+    border: 0px;
+  }
+
+}
+
+.partners {
+  width: 10px;
+  height: 10px;
+  background-color: #e9286f;
+  display: inline-block;
+}
+
+.corporates {
+  width: 10px;
+  height: 10px;
+  background-color: #ba2db8;
+  display: inline-block;
+}
+
+.individuals {
+  width: 10px;
+  height: 10px;
+  background-color: #2dba34;
+  display: inline-block;
+}
+
+.alls {
+  width: 10px;
+  height: 10px;
+  background-color: #2dbaa5;
+  display: inline-block;
+}
+
+.uncls {
+  width: 10px;
+  height: 10px;
+  background-color: #bab82d;
+  display: inline-block;
+}
+
+.ui-treenode-connector-line { margin: 0px -1px 0px 0px!important; padding: 0.1px!important; }

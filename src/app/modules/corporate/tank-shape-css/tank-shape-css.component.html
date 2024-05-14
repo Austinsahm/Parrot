@@ -1,0 +1,68 @@
+<div class="card pointer mb-2">
+  <div class="card-header">
+    <div class="d-flex justify-content-between" style="height: 40px">
+      <span>{{ title }}</span>
+      <div
+        class="d-flex justify-content-center align-items-center float-end bg-icons"
+      >
+        <button
+          mat-icon-button
+          (click)="minimize()"
+          aria-label="Minimize"
+          class="icon-btn"
+        >
+          <mat-icon style="color: black">minimize</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="maximize()"
+          class="icon-btn"
+          aria-label="Maximize"
+        >
+          <mat-icon style="color: black">check_box_outline_blank</mat-icon>
+        </button>
+        <!-- [disabled]="!device.subscrValid" -->
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="menu"
+          class="icon-btn"
+        >
+          <mat-icon style="color: black">more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <!-- <button mat-menu-item (click)="settings(device)">
+                <mat-icon>settings</mat-icon>
+                <span>Settings</span>
+              </button> -->
+          <button mat-menu-item (click)="dataDetails()">
+            <mat-icon>insights</mat-icon>
+            <span>Data Details</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <span class="text">{{ title }}</span>
+    <div class="shape-info">
+      <div class="cylinder" *ngIf="shape === 'Cylinder'">
+        <div class="cylinder-content" #cylinderLevel></div>
+      </div>
+      <div class="rectangle" *ngIf="shape === 'Rectangle'">
+        <div class="rectangle-content" #rectangleLevel></div>
+      </div>
+      <div class="circle" *ngIf="shape === 'Circle'">
+        <div class="circle-content" #circleLevel></div>
+      </div>
+      <div class="caliberation">
+        <div class="scale" *ngFor="let scale of scales">
+          <!-- <span class="indicator"></span> -->
+          - {{ scale }} mm
+        </div>
+      </div>
+    </div>
+    <span class="text">{{ level.toFixed(2) }} mm</span>
+  </div>
+  <!-- <canvas class="canvas" #canvas style="border: 5px solid red"></canvas> -->
+</div>

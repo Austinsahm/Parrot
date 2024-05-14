@@ -1,0 +1,334 @@
+<div class="container col-md-11" style="margin: 20px auto">
+  <div class="row mb-2">
+    <div class="col-md-2">
+      <mat-card class="sub-card">
+        <div>
+          <mat-card-title
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            {{ session.numCorporate }}
+          </mat-card-title>
+          <mat-card-subtitle
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            Corporate Clients
+          </mat-card-subtitle>
+        </div>
+        <div>
+          <mat-icon class="sub-cards-icon">corporate_fare</mat-icon>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="col-md-2">
+      <mat-card class="sub-card">
+        <div>
+          <mat-card-title
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            {{ session.numIndividual }}
+          </mat-card-title>
+          <mat-card-subtitle
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            Individual Clients
+          </mat-card-subtitle>
+        </div>
+        <div>
+          <mat-icon class="sub-cards-icon">perm_identity</mat-icon>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="col-md-2">
+      <mat-card class="sub-card">
+        <div>
+          <mat-card-title
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            {{ session.numPartner }}
+          </mat-card-title>
+          <mat-card-subtitle
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            Partners
+          </mat-card-subtitle>
+        </div>
+        <div>
+          <mat-icon class="sub-cards-icon">group_work</mat-icon>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="col-md-2">
+      <mat-card class="sub-card">
+        <div>
+          <mat-card-title
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            {{ totalInactiveDevice }}
+          </mat-card-title>
+          <mat-card-subtitle
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            Total Inactive Devices
+          </mat-card-subtitle>
+        </div>
+        <div>
+          <mat-icon class="sub-cards-icon">notifications_off</mat-icon>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="col-md-2">
+      <mat-card class="sub-card">
+        <div>
+          <mat-card-title
+          
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            {{ totalActiveDevice }}
+          </mat-card-title>
+          <mat-card-subtitle
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            Total Active Devices
+          </mat-card-subtitle>
+        </div>
+        <div>
+          <mat-icon class="sub-cards-icon">notifications</mat-icon>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="col-md-2">
+      <mat-card class="sub-card">
+        <div>
+          <mat-card-title
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            {{ totalDevice }}
+          </mat-card-title>
+          <mat-card-subtitle
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif '
+            }"
+          >
+            Overall Number of Devices
+          </mat-card-subtitle>
+        </div>
+        <div>
+          <mat-icon class="sub-cards-icon">apps</mat-icon>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <mat-card
+        class="main-card"
+        style="margin-left: 15%"
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif '
+        }"
+      >
+        <div style="height: 45vh">
+          <app-ignite-bar-chart
+            [data]="barChartData"
+            height="40vh"
+            [brushes]="chartColours"
+          ></app-ignite-bar-chart>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="col-md-6">
+      <mat-card
+        class="main-card"
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif '
+        }"
+      >
+        <div style="height: 45vh">
+          <app-pie-guage-chart
+            [data]="pieChartData"
+            height="40vh"
+            [brushes]="chartColours"
+          ></app-pie-guage-chart>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="cards"> 
+    <mat-card class="main-card">
+        <div>
+          <div width="75%" height="75%">
+            <canvas width="10" height="10" baseChart 
+                [data]="barChartData"
+                [labels]="barChartLabels"
+                [chartType]="barChartType"
+                [colors] = "backgroundColor"
+            >
+            </canvas>
+        </div>
+      </div>
+  </mat-card>
+
+  <mat-card class="main-card">
+    <div>
+      <div width="75%" height="75%">
+          <canvas width="10" height="10" baseChart 
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              [colors] = "backgroundColor"
+          >
+          </canvas>
+      </div>
+    </div>
+  </mat-card>
+
+    <div class="sub-cards">
+
+      <mat-card class="sub-card">
+        <div>
+        <mat-card-title>  {{ session.numCorporate }} </mat-card-title>
+          <mat-card-subtitle> Corporate Clients </mat-card-subtitle>
+        </div>
+        <div>
+          <mat-icon class="sub-cards-icon" >corporate_fare</mat-icon>
+          </div>          
+      </mat-card>
+
+      <mat-card class="sub-card">
+        <div>
+        <mat-card-title>  {{ session.numIndividual }} </mat-card-title>
+          <mat-card-subtitle> Individual Clients </mat-card-subtitle>
+        </div>
+        <div>
+        <mat-icon class="sub-cards-icon">perm_identity</mat-icon>
+        </div>
+      </mat-card>
+
+      <mat-card class="sub-card">
+        <div>
+        <mat-card-title>  {{ session.numPartner }} </mat-card-title>
+          <mat-card-subtitle> Partners </mat-card-subtitle>
+        </div>
+        <div>
+        <mat-icon class="sub-cards-icon">group_work</mat-icon>
+        </div>
+      </mat-card>
+
+      <mat-card class="sub-card">
+        <div>
+        <mat-card-title>  {{ totalInactiveDevice}} </mat-card-title>
+          <mat-card-subtitle> Total Inactive Devices </mat-card-subtitle>
+        </div>
+        <div>
+        <mat-icon class="sub-cards-icon">notifications_off</mat-icon>
+        </div>
+      </mat-card>
+
+      <mat-card class="sub-card">
+        <div>
+        <mat-card-title>  {{ totalActiveDevice}} </mat-card-title>
+          <mat-card-subtitle> Total Active Devices </mat-card-subtitle>
+        </div>
+        <div>
+        <mat-icon class="sub-cards-icon">notifications</mat-icon>
+        </div>
+      </mat-card>
+
+      <mat-card class="sub-card">
+        <div>
+        <mat-card-title>  {{ totalDevice}} </mat-card-title>
+          <mat-card-subtitle> Overall Number of Devices </mat-card-subtitle>
+        </div>
+        <div>
+        <mat-icon class="sub-cards-icon">apps</mat-icon>
+        </div>
+      </mat-card>
+    </div>
+</div> -->
+
+<!-- 
+<br/><br/>
+<div class="row">
+
+  <div class="col-md-1"></div>
+
+  <div class="col-md-3">
+    <div style="max-width: 50em; margin: 3em auto;">
+      <h4>Number of Partners = {{ session.numPartner }}</h4>
+      <h4>Number of Corporate Clients = {{ session.numCorporate }}</h4>
+      <h4>Number of Individual Clients = {{ session.numIndividual }}</h4>
+      <h4>Total Inactive Devices = {{ totalInactiveDevice}}</h4>
+      <h4>Total Active Devices = {{ totalActiveDevice}}</h4>
+      <h4>Overall Number of Devices = {{ totalDevice}}</h4>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div width="50px" height="50px">
+        <canvas width="10" height="10" baseChart 
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [colors] = "backgroundColor"
+        >
+        </canvas>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+      <div width="50px" height="50px">
+        <canvas width="10" height="10" baseChart 
+            [data]="barChartData"
+            [labels]="barChartLabels"
+            [chartType]="barChartType"
+            [colors] = "backgroundColor"
+        >
+        </canvas>
+    </div>
+  </div>
+
+  <div class="col-md-1"></div>
+
+</div>
+
+<br/><br/>
+
+<div class="text-center font-weight-bold">
+  <div>
+    GreenSky is conceived to take necessary actions when needed to build a better work
+  </div>
+  <div>
+    Ensure nothing misses out: identify, track, monitor
+  </div>
+</div>  -->

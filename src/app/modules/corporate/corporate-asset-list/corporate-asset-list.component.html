@@ -1,0 +1,92 @@
+<div class="px-3"><app-title [title]="smartHome?'Assets':'Asset Directory'" size="lg"></app-title>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="!smartHome">
+  <div class="row align-items-center" *ngIf="permission$ | async as payload">
+    <div class="col-6">
+      <form class="nosubmit">
+        <input
+          type="text"
+          [formControl]="searchField"
+          style="padding: 4px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px"
+          placeholder="Search..."
+          class="nosubmit"
+        />
+      </form>
+    </div>
+    <div class="col-6">
+      <button
+        *ngIf="payload.setup.asset.creater"
+        class="float-end"
+        (click)="addAsset()"
+        [ngStyle]="{
+          backgroundColor: '#' + (primaryColour || '3D95F7'),
+          width: '10em',
+          color: '#ffffff',
+          fontSize: '16px',
+          border: '0',
+          borderRadius: '10px',
+          height: '35px'
+        }"
+      >
+        Add Asset
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div
+    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+    *ngIf="assets$ | progress | async as payload"
+  >
+    <ngx-datatable
+      class="bootstrap table-bordered table-striped table-hover"
+      #assetsListTable
+      [rows]="payload.value"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [limit]="10"
+      [loadingIndicator]="payload.loading"
+      [columnMode]="'force'"
+      [rowHeight]="'auto'"
+      style="font-size: 15px !important"
+    >
+      <ngx-datatable-column name="Asset" prop="assetName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <a
+            href="javascript:void(0);"
+            (click)="goToAssetDetail(row)"
+            placement="top"
+            [ngbTooltip]="row.assetId"
+          >
+            {{ row["assetName"] }}
+          </a>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Organization" prop="companyName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row["company"] }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Asset Type" prop="assetTypeName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row["assetType"] }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Location" prop="locationName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row["location"] }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Status" prop="statusName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row["status"] }}
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>
+</div>

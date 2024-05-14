@@ -1,0 +1,189 @@
+// * {
+//   font-family: Times New Roman, Times, serif;
+// }
+.input-icons i {
+  position: absolute;
+}
+
+.icon {
+  padding: 10px;
+  min-width: 40px;
+}
+
+.alert {
+  padding: 0px;
+  margin-bottom: 0px;
+  background-color: transparent;
+  color: red;
+  border: none;
+  left: 0%;
+  right: 83.02%;
+  top: 0%;
+  bottom: 91.33%;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13.7333px;
+  line-height: 16px;
+}
+
+.login-form {
+  background-color: #ffffff;
+  padding: 60px;
+  width: 60%;
+  margin: auto;
+  clear: both;
+}
+
+.login-form label {
+  margin-bottom: 15px;
+}
+
+.login-form input {
+  border-bottom: 1px solid black;
+  border-radius: 5px;
+}
+
+.login-form input:focus {
+  outline: none;
+  border: 1px solid #2fd5b4;
+}
+
+.login-form div a:hover {
+  color: #dab5ff;
+}
+
+.login-form div a {
+  color: #ff1010;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: All 0.3s;
+}
+
+.login {
+  padding-top: 5em;
+}
+
+.mt90 {
+  margin-top: 90px;
+}
+
+.login-background {
+  background-image: url("http://test.datanucleusinc.com:8080/logos/worldmap.png");
+  height: auto;
+  max-width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+button#submit:hover {
+  // background-color: #1f1;
+  font-weight: bolder;
+}
+
+button#submit {
+  width: 100%;
+  background-color: #3d95f7;
+  height: calc(1.5em + 1rem + 2px);
+  outline: none;
+  color: white;
+  font-family: Roboto;
+}
+
+input {
+  font-family: Roboto;
+  font-size: 13.7333px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.white {
+  background-color: #ffffff;
+  @media (min-width: 700px) {
+    margin-right: 21vh;
+  }
+}
+
+.forget_passord {
+  color: #3d95f7 !important;
+  left: 67.71%;
+  right: 0.33%;
+  top: 92.56%;
+  bottom: -0.14%;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13.7333px;
+  line-height: 14px;
+  text-decoration: none;
+}
+
+.forget_passord:hover {
+  font-weight: bolder;
+}
+
+.bg-image {
+  /* The image used */
+  // background-image: url("Smart-City.jpg");
+
+  /* Add the blur effect */
+  // filter: blur(1px);
+  // -webkit-filter: blur(1px);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-text {
+  // background-color: rgb(0,0,0); /* Fallback color */
+  // background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  // color: rgb(55, 39, 39);
+  // font-weight: bold;
+  // border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  // width: 60%;
+  // padding: 20px;
+  // text-align: center;
+}
+
+mat-form-field {
+  width: 100%;
+  // height: 90px;
+  // border: 1px solid yellow;
+}
+
+// mat-form-field input {
+//   border: 1px solid green;
+//   margin: 0px;
+// }
+
+.my-form-field .mat-form-field-appearance-outline .mat-form-field-infix {
+  // margin-bottom: -1.25em;
+  // border: 1px solid yellow  ;
+  // height: 60px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--input-border) !important;
+}

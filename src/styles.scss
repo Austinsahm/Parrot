@@ -1,0 +1,202 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$greenSkyUI-primary: mat.define-palette(mat.$indigo-palette);
+$greenSkyUI-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$greenSkyUI-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$greenSkyUI-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $greenSkyUI-primary,
+      accent: $greenSkyUI-accent,
+      warn: $greenSkyUI-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($greenSkyUI-theme);
+
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.min.css";
+@import "~ngx-toastr/toastr.css";
+@import "~@swimlane/ngx-datatable/index.css";
+@import "~@swimlane/ngx-datatable/themes/bootstrap.scss";
+@import "~@swimlane/ngx-datatable/assets/icons.css";
+@import "~primeng/resources/primeng.min.css";
+@import "../node_modules/primeng/resources/themes/lara-dark-teal/theme.css";
+@import "../node_modules/primeicons/primeicons.css";
+
+label {
+  font-weight: bold !important;
+}
+
+@media print {
+  .print-target {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 15px;
+    font-size: 14px;
+    line-height: 18px;
+    z-index: 9999999;
+  }
+}
+html,
+body {
+  height: 100%;
+}
+* {
+  margin: 0;
+  // font-family: Roboto, Lato, "Open Sans";
+}
+
+.mat-content {
+  overflow: visible !important;
+}
+
+.mat-drawer-container {
+  background-color: inherit !important;
+}
+
+mat-icon {
+  color: #1976d2;
+}
+
+.wifi-count {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50%;
+  border: 1px solid #0000ff;
+  text-align: center;
+  color: #fff;
+  background-color: #0000ff;
+  font-size: 12px;
+}
+
+.sigfox-count {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50%;
+  border: 1px solid #ff0000;
+  text-align: center;
+  color: #fff;
+  background-color: #ff0000;
+  font-size: 12px;
+}
+
+.gps-count {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50%;
+  border: 1px solid #00ff00;
+  text-align: center;
+  color: #fff;
+  background-color: #00ff00;
+  font-size: 12px;
+}
+
+.cdk-overlay-container {
+  z-index: 1127;
+}
+
+.p-tree-horizontal .p-treenode-content {
+  padding: 0 !important;
+}
+
+.p-tree.p-tree-horizontal .p-treenode .p-treenode-content {
+  border: 0px !important;
+  background-color: none !important;
+}
+
+.p-tree.p-tree-horizontal .p-treenode .p-treenode-content .p-tree-toggler {
+  margin-right: 0 !important;
+}
+
+.p-tooltip .p-tooltip-text {
+  padding: 0px !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.p-tree.p-tree-horizontal .p-treenode:first-child {
+  padding: 0.25rem 2.5rem 0.25rem 0 !important;
+}
+
+.p-tree.p-tree-horizontal .p-treenode .p-treenode-content .p-tree-toggler {
+  display: none !important;
+}
+
+.p-organizationchart
+  .p-organizationchart-node-content.p-organizationchart-selectable-node:not(
+    .p-highlight
+  ):hover {
+  background: unset !important;
+  color: unset !important;
+}
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+button[title="Stop drawing"] {
+  display: none !important;
+}
+
+.fpe-info-window__content {
+  overflow: auto !important;
+}
+
+.animate {
+  stroke-dasharray: 210;
+  stroke-dashoffset: 210;
+  animation: line-animate 10s forwards infinite;
+}
+
+@keyframes line-animate {
+  to {
+    stroke-dasharray: 0;
+  }
+}
+
+.draggable {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.draggable:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+
+.fp-icon_selected {
+  background-color: #45aa67;
+}
+
+
+.mat-form-field-wrapper {
+  padding-bottom: 0.75em;
+}

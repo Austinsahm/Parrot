@@ -1,0 +1,38 @@
+<div
+  class="container sample"
+  style="font-weight: bolder; font-size: 1.3em"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <div class="options vertical">
+    <span id="legendTitle">{{ data[0]?.attribute }}</span>
+    <br />
+    <app-combo-select-field
+      placeholder="Chart Type"
+      [options]="chartOptions"
+      [whiteLabel]="true"
+      (selectionChange)="changeChart($event)"
+    ></app-combo-select-field>
+    <!-- <igx-legend #legend orientation="horizontal"></igx-legend> -->
+  </div>
+</div>
+<div class="card-body">
+  <div class="container">
+    <igx-category-chart
+      height="50vh"
+      width="100%"
+      [dataSource]="arr"
+      [chartType]="chartType"
+      xAxisTitle="Time"
+      [yAxisTitle]="data[0].attribute"
+      [transitionInDuration]="2000"
+      isTransitionInEnabled="true"
+      [transitionInMode]="'SweepFromLeft'"
+      [brushes]="brushes"
+    >
+    </igx-category-chart>
+  </div>
+</div>
+
+<!-- [legend]="legend" -->

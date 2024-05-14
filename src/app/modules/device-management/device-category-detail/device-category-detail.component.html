@@ -1,0 +1,520 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <div
+        class="card col-12"
+        [ngStyle]="{
+          border: '1px solid ' + formBgColor,
+          'background-color': formBgColor,
+          color: formFontColor || 'black',
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+      >
+        <div class="card-body box" style="overflow: auto">
+          <ng-container *ngIf="source$ | progress | async as payload">
+            <ngx-skeleton-loader
+              *ngIf="payload.loading"
+              [count]="5"
+            ></ngx-skeleton-loader>
+            <!-- <p *ngIf="payload.error" style="color: red">
+              {{ payload.error.message }}
+            </p> -->
+            <p *ngIf="payload.error" style="color: red">Unknown Error</p>
+
+            <ng-container *ngIf="payload.value">
+              <div class="container-fluid">
+                <div
+                  class="card"
+                  [ngStyle]="{
+                    border: '1px solid ' + formBgColor,
+                    'background-color': formBgColor,
+                    color: formFontColor || 'black',
+                    'font-family': formFont || 'Times New Roman, Times, serif'
+                  }"
+                >
+                  <!-- <div
+                    class="card-header font-weight-bold"
+                    style="font-weight: bolder; font-size: 1.3em"
+                    [ngStyle]="{
+                      'font-family': formFont || 'Times New Roman, Times, serif',
+                      color: '#' + (formColor || 'ff9900')
+                    }"
+                  >
+                    Company Device Category
+                  </div> -->
+                  <app-title
+                    class="card-header"
+                    title="Company Device Category"
+                    size="lg"
+                  ></app-title>
+                  <div class="card-body">
+                    <form [formGroup]="deviceTypeForm">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                      >
+                        <div class="row" *ngIf="!editMode">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2"
+                            *ngIf="permission$ | async as payload"
+                          >
+                            <!-- <button
+                              (click)="edit()"
+                              *ngIf="
+                                payload.deviceManagement.deviceCategory.updater
+                              "
+                              class="btn btn-outline-secondary col-md-6 col-xl-4 col-lg-4 float-end"
+                            >
+                              Edit
+                            </button> -->
+                            <button
+                              *ngIf="
+                                payload.deviceManagement.deviceCategory.updater
+                              "
+                              class="float-end"
+                              [ngStyle]="{
+                                backgroundColor: '#ffffff',
+                                width: '10em',
+                                color: '#' + (primaryColour || '3D95F7'),
+                                fontSize: '16px',
+                                border:
+                                  '1px solid #' + (primaryColour || '3D95F7'),
+                                borderRadius: '10px',
+                                height: '35px'
+                              }"
+                              (click)="edit()"
+                            >
+                              Edit
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> -->
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                          >
+                            <div class="row mb-4">
+                              <div
+                                *ngIf="!editMode"
+                                class="col-xs-6 col-md-3 col-lg-3 col-xl-3 align-self-end"
+                              >
+                                <label class="form-check-label">Name</label>
+                                <!-- <label *ngIf="editMode" style="color: red"
+                                  >*</label
+                                > -->
+                              </div>
+                              <div *ngIf="!editMode" class="col-xs-6 col-md-3">
+                                <span>{{
+                                  payload.value.category?.deviceCategName
+                                }}</span>
+                              </div>
+
+                              <ng-container *ngIf="editMode">
+                                <mat-form-field
+                                  appearance="outline"
+                                  class="col-xs-12 col-md-6"
+                                >
+                                  <mat-label
+                                    [ngStyle]="{
+                                      color: formFontColor || 'black',
+                                      'font-family':
+                                        formFont ||
+                                        'Times New Roman, Times, serif'
+                                    }"
+                                    >Name</mat-label
+                                  >
+                                  <input
+                                    matInput
+                                    class=""
+                                    placeholder="Name"
+                                    formControlName="deviceCategName"
+                                    [ngStyle]="{
+                                      color: formFontColor || 'black',
+                                      'background-color': formBgColor
+                                    }"
+                                  />
+                                </mat-form-field>
+
+                                <app-control-error
+                                  *ngIf="
+                                    deviceTypeForm.get('deviceCategName')
+                                      .invalid &&
+                                    deviceTypeForm.get('deviceCategName')
+                                      .touched
+                                  "
+                                >
+                                  <span
+                                    *ngIf="
+                                      deviceTypeForm.get('deviceCategName')
+                                        .errors.required
+                                    "
+                                    >This field is required.</span
+                                  >
+                                </app-control-error>
+                              </ng-container>
+                              <!-- </div> -->
+                              <!-- </div>
+                            <div class="row mb-4"> -->
+                              <div
+                                *ngIf="!editMode"
+                                class="col-xs-6 col-md-3 col-lg-3 col-xl-3 align-self-end"
+                              >
+                                <label class="form-check-label"
+                                  >Description</label
+                                >
+                                <!-- <label *ngIf="editMode" style="color: red"
+                                  >*</label
+                                > -->
+                              </div>
+                              <div *ngIf="!editMode" class="col-xs-6 col-md-3">
+                                <span>{{
+                                  payload.value.category?.deviceCategDesc
+                                }}</span>
+                              </div>
+                              <ng-container *ngIf="editMode">
+                                <mat-form-field
+                                  appearance="outline"
+                                  class="col-xs-12 col-md-6"
+                                >
+                                  <mat-label
+                                    [ngStyle]="{
+                                      color: formFontColor || 'black',
+                                      'font-family':
+                                        formFont ||
+                                        'Times New Roman, Times, serif'
+                                    }"
+                                    >Description</mat-label
+                                  >
+                                  <input
+                                    matInput
+                                    class=""
+                                    placeholder="Description"
+                                    formControlName="deviceCategDesc"
+                                    [ngStyle]="{
+                                      color: formFontColor || 'black',
+                                      'background-color': formBgColor
+                                    }"
+                                  />
+                                </mat-form-field>
+
+                                <app-control-error
+                                  *ngIf="
+                                    deviceTypeForm.get('deviceCategDesc')
+                                      .invalid &&
+                                    deviceTypeForm.get('deviceCategDesc')
+                                      .touched
+                                  "
+                                >
+                                  <span
+                                    *ngIf="
+                                      deviceTypeForm.get('deviceCategDesc')
+                                        .errors.required
+                                    "
+                                    >This field is required.</span
+                                  >
+                                </app-control-error>
+                              </ng-container>
+                              <!-- </div> -->
+                            </div>
+
+                            <div class="row mb-4">
+                              <div
+                                *ngIf="!editMode"
+                                class="col-xs-6 col-md-3 col-lg-3 col-xl-3 align-self-end"
+                              >
+                                <label class="form-check-label"
+                                  >Organization</label
+                                >
+                              </div>
+                              <div *ngIf="!editMode" class="col-xs-6 col-md-3">
+                                <span *ngIf="!editMode">{{
+                                  payload.value.category?.companyName
+                                }}</span>
+                              </div>
+                              <ng-container *ngIf="editMode">
+                                <app-company-field
+                                  [subdomain]="subdomain"
+                                  placeholder="Select organization..."
+                                  formControlName="companyId"
+                                  [selectable]="true"
+                                  class="col-xs-12 col-md-6"
+                                  [defaultValue]="
+                                    deviceTypeForm.get('companyId').value
+                                  "
+                                  (selectionChange)="
+                                    deviceTypeForm.patchValue({
+                                      companyId: $event.value
+                                    })
+                                  "
+                                >
+                                </app-company-field>
+                                <app-control-error
+                                  *ngIf="
+                                    deviceTypeForm.get('companyId').invalid &&
+                                    deviceTypeForm.get('companyId').touched
+                                  "
+                                >
+                                  <span
+                                    *ngIf="
+                                      deviceTypeForm.get('companyId').errors
+                                        .required
+                                    "
+                                    >This field is required.</span
+                                  >
+                                </app-control-error>
+                              </ng-container>
+                              <!-- </div> -->
+                              <!-- </div>
+
+                            <div class="row mb-4"> -->
+                              <div
+                                *ngIf="!editMode"
+                                class="col-xs-6 col-md-3 col-lg-3 col-xl-3 align-self-end"
+                              >
+                                <label class="form-check-label"
+                                  >Device Network</label
+                                ><label *ngIf="editMode" style="color: red"
+                                  >*</label
+                                >
+                              </div>
+                              <div *ngIf="!editMode" class="col-xs-6 col-md-3">
+                                <span>{{
+                                  payload.value.category?.networkName
+                                }}</span>
+                              </div>
+
+                              <mat-form-field
+                                *ngIf="editMode"
+                                appearance="outline"
+                                class="col-xs-12 col-md-6"
+                              >
+                                <mat-label
+                                  [ngStyle]="{
+                                    color: formFontColor || 'black',
+                                    'font-family':
+                                      formFont || 'Times New Roman, Times, serif'
+                                  }"
+                                  >Device Network</mat-label
+                                >
+                                <input
+                                  matInput
+                                  class=""
+                                  readonly
+                                  disabled
+                                  placeholder="Device Network"
+                                  [value]="payload.value.category?.networkName"
+                                  [ngStyle]="{
+                                    color: formFontColor || 'black',
+                                    'background-color': formBgColor
+                                  }"
+                                />
+                              </mat-form-field>
+
+                              <!-- <ng-container *ngIf="editMode">
+                                  <app-device-network-field
+                                    formControlName="networkId"
+                                    placeholder="Select network..."
+                                    [selectable]="true"
+                                    [disabled]="true"
+                                  >
+                                  </app-device-network-field>
+                                  <app-control-error
+                                    *ngIf="
+                                      deviceTypeForm.get('networkId')
+                                        .invalid &&
+                                      deviceTypeForm.get('networkId')
+                                        .touched
+                                    "
+                                  >
+                                    <span
+                                      *ngIf="
+                                        deviceTypeForm.get('networkId')
+                                          .errors.required
+                                      "
+                                      >This field is required.</span
+                                    >
+                                  </app-control-error>
+                                </ng-container> -->
+                              <!-- </div> -->
+                            </div>
+                          </div>
+
+                          <!-- </div> -->
+                        </div>
+                        <!--
+              <div class="row">
+                <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                  <button (click)="cancel()"
+                          class="btn btn-danger">Cancel</button>
+                  <button *ngIf="editMode" [disabled]="!deviceTypeForm.valid" (click)="submit()"
+                          type="submit" class="btn btn-secondary ms-2">Submit</button>
+                </div>
+              </div>-->
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <br />
+                <div
+                  class="card"
+                  [ngStyle]="{
+                    border: '1px solid ' + formBgColor,
+                    'background-color': formBgColor,
+                    color: formFontColor || 'black',
+                    'font-family': formFont || 'Times New Roman, Times, serif'
+                  }"
+                >
+                  <div class="card-body">
+                    <div
+                      class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                    >
+                      <div class="row">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2"
+                        >
+                          <!-- <button
+                            class="btn btn-sm btn-secondary col-md-6 col-xl-4 col-lg-4 float-end p-2"
+                            (click)="addDevice(payload.value.category)"
+                          >
+                            Add Device
+                          </button> -->
+                          <button
+                            class="float-end"
+                            [ngStyle]="{
+                              backgroundColor:
+                                '#' + (primaryColour || '3D95F7'),
+                              width: '12em',
+                              color: '#ffffff',
+                              fontSize: '13px',
+                              border: '0',
+                              borderRadius: '10px',
+                              height: '35px'
+                            }"
+                            (click)="addDevice(payload.value.category)"
+                          >
+                            Add Device
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                        >
+                          <ngx-datatable
+                            class="bootstrap table-bordered table-striped table-hover"
+                            [rows]="payload.value.devices"
+                            [headerHeight]="50"
+                            [footerHeight]="50"
+                            [limit]="10"
+                            [loadingIndicator]="payload.loading"
+                            [columnMode]="'force'"
+                            [rowHeight]="'auto'"
+                          >
+                            <ngx-datatable-column
+                              name="Device ID"
+                              prop="deviceId"
+                            >
+                              <ng-template
+                                let-row="row"
+                                ngx-datatable-cell-template
+                              >
+                                {{ row["manufDeviceId"] }}
+                              </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column
+                              name="Device Name"
+                              prop="deviceName"
+                            >
+                              <ng-template
+                                let-row="row"
+                                ngx-datatable-cell-template
+                              >
+                                {{ row["deviceName"] }}
+                              </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column
+                              name="Actions"
+                              [sortable]="false"
+                            >
+                              <ng-template
+                                let-row="row"
+                                ngx-datatable-cell-template
+                              >
+                                <a
+                                  href="javascript:void(0);"
+                                  (click)="deleteHandler(row)"
+                                  >Delete</a
+                                >
+                              </ng-template>
+                            </ngx-datatable-column>
+                          </ngx-datatable>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="container-fluid">
+                  <div class="row">
+                    <div
+                      class="col"
+                      style="padding: 1em 0"
+                      *ngIf="permission$ | async as payload"
+                    >
+                      <!-- <button class="btn btn-danger" (click)="cancel()">
+                        Cancel
+                      </button> -->
+                      <button
+                        class="ms-4"
+                        [ngStyle]="{
+                          backgroundColor: '#fff',
+                          width: '10em',
+                          color: '#' + (primaryColour || '3D95F7'),
+                          fontSize: '16px',
+                          border: '1px solid #' + (primaryColour || '3D95F7'),
+                          borderRadius: '10px',
+                          height: '35px'
+                        }"
+                        (click)="cancel()"
+                      >
+                        Cancel
+                      </button>
+                      <!-- <button
+                        *ngIf="payload.deviceManagement.deviceCategory.updater"
+                        class="btn btn-success ms-2 float-end"
+                        (click)="submit()"
+                      >
+                        Submit
+                      </button> -->
+                      <button
+                        class="float-end me-4"
+                        *ngIf="payload.deviceManagement.deviceCategory.updater"
+                        [ngStyle]="{
+                          backgroundColor: '#' + (primaryColour || '3D95F7'),
+                          width: '10em',
+                          color: '#ffffff',
+                          fontSize: '16px',
+                          border: '0',
+                          borderRadius: '10px',
+                          height: '35px'
+                        }"
+                        (click)="submit()"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

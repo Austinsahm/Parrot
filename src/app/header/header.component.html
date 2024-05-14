@@ -1,0 +1,36 @@
+<ng-container *ngIf="page$ | progress | async as payload">
+  <div class="top-header" [ngStyle]="{'background-color': '#' + (payload.value?.company?.headerColour || '2FD5B4')}">
+    <div class="container">
+      <div class="logo">
+        <a href="javascript:void(0);">
+          <div class="image">
+            <img [src]="payload.value?.company?.logo || 'assets/images/logo.png'" />
+            <br />
+            <strong style="color: white;">{{ payload.value?.company?.companyName }}</strong>
+          </div>
+        </a>
+      </div>
+
+      <div class="info" *ngIf="payload.value?.loggedIn">
+        <div>
+          <span *ngIf="false">{{ payload.value?.user?.companyName }}</span>
+          <span>{{ payload.value?.user?.companyTypeName }} </span>
+          <span>System Administrator</span>
+        </div>
+        <div>{{ payload.value?.user?.firstName }} {{ payload.value?.user?.lastName }} <button
+            class="btn btn-sm btn-outline-primary" (click)="logout()">Logout</button>
+        </div>
+        <div>{{loggedDate | date:'yyyy-MM-dd hh:mm:ss'}}</div>
+        <!--
+        <div>
+          <button class="btn btn-sm btn-outline-primary" (click)="logout()">Logout</button>
+        </div>
+      -->
+      </div>
+      <div class="button" *ngIf="!payload.value?.loggedIn">
+        <button class="btn btn-primary" (click)="login()">Login</button>
+      </div>
+    </div>
+    <h2>Green Sky</h2>
+  </div>
+</ng-container>

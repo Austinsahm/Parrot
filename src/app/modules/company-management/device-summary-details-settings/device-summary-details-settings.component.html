@@ -1,0 +1,153 @@
+<div
+  class="container-fluid"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+  style="border-radius: 10px"
+>
+  <div
+    class="modal-header"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }"
+  >
+    <span
+      >{{ device.companyName }} ({{ device.deviceName }}) ({{
+        device.manufDeviceId
+      }}) > settings</span
+    >
+    <button
+      type="button"
+      class="btn float-end"
+      aria-label="Close"
+      (click)="close()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div
+    class="modal-body"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif'
+    }"
+  >
+    <div
+      class="card"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif'
+      }"
+    >
+      <div
+        class="card-body justify-content-center align-items-center"
+      >
+        <mat-tab-group>
+          <mat-tab label="General"> Content 1 </mat-tab>
+          <mat-tab label="Downlink"> Content 2 </mat-tab>
+          <mat-tab label="Processing Parameters"> Content 3 </mat-tab>
+          <mat-tab label="Custom View">
+            <form
+              class="example-container justify-content-center align-items-center"
+              [formGroup]="options"
+            >
+              <div class="row mb-2 justify-content-center align-items-center">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <mat-form-field
+                    appearance="standard"
+                    [hideRequiredMarker]="hideRequiredControl.value"
+                    [floatLabel]="floatLabelControl.value"
+                  >
+                    <mat-select>
+                      <mat-option>-- None --</mat-option>
+                      <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                    <mat-label>Default view</mat-label>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <mat-form-field
+                    appearance="standard"
+                    [hideRequiredMarker]="hideRequiredControl.value"
+                    [floatLabel]="floatLabelControl.value"
+                  >
+                    <mat-select>
+                      <mat-option>-- None --</mat-option>
+                      <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                    <mat-label>Main key</mat-label>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row mb-2 justify-content-center align-items-center">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <mat-form-field
+                    appearance="standard"
+                    [hideRequiredMarker]="hideRequiredControl.value"
+                    [floatLabel]="floatLabelControl.value"
+                  >
+                    <mat-select>
+                      <mat-option>-- None --</mat-option>
+                      <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                    <mat-label>Default map zoom level</mat-label>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <mat-form-field
+                    appearance="standard"
+                    [hideRequiredMarker]="hideRequiredControl.value"
+                    [floatLabel]="floatLabelControl.value"
+                  >
+                    <mat-select>
+                      <mat-option>-- None --</mat-option>
+                      <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                    <mat-label>Tracing history length</mat-label>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row mb-2 justify-content-center align-items-center">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <mat-form-field
+                    appearance="standard"
+                    [hideRequiredMarker]="hideRequiredControl.value"
+                    [floatLabel]="floatLabelControl.value"
+                  >
+                    <mat-select>
+                      <mat-option>-- None --</mat-option>
+                      <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                    <mat-label>Default chart</mat-label>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <mat-form-field
+                    appearance="standard"
+                    [hideRequiredMarker]="hideRequiredControl.value"
+                    [floatLabel]="floatLabelControl.value"
+                  >
+                    <mat-select>
+                      <mat-option>-- None --</mat-option>
+                      <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                    <mat-label>Dashboard data</mat-label>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+
+            <!-- Content 4 -->
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal-footer"
+  ></div>
+</div>

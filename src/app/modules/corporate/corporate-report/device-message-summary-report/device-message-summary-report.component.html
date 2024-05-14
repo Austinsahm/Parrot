@@ -1,0 +1,70 @@
+<ng-container *ngIf="inFilterMode">
+  <span
+    style="
+      padding: 4px;
+      margin: 8px auto;
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #ff7c21;
+    "
+  >
+    Device Message Summary
+  </span>
+  <div style="border: 1px dashed #ddd; padding: 1em">
+    <app-corporate-device-message-report-form
+      [company]="company"
+      #formElement
+    ></app-corporate-device-message-report-form>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row rowing">
+      <div class="col" style="padding: 1em 0">
+        <button
+          type="button"
+          class="btn btn-danger"
+          aria-label="Close"
+          (click)="cancelHandler()"
+          id="cancel"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-success float-end"
+          (click)="saveHandler(formElement?.form?.value)"
+          id="submit"
+        >
+          Submit
+        </button>
+        <!-- [disabled]="formElement?.form?.invalid || formElement?.form?.pristine" -->
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="container-fluid" *ngIf="!inFilterMode">
+  <ng-container *ngIf="report$ | progress | async as payload">
+    <div class="col clearfix" style="padding: 1em 0" *ngIf="!payload.loading">
+      <button
+        type="button"
+        class="btn btn-secondary float-endms-2"
+        (click)="inFilterMode = true"
+      >
+        Filter
+      </button>
+      <div class="float-end">
+        <app-report-actions
+          report="DeviceMessages"
+          [data]="payload.value"
+        ></app-report-actions>
+      </div>
+    </div>
+
+    <ngx-skeleton-loader
+      [count]="5"
+      *ngIf="payload.loading"
+    ></ngx-skeleton-loader>
+    <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+  </ng-container>
+</div>

@@ -1,0 +1,423 @@
+<div
+  class="modal-header"
+  [ngStyle]="{
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <!-- style="font-weight: bolder; font-size: 1.3em"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: '#' + (formColor || 'ff9900')
+  }" -->
+  <app-title
+    title="{{ company?.companyName | uppercase }} | Customize Screen"
+    size="lg"
+  ></app-title>
+</div>
+<div
+  class="modal-body"
+  [ngStyle]="{
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <div
+    class="card"
+    [ngStyle]="{
+      border: '1px solid ' + formBgColor,
+      'background-color': formBgColor,
+      color: formFontColor || 'black',
+      'font-family': formFont || 'Times New Roman, Times, serif'
+    }"
+  >
+    <div class="card-body">
+      <div *ngIf="!editing">
+        <div class="clearfix">
+          <!-- <button
+            class="btn btn-secondary float-end"
+            (click)="editing = !editing"
+          >
+            Edit
+          </button> -->
+          <button
+            class="float-end"
+            [ngStyle]="{
+              backgroundColor: '#ffffff',
+              width: '10em',
+              color: '#' + (primaryColour || '3D95F7'),
+              fontSize: '16px',
+              border: '1px solid #' + (primaryColour || '3D95F7'),
+              borderRadius: '10px',
+              height: '35px'
+            }"
+            (click)="editing = !editing"
+          >
+            Edit
+          </button>
+        </div>
+        <app-white-label-detail
+          [company]="company"
+          style="width: 100%"
+        ></app-white-label-detail>
+      </div>
+
+      <div *ngIf="editing">
+        <div class="clearfix mb-2">
+          <!-- <button
+            class="btn btn-danger float-end"
+            (click)="editing = !editing"
+            id="cancel"
+          >
+            Cancel
+          </button> -->
+          <button
+            class="float-end"
+            [ngStyle]="{
+              backgroundColor: '#fff',
+              width: '10em',
+              color: '#' + (primaryColour || '3D95F7'),
+              fontSize: '16px',
+              border: '1px solid #' + (primaryColour || '3D95F7'),
+              borderRadius: '10px',
+              height: '35px'
+            }"
+            (click)="editing = !editing"
+          >
+            Cancel
+          </button>
+        </div>
+        <div [formGroup]="form">
+          <div
+            class="container col-sm-12"
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif'
+            }"
+          >
+            <div class="row mb-4" *ngIf="company?.companyUrl">
+              <div class="col-4 bd-label">Company URL</div>
+              <div class="col-8">{{ company?.companyUrl }}</div>
+            </div>
+            <hr />
+            <div class="row mb-4">
+              <!-- <div class="col-4 bd-label">Company Logo</div> -->
+              <div class="col-4">
+                <app-file-input formControlName="logo"></app-file-input>
+                <app-control-error
+                  *ngIf="form.get('logo').invalid && form.get('logo').touched"
+                >
+                  <span *ngIf="form.get('logo').errors.required"
+                    >This field is required.</span
+                  >
+                </app-control-error>
+              </div>
+              <div
+                class="col-md-3"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                <div
+                  class="col-8"
+                  style="align-items: center; justify-content: center"
+                >
+                  <!-- <button
+                    [disabled]="
+                      !(form.get('logo').invalid || form.get('logo').touched)
+                    "
+                    (click)="uploadLogo()"
+                    type="button"
+                    class="btn btn-success submit"
+                  >
+                    Update
+                  </button> -->
+                  <button
+                    [ngStyle]="{
+                      backgroundColor: '#' + (primaryColour || '3D95F7'),
+                      width: '10em',
+                      color: '#ffffff',
+                      fontSize: '16px',
+                      border: '0',
+                      borderRadius: '10px',
+                      height: '35px'
+                    }"
+                    [disabled]="
+                      !(form.get('logo').invalid || form.get('logo').touched)
+                    "
+                    (click)="uploadLogo()"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div class="row mb-3">
+              <div class="col-xs-12 col-sm-6 col-md-4" style="">
+                <div class="row">
+                  <div class="col-8 bd-label title">Company Header Color</div>
+                  <div class="col-4">
+                    <!-- <input ejs-colorpicker mode="palette" type="color" inline="true" id="try" formControlName="headerColour" /> -->
+                    <ngx-colors
+                      ngx-colors-trigger
+                      formControlName="headerColour"
+                    ></ngx-colors>
+                    <app-control-error
+                      *ngIf="
+                        form.get('headerColour').invalid &&
+                        form.get('headerColour').touched
+                      "
+                    >
+                      <span *ngIf="form.get('headerColour').errors.required"
+                        >This field is required.</span
+                      >
+                    </app-control-error>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4" style="">
+                <div class="row">
+                  <div class="col-8 bd-label title">
+                    Company Header Font Color
+                  </div>
+                  <div class="col-4">
+                    <!-- <input type="color" formControlName="headerFontColour" /> -->
+                    <ngx-colors
+                      ngx-colors-trigger
+                      formControlName="headerFontColour"
+                    ></ngx-colors>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4" style="">
+                <div class="row">
+                  <div class="col-8 bd-label title">Company Footer Color</div>
+                  <div class="col-4">
+                    <!-- <input type="color" formControlName="footerColour" /> -->
+                    <ngx-colors
+                      ngx-colors-trigger
+                      formControlName="footerColour"
+                    ></ngx-colors>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="row mb-3">
+              <div class="col-4 bd-label">Company Sidebar Color</div>
+              <div class="col-8">
+                <input type="color" formControlName="sideBarColor" />
+                <app-control-error
+                  *ngIf="
+                    form.get('sideBarColor').invalid &&
+                    form.get('sideBarColor').touched
+                  "
+                >
+                  <span *ngIf="form.get('sideBarColor').errors.required"
+                    >This field is required.</span
+                  >
+                </app-control-error>
+              </div>
+            </div> -->
+
+            <!-- <div class="row mb-3">
+              <div class="col-4 bd-label">Company Body Color</div>
+              <div class="col-8">
+                <input type="color" formControlName="bodyColour" />
+                <app-control-error
+                  *ngIf="
+                    form.get('bodyColour').invalid &&
+                    form.get('bodyColour').touched
+                  "
+                >
+                  <span *ngIf="form.get('bodyColour').errors.required"
+                    >This field is required.</span
+                  >
+                </app-control-error>
+              </div>
+            </div> -->
+
+            <div class="row mb-3">
+              <div class="col-xs-12 col-sm-6 col-md-4" style="">
+                <div class="row">
+                  <div class="col-8 bd-label title">Company Sidebar Color</div>
+                  <div class="col-4">
+                    <!-- <input type="color" formControlName="footerColour" /> -->
+                    <ngx-colors
+                      ngx-colors-trigger
+                      formControlName="sideBarColor"
+                    ></ngx-colors>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4" style="">
+                <div class="row">
+                  <div class="col-8 bd-label title">
+                    Company Footer Font Color
+                  </div>
+                  <div class="col-4">
+                    <!-- <input type="color" formControlName="footerFontColour" /> -->
+                    <ngx-colors
+                      ngx-colors-trigger
+                      formControlName="footerFontColour"
+                    ></ngx-colors>
+                    <app-control-error
+                      *ngIf="
+                        form.get('footerFontColour').invalid &&
+                        form.get('footerFontColour').touched
+                      "
+                    >
+                      <span *ngIf="form.get('footerFontColour').errors.required"
+                        >This field is required.</span
+                      >
+                    </app-control-error>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4" style="">
+                <div class="row">
+                  <div class="col-8 bd-label title">Company Form Color</div>
+                  <div class="col-4">
+                    <!-- <input type="color" formControlName="formColor" /> -->
+                    <ngx-colors
+                      ngx-colors-trigger
+                      formControlName="formColor"
+                    ></ngx-colors>
+                    <app-control-error
+                      *ngIf="
+                        form.get('formColor').invalid &&
+                        form.get('formColor').touched
+                      "
+                    >
+                      <span *ngIf="form.get('formColor').errors.required"
+                        >This field is required.</span
+                      >
+                    </app-control-error>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-xs-12 col-sm-6 col-md-4" style="">
+                <div class="row">
+                  <div class="col-8 bd-label title">
+                    Company Form Font Color
+                  </div>
+                  <div class="col-4">
+                    <!-- <input type="color" formControlName="formFontColor" /> -->
+                    <ngx-colors
+                      ngx-colors-trigger
+                      formControlName="formFontColor"
+                    ></ngx-colors>
+                    <app-control-error
+                      *ngIf="
+                        form.get('formFontColor').invalid &&
+                        form.get('formFontColor').touched
+                      "
+                    >
+                      <span *ngIf="form.get('formFontColor').errors.required"
+                        >This field is required.</span
+                      >
+                    </app-control-error>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <!-- <div class="col-6 bd-label title">
+                    Company Form Font Style
+                  </div> -->
+              <div class="col-md-4">
+                <!-- <input type="color" formControlName="formFontType" /> -->
+                <app-combo-select-field
+                  placeholder="Select Font Style"
+                  [options]="fontStyles"
+                  (selectionChange)="onSelectFontStyle($event)"
+                  [defaultSelection]="form.get('formFontType').value"
+                ></app-combo-select-field>
+                <!-- <app-control-error
+                    *ngIf="
+                      form.get('formFontType').invalid &&
+                      form.get('formFontType').touched
+                    "
+                  >
+                    <span *ngIf="form.get('formFontType').errors.required"
+                      >This field is required.</span
+                    >
+                  </app-control-error> -->
+              </div>
+            </div>
+
+            <div
+              class="row mb-3"
+              [ngStyle]="{
+                border: '1px solid ' + formBgColor,
+                'background-color': formBgColor,
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif'
+              }"
+            >
+              <!-- <div class="col-4 bd-labe float-end"></div> -->
+              <div class="col-sm-12 col-xs-12 col-md-12">
+                <!-- <button
+                  type="button"
+                  (click)="defaultColor()"
+                  class="btn btn-danger submit"
+                >
+                  Reset Default
+                </button> -->
+
+                <button
+                  [ngStyle]="{
+                    backgroundColor: '#fff',
+                    width: '10em',
+                    color: '#' + (primaryColour || '3D95F7'),
+                    fontSize: '16px',
+                    border: '1px solid #' + (primaryColour || '3D95F7'),
+                    borderRadius: '10px',
+                    height: '35px'
+                  }"
+                  (click)="defaultColor()"
+                >
+                  Reset Default
+                </button>
+                <!-- <button
+                  type="button"
+                  (click)="saveHandler()"
+                  class="btn btn-success float-end"
+                >
+                  Update
+                </button> -->
+                <button
+                  class="float-end"
+                  [ngStyle]="{
+                    backgroundColor: '#' + (primaryColour || '3D95F7'),
+                    width: '10em',
+                    color: '#ffffff',
+                    fontSize: '16px',
+                    border: '0',
+                    borderRadius: '10px',
+                    height: '35px'
+                  }"
+                  (click)="saveHandler()"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<!-- <div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <div class="card col-12">
+        <div class="card-body box" style="overflow: auto">
+          <div class="card">
+            <app-title
+              class="card-header"
+              title="User Details"
+              size="lg"
+            ></app-title> -->
+<ng-container *ngIf="source$ | progress | async as payload">
+  <ngx-skeleton-loader
+    *ngIf="payload.loading"
+    [count]="5"
+  ></ngx-skeleton-loader>
+  <app-control-error *ngIf="payload.error">{{
+    payload.error.message
+  }}</app-control-error>
+  <div
+    class="p-3"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: formFontColor || 'black',
+      border: '1px solid ' + formBgColor,
+      'background-color': formBgColor
+    }"
+  >
+    <ng-container *ngIf="payload.value">
+      <div *ngIf="!edit" class="row clearfix" style="margin-bottom: 1em">
+        <div class="col-md-6">
+          <app-title title="User Details" size="md"></app-title>
+        </div>
+        <div class="col-md-6" *ngIf="permission$ | async as payload">
+          <!-- <button
+                      type="button"
+                      *ngIf="payload.security.users.updater"
+                      class="btn btn-outline-secondary col-md-6 col-xl-4 col-lg-4 float-end"
+                      (click)="edit = !edit"
+                    >
+                      Edit
+                    </button> -->
+          <button
+            *ngIf="payload.security.users.updater"
+            class="float-end me-2"
+            [ngStyle]="{
+              backgroundColor: '#ffffff',
+              width: '10em',
+              color: '#' + (primaryColour || '3D95F7'),
+              fontSize: '16px',
+              border: '1px solid #' + (primaryColour || '3D95F7'),
+              borderRadius: '10px',
+              height: '35px'
+            }"
+            (click)="edit = !edit"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+      <app-partner-user-detail-view
+        *ngIf="!edit"
+        [user]="payload.value?.user"
+        [groups]="payload.value?.groups"
+        (onClose)="cancelHandler()"
+      >
+      </app-partner-user-detail-view>
+
+      <app-partner-user-detail-form
+        [company]="company"
+        [user]="payload.value?.user"
+        [groups]="payload.value?.groups"
+        *ngIf="edit"
+        (onCancel)="cancelHandler()"
+        (onSave)="saveHandler($event)"
+        (onGroupChanged)="groupsChangedHandler($event)"
+      >
+      </app-partner-user-detail-form>
+    </ng-container>
+  </div>
+</ng-container>
+<!-- </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

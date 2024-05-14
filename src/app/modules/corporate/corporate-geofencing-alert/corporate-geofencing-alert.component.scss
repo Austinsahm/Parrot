@@ -1,0 +1,54 @@
+#map {
+  height: 60vh;
+}
+
+mat-form-field {
+  width: 80%;
+  font-size: small;
+  font-weight: normal;
+}
+
+.center {
+  display: flex;
+  align-content: center;
+}
+
+.search {
+  font-size: 36px;
+}
+
+.arrow-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.arrow-icon > div {
+  margin-left: -1px;
+  margin-top: -3px;
+  transform-origin: center center;
+  font: 12px/1.5 "Helvetica Neue", Times New Roman, Times, serif;
+}
+
+.wifi {
+  height: 5px;
+  width: 5px;
+  background-color: #0000ff;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.gps {
+  height: 5px;
+  width: 5px;
+  background-color: #00ff00;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.sigfox {
+  height: 5px;
+  width: 5px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  display: inline-block;
+}

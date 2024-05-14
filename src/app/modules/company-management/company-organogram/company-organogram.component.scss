@@ -1,0 +1,73 @@
+:host ::ng-deep .p-tree {
+  .partner {
+    background-color: #e9286f;
+    color: #f5efef;
+    padding: 0.5em 1em;
+  }
+
+  .corporate {
+    background-color: #ba2db8;
+    color: #f5efef;
+    padding: 0.5em 1em;
+  }
+
+  .individual {
+    background-color: #2dba34;
+    color: #f5efef;
+    padding: 0.5em 1em;
+  }
+
+  .uncl {
+    background-color: #bab82d;
+    color: #f5efef;
+    padding: 0.5em 1em;
+  }
+
+  .all {
+    background-color: #2dbaa5;
+    color: #f5efef;
+    padding: 0.5em 1em;
+  }
+
+}
+
+.p-tree .p-tree-horizontal .p-treenode .p-treenode-content {
+  border: 0px !important;
+  padding: 0px !important;
+  background-color: none !important;
+}
+
+.partners {
+  width: 5px;
+  height: 5px;
+  background-color: #e9286f;
+  display: inline-block;
+}
+
+.corporates {
+  width: 10px;
+  height: 10px;
+  background-color: #ba2db8;
+  display: inline-block;
+}
+
+.individuals {
+  width: 10px;
+  height: 10px;
+  background-color: #2dba34;
+  display: inline-block;
+}
+
+.alls {
+  width: 10px;
+  height: 10px;
+  background-color: #2dbaa5;
+  display: inline-block;
+}
+
+.uncls {
+  width: 10px;
+  height: 10px;
+  background-color: #bab82d;
+  display: inline-block;
+}

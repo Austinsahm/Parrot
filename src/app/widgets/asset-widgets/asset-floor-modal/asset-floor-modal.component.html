@@ -1,0 +1,24 @@
+<div class="border border-dark">
+  <div
+    class="modal-header fw-bold"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }"
+  >
+    {{ floor.floorName | titlecase }}
+    <button
+      type="button"
+      class="btn-close"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <!-- <app-corporate-floor-plan
+      overview="true"
+      [floorId]="floor.floorId"
+    ></app-corporate-floor-plan> -->
+    <div id="floorPlan" #floorPlan></div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<!-- <div class="file-box" (click)="fileInput.click()" (blur)="_onTouched()">{{ placeholder || 'Click to select a file' }}
+</div> -->
+
+<!-- <input
+  type="file"
+  #fileInput
+  [multiple]="multiple"
+  (change)="selectionHandler()"
+  (blur)="_onTouched()"
+/> -->
+
+<input
+  type="file"
+  class="file-input"
+  #fileUpload
+  [multiple]="multiple"
+  (blur)="_onTouched()"
+  (change)="onFileChange($event)"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: formFontColor || 'black',
+    'background-color': formBgColor,
+    'border-bottom': '1px solid ' + formFontColor
+  }"
+/>
+<mat-form-field
+  class="col-12"
+  appearance="outline"
+  (click)="fileUpload.click()"
+  role="button"
+>
+  <mat-label
+    [ngStyle]="{
+      color: formFontColor || 'black',
+      'font-family': formFont || 'Times New Roman, Times, serif'
+    }"
+    >Logo</mat-label
+  >
+  <mat-hint class="mt-3 p-0">Upload Company Logo </mat-hint>
+  <input
+    matInput
+    readonly
+    (blur)="_onTouched()"
+    [value]="filename || ''"
+    [ngStyle]="{
+      color: formFontColor || 'black',
+      'background-color': formBgColor
+    }"
+    role="button"
+  />
+  <mat-icon
+    matSuffix
+    [ngStyle]="{
+      color: formFontColor || 'black'
+    }"
+    >attach_file</mat-icon
+  >
+</mat-form-field>

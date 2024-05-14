@@ -1,0 +1,72 @@
+<!-- <div *ngIf="permission$ | async as payload"> -->
+<div
+  class="px-3"
+  [ngStyle]="{
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="row mb-3">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+        <app-title title="Geofencing" size="lg"></app-title>
+      </div>
+    </div>
+
+    <!-- <div
+    class="row mb-1 py-1 border border-dark rounded"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }"
+  > -->
+    <app-search-device-geofence
+      *ngIf="selectedTask === 'search'"
+      [taskOptions]="taskOptions"
+      (selectedTask)="onGeofencingTask($event)"
+      [companyId]="companyId"
+      [isDeviceId]="deviceId"
+      [isDeviceCategory]="deviceCategoryId"
+      [deviceIdOptions$]="deviceIdOptions$"
+      [geofenceNameOptions$]="geofenceNameOptions$"
+      (selectedDeviceCategory)="onDeviceCategory($event)"
+      (selectedDeviceId)="onDeviceId($event)"
+    ></app-search-device-geofence>
+
+    <app-trace-device-geofence
+      *ngIf="selectedTask === 'tracing'"
+      [taskOptions]="taskOptions"
+      (selectedTask)="onGeofencingTask($event)"
+      [companyId]="companyId"
+      [isDeviceId]="deviceId"
+      [isDeviceCategory]="deviceCategoryId"
+      [deviceIdOptions$]="deviceIdOptions$"
+      (selectedDeviceCategory)="onDeviceCategory($event)"
+      (selectedDeviceId)="onDeviceId($event)"
+    ></app-trace-device-geofence>
+    <!-- 
+  <app-create-geofence
+    *ngIf="selectedTask === 'create'"
+    [taskOptions]="taskOptions"
+    (selectedTask)="onGeofencingTask($event)"
+    [companyId]="companyId"
+    [isDeviceCategory]="deviceCategoryId"
+    (selectedDeviceCategory)="onDeviceCategory($event)"
+    ></app-create-geofence> -->
+
+    <app-create-edit-geofence
+      *ngIf="selectedTask === 'create'"
+      [taskOptions]="taskOptions"
+      (selectedTask)="onGeofencingTask($event)"
+      [geofenceNameOptions$]="geofenceNameOptions$"
+      [companyId]="companyId"
+      [isDeviceCategory]="deviceCategoryId"
+      (selectedDeviceCategory)="onDeviceCategory($event)"
+    ></app-create-edit-geofence>
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
+  </div>
+</div>

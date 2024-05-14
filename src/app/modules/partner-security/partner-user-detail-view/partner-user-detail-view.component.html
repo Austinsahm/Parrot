@@ -1,0 +1,194 @@
+<!-- <div class="boxing"> -->
+
+<!-- <div class="card-body">
+  <div class="row">
+    <div class="container-fluid" *ngIf="user">
+      <div class="row rowing">
+        <div class="col-5">
+          <strong>First name</strong>
+        </div>
+        <div class="col-7">{{ user.firstName }}</div>
+      </div>
+
+      <div class="row rowing">
+        <div class="col-5">
+          <strong>Last name</strong>
+        </div>
+        <div class="col-7">{{ user.lastName }}</div>
+      </div>
+
+      <div class="row rowing">
+        <div class="col-5">
+          <strong>User Type</strong>
+        </div>
+        <div class="col-7">{{ user.userTypeName }}</div>
+      </div>
+
+      <div class="row rowing">
+        <div class="col-5">
+          <strong>Company</strong>
+        </div>
+        <div class="col-7">{{ user.companyName }}</div>
+      </div>
+
+      <div class="row rowing">
+        <div class="col-5">
+          <strong>Location</strong>
+        </div>
+        <div class="col-7">{{ user.locationName }}</div>
+      </div>
+      <div class="row rowing">
+        <div class="col-5">
+          <strong>Email Address</strong>
+        </div>
+        <div class="col-7">{{ user.emailAddress }}</div>
+      </div>
+      <div class="row rowing">
+        <div class="col-5">
+          <strong>Primary Phone No.</strong>
+        </div>
+        <div class="col-7">{{ user.pryPhoneNo }}</div>
+      </div>
+      <div class="row rowing">
+        <div class="col-5">
+          <strong>Alternate Phone No.</strong>
+        </div>
+        <div class="col-7">{{ user.altPhoneNo }}</div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="row">
+  <div class="container-fluid" *ngIf="user">
+    <div class="row align-items-center">
+      <div class="col-5">
+        <div class="row rowing">
+          <div class="col-4">
+            <strong>First Name</strong>
+          </div>
+          <div class="col-8">{{ user.firstName }}</div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="row rowing">
+          <div class="col-4">
+            <strong>Last Name</strong>
+          </div>
+          <div class="col-8">{{ user.lastName }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-5">
+        <div class="row rowing">
+          <div class="col-4">
+            <strong>Primary Phone No.</strong>
+          </div>
+          <div class="col-8">{{ user.pryPhoneNo }}</div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="row rowing">
+          <div class="col-4">
+            <strong>Alternate Phone No.</strong>
+          </div>
+          <div class="col-8">{{ user.altPhoneNo }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-5">
+        <div class="row rowing">
+          <div class="col-4">
+            <strong>Email Address</strong>
+          </div>
+          <div class="col-8">{{ user.emailAddress }}</div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="row rowing">
+          <div class="col-4">
+            <strong>Location</strong>
+          </div>
+          <div class="col-8">{{ user.locationName }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-5">
+        <div class="row rowing">
+          <div class="col-4">
+            <strong>User Type</strong>
+          </div>
+          <div class="col-8">{{ user.userTypeName }}</div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="row rowing">
+          <div class="col-4">
+            <strong>Company</strong>
+          </div>
+          <div class="col-8">{{ user.companyName }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="groups">
+  <ngx-datatable
+    class="bootstrap table-bordered table-striped table-hover"
+    #companyListTable
+    [rows]="groups"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [limit]="10"
+    [columnMode]="'force'"
+    [loadingIndicator]="false"
+    [rowHeight]="'auto'"
+  >
+    <ngx-datatable-column name="Group Name" prop="roleName">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row["roleName"] }}
+        <!-- <a href="javascript:void(0);">
+                    {{ row['roleName'] }}
+                </a> -->
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Status" prop="groupStatusName">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row["groupStatusName"] }}
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</ng-container>
+
+<div class="container-fluid">
+  <div class="row rowing">
+    <div class="col" style="padding: 1em 0">
+      <button
+        [ngStyle]="{
+          backgroundColor: '#fff',
+          width: '10em',
+          color: '#' + (primaryColour || '3D95F7'),
+          fontSize: '16px',
+          border: '1px solid #' + (primaryColour || '3D95F7'),
+          borderRadius: '10px',
+          height: '35px'
+        }"
+        (click)="onClose.emit()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

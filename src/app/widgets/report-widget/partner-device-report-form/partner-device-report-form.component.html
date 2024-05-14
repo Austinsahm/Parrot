@@ -1,0 +1,69 @@
+<div [formGroup]="form">
+  <div class="row mb-3">
+    <label class="col-sm-3 col-form-label"> Device Category</label>
+    <div class="col-sm-4">
+      <app-device-category-field
+        [subdomain]="company?.companyId"
+        (selectionChange)="changeDeviceCategoryId($event)"
+        placeholder="Select Category"
+        [selectable]="selectable"
+    ></app-device-category-field>
+    </div>
+  </div>
+
+  <div class="row align-items-center">
+    <label class="col-sm-3 col-form-label">Device</label>
+    <div class="col-sm-4" *ngIf="!devCat; else category">
+      <app-dashboard-device-field
+        (selectionChange)="changeDeviceId($event)"
+        placeholder="Device"
+        [selectable]="selectable"
+        
+      >
+    </app-dashboard-device-field>
+    </div>
+    <ng-template #category>
+        <div
+          class="col-sm-6 col-md-4 col-lg-3 pe-0"
+          *ngIf="deviceIdOptions$ | progress | async as payload"
+        >
+          <app-combo-select-field
+            placeholder="Device"
+            [options]="payload.value"
+            [loading]="payload.loading"
+            (selectionChange)="changeDeviceId($event)"
+          >
+          </app-combo-select-field></div
+      ></ng-template>
+  </div>
+
+  <div class="row mb-3 align-items-center">
+    <label class="col-sm-3 col-form-label">Date</label>
+    <div class="col-sm-4">
+      <mat-form-field
+        appearance="standard"
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+      >
+        <mat-label>Date range</mat-label>
+        <mat-date-range-input [max]="today" [rangePicker]="picker">
+          <input
+            matStartDate
+            readonly
+            formControlName="from"
+            placeholder="Start date"
+          />
+          <input
+            matEndDate
+            readonly
+            formControlName="to"
+            placeholder="End date"
+          />
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

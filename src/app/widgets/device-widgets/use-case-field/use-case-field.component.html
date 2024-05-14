@@ -1,0 +1,22 @@
+<ng-container *ngIf="!new; else fine"
+  ><app-combo-box-field
+    [formControl]="control"
+    *ngIf="useCases$ | progress | async as payload"
+    [options]="payload.value"
+    [placeholder]="placeholder"
+    [loading]="payload.loading"
+  >
+  </app-combo-box-field>
+</ng-container>
+
+<ng-template #fine>
+  <app-combo-select-field
+    [formControl]="control"
+    *ngIf="useCases$ | progress | async as payload"
+    [options]="payload.value"
+    [placeholder]="placeholder"
+    [loading]="payload.loading"
+    [defaultSelection]="defaultValue"
+    (selectionChange)="onSelectionChange($event)"
+  ></app-combo-select-field>
+</ng-template>

@@ -1,0 +1,221 @@
+<ng-container *ngIf="source$ | progress | async as payload">
+    <ngx-skeleton-loader
+      *ngIf="payload.loading"
+      [count]="5"
+    ></ngx-skeleton-loader>
+    <p *ngIf="payload.error" style="color: red">{{ payload.error.message }}</p>
+  
+    <ng-container *ngIf="payload.value">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-header">Company Device Category</div>
+          <div class="card-body">
+            <form [formGroup]="deviceTypeForm">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="row" *ngIf="!editMode">
+                  <div
+                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2"
+                    *ngIf="permission$ | async as payload"
+                  >
+                    <button
+                      (click)="edit()"
+                      *ngIf="payload.deviceManagement.deviceCategory.updater"
+                      class="btn btn-outline-secondary col-md-6 col-xl-4 col-lg-4 float-end"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+  
+                <div class="row" style="max-width: 40em">
+                  <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> -->
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="row mb-4">
+                      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                        <label class="form-check-label">Name</label
+                        ><label *ngIf="editMode" style="color: red">*</label>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <span *ngIf="!editMode">{{
+                          payload.value.category?.deviceCategName
+                        }}</span>
+                        <ng-container *ngIf="editMode">
+                          <input
+                            class="form-control"
+                            placeholder="Name"
+                            formControlName="deviceCategName"
+                          />
+                          <app-control-error
+                            *ngIf="
+                              deviceTypeForm.get('deviceCategName').invalid &&
+                              deviceTypeForm.get('deviceCategName').touched
+                            "
+                          >
+                            <span
+                              *ngIf="
+                                deviceTypeForm.get('deviceCategName').errors
+                                  .required
+                              "
+                              >This field is required.</span
+                            >
+                          </app-control-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                    
+                    <!-- <div class="row mb-4">
+                      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                        <label class="form-check-label">Description</label
+                        ><label *ngIf="editMode" style="color: red">*</label>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <span *ngIf="!editMode">{{
+                          payload.value.category?.deviceCategDesc
+                        }}</span>
+                        <ng-container *ngIf="editMode">
+                          <input
+                            class="form-control"
+                            placeholder="Description"
+                            formControlName="deviceCategDesc"
+                          />
+                          <app-control-error
+                            *ngIf="
+                              deviceTypeForm.get('deviceCategDesc').invalid &&
+                              deviceTypeForm.get('deviceCategDesc').touched
+                            "
+                          >
+                            <span
+                              *ngIf="
+                                deviceTypeForm.get('deviceCategDesc').errors
+                                  .required
+                              "
+                              >This field is required.</span
+                            >
+                          </app-control-error>
+                        </ng-container>
+                      </div>
+                    </div> -->
+  
+                    <div class="row mb-4">
+                      <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                        <label class="form-check-label">Organization</label
+                        ><label *ngIf="editMode" style="color: red">*</label>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <span *ngIf="!editMode">{{
+                          payload.value.category?.companyName
+                        }}</span>
+                        <ng-container *ngIf="editMode">
+                          <app-company-field
+                            [subdomain]="subdomain"
+                            placeholder="Select organization..."
+                            formControlName="companyId"
+                          >
+                          </app-company-field>
+                          <app-control-error
+                            *ngIf="
+                              deviceTypeForm.get('companyId').invalid &&
+                              deviceTypeForm.get('companyId').touched
+                            "
+                          >
+                            <span
+                              *ngIf="
+                                deviceTypeForm.get('companyId').errors.required
+                              "
+                              >This field is required.</span
+                            >
+                          </app-control-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                
+                  </div>
+  
+                  <!-- </div> -->
+                </div>
+                <!--
+                <div class="row">
+                  <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                    <button (click)="cancel()"
+                            class="btn btn-danger">Cancel</button>
+                    <button *ngIf="editMode" [disabled]="!deviceTypeForm.valid" (click)="submit()"
+                            type="submit" class="btn btn-secondary ms-2">Submit</button>
+                  </div>
+                </div>-->
+              </div>
+            </form>
+          </div>
+        </div>
+        <br />
+  
+        <div class="card">
+          <div class="card-body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="row">
+                <div
+                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2"
+                >
+                  <button
+                    class="btn btn-sm btn-secondary col-md-6 col-xl-4 col-lg-4 float-end p-2"
+                    (click)="addDevice(payload.value.category)"
+                  >
+                    Add Device
+                  </button>
+                </div>
+              </div>
+  
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <ngx-datatable
+                    class="bootstrap table-bordered table-striped table-hover"
+                    [rows]="payload.value.devices"
+                    [headerHeight]="50"
+                    [footerHeight]="50"
+                    [limit]="10"
+                    [loadingIndicator]="payload.loading"
+                    [columnMode]="'force'"
+                    [rowHeight]="'auto'"
+                  >
+                    <ngx-datatable-column name="Device ID" prop="deviceId">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row["manufDeviceId"] }}
+                      </ng-template>
+                    </ngx-datatable-column>
+  
+                    <ngx-datatable-column name="Device Name" prop="deviceName">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row["deviceName"] }}
+                      </ng-template>
+                    </ngx-datatable-column>
+  
+                    <ngx-datatable-column name="Actions" [sortable]="false">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <a href="javascript:void(0);" (click)="deleteHandler(row)"
+                          >Delete</a
+                        >
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div
+          class="btn btn-group float-end"
+          *ngIf="permission$ | async as payload"
+        >
+          <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+          <button
+            *ngIf="payload.deviceManagement.deviceCategory.updater"
+            class="btn btn-success ms-2"
+            (click)="submit()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  

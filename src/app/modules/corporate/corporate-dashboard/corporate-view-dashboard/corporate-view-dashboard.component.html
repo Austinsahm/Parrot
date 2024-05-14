@@ -1,0 +1,173 @@
+<div class="col-12">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+      <app-title title="Device Dashboard" size="lg"></app-title>
+      <!--<input type="text" class="float-end" placeholder="Search..." [formControl]="searchField" /> -->
+    </div>
+  </div>
+</div>
+
+<div class="row" style="height: 60vh">
+  <div
+    class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"
+    *ngIf="dashboards$ | progress | async as payload"
+  >
+    <!-- [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        'color': '#' + (formColor || 'ff9900')
+      }" -->
+    <ngx-skeleton-loader
+      *ngIf="payload.loading"
+      [count]="5"
+    ></ngx-skeleton-loader>
+    <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+    <ng-container *ngIf="payload.value">
+      <ngx-datatable
+        class="bootstrap table-bordered table-striped table-hover"
+        #companyListTable
+        [rows]="payload.value"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [limit]="10"
+        [columnMode]="'force'"
+        [loadingIndicator]="payload.loading"
+        [rowHeight]="'auto'"
+        style="font-size: 15px !important"
+      >
+        <ngx-datatable-column name="Dashboard Name" prop="dashboardName">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <a
+              href="javascript:void(0);"
+              (click)="openDetails(row)"
+              placement="top"
+              [ngbTooltip]="row.deviceId"
+            >
+              {{ row["dashboardName"] }}
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column
+          name="Manufacturer Device ID"
+          prop="manufDeviceId"
+        >
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row["manufDeviceId"] }}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </ng-container>
+  </div>
+  <div
+    class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8"
+    *ngIf="showChart"
+    [formGroup]="form"
+  >
+    <div
+      class="card"
+      style="border: 1px solid"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: '#' + (formColor || 'ff9900')
+      }"
+    >
+      <div class="card-body">
+        <strong> {{ manufDeviceId }} - {{ deviceName }} </strong>
+
+        <div class="mb-4 mt-4">
+          <label class="form-label">From</label>
+          <div style="display: flex">
+            <app-date-field
+              #fromDate
+              [max]="toDate?.rawValue"
+              formControlName="from"
+              placeholder="From Date"
+            ></app-date-field>
+            <ngb-timepicker
+              class="ms-4"
+              [spinners]="false"
+              [seconds]="true"
+              formControlName="fromTime"
+            ></ngb-timepicker>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">To</label>
+          <div style="display: flex">
+            <app-date-field
+              #toDate
+              [min]="fromDate?.rawValue"
+              formControlName="to"
+              placeholder="To Date"
+            ></app-date-field>
+            <ngb-timepicker
+              class="ms-4"
+              [spinners]="false"
+              [seconds]="true"
+              formControlName="toTime"
+            ></ngb-timepicker>
+          </div>
+        </div>
+
+        <button
+          (click)="fetchCharts()"
+          [ngStyle]="{
+            backgroundColor: '#' + (primaryColour || '3D95F7'),
+            width: '10em',
+            color: '#ffffff',
+            fontSize: '16px',
+            border: '0',
+            borderRadius: '10px',
+            height: '35px'
+          }"
+        >
+          Submit
+        </button>
+        <!-- [disabled]="form?.pristine"  -->
+        <app-control-error *ngIf="showError" class="float-end">
+          <span>All fields are required.</span>
+        </app-control-error>
+        <br /><br />
+
+        <div class="row" *ngIf="staticCharts">
+          <div class="col-md-6 mb-5" *ngFor="let chart of staticCharts">
+            <div>
+              <app-guage-chart
+                *ngIf="chart.chartType === GAUGE"
+                [label]="chart.label"
+                [percentage]="chart.percentage"
+              ></app-guage-chart>
+              <app-pie-chart
+                *ngIf="chart.chartType === PIE"
+                [label]="chart.label"
+                [percentage]="chart.percentage"
+              ></app-pie-chart>
+              <app-doughnut-chart
+                *ngIf="chart.chartType === DOUGHNUT"
+                [label]="chart.label"
+                [percentage]="chart.percentage"
+              ></app-doughnut-chart>
+              <strong>{{ chart.label }} ({{ chart.value }})</strong>
+            </div>
+          </div>
+        </div>
+
+        <br /><br />
+
+        <div class="row" *ngIf="timeSeriesCharts">
+          <div class="col-md-6 mb-5" *ngFor="let chart of timeSeriesCharts">
+            <div>
+              <app-line-chart
+                [attribute]="chart.attribute"
+                [xAxesValues]="chart.xAxesValues"
+                [yAxesValues]="chart.yAxesValues"
+              ></app-line-chart>
+              <strong>{{ chart.attribute }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

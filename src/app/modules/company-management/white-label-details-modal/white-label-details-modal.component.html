@@ -1,0 +1,122 @@
+<ng-container *ngIf="company$ | progress | async as payload">
+  <ng-container *ngIf="payload.loading">
+    <div
+      class="modal-header"
+      style="font-weight: bolder; font-size: 1.3em"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: '#' + (formFontColor || 'ff9900')
+      }"
+    >
+      Customize Screen
+    </div>
+    <div
+      class="modal-body"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif'
+      }"
+    >
+      <div
+        class="card"
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+      >
+        <div
+          class="card-body"
+          [ngStyle]="{
+            'font-family': formFont || 'Times New Roman, Times, serif'
+          }"
+        >
+          <ngx-skeleton-loader
+            style="outline: none"
+            [count]="5"
+          ></ngx-skeleton-loader>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="row">
+          <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+            <!-- <button
+              type="button"
+              class="btn btn-danger"
+              aria-label="Close"
+              (onClose)="closeHandler()"
+            >
+              Close
+            </button> -->
+            <button
+              [ngStyle]="{
+                backgroundColor: '#fff',
+                width: '10em',
+                color: '#' + (primaryColour || '3D95F7'),
+                fontSize: '16px',
+                border: '1px solid #' + (primaryColour || '3D95F7'),
+                borderRadius: '10px',
+                height: '35px'
+              }"
+              (onClose)="closeHandler()"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <app-control-error *ngIf="payload.error">{{
+    payload.error.message
+  }}</app-control-error>
+
+  <ng-container *ngIf="payload.value">
+    <app-white-label-form
+      [company]="payload.value"
+      (onUpload)="uploadHandler($event)"
+      (onSave)="saveHandler(payload.value, $event)"
+      (onDefault)="saveHandler(payload.value, $event)"
+    >
+    </app-white-label-form>
+
+    <div
+      class="modal-footer"
+      [ngStyle]="{
+        border: '1px solid ' + formBgColor,
+        'background-color': formBgColor,
+        color: formFontColor || 'black',
+        'font-family': formFont || 'Times New Roman, Times, serif'
+      }"
+    >
+      <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="row">
+          <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+            <!-- <button
+              type="button"
+              class="btn btn-danger"
+              aria-label="Close"
+              (click)="closeHandler()"
+            >
+              Close
+            </button> -->
+            <button
+              aria-label="Close"
+              [ngStyle]="{
+                backgroundColor: '#fff',
+                width: '10em',
+                color: '#' + (primaryColour || '3D95F7'),
+                fontSize: '16px',
+                border: '1px solid #' + (primaryColour || '3D95F7'),
+                borderRadius: '10px',
+                height: '35px'
+              }"
+              (click)="closeHandler()"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

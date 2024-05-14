@@ -1,0 +1,30 @@
+// .boxing {
+//     border: 1px dashed #ddd;
+//     padding: 1em;
+//     margin-bottom: 2em;
+// }
+
+// .rowing {
+//   margin-bottom: 1em;
+// }
+
+// input {
+//   border: none;
+//   outline: none;
+//   border-bottom: 1px solid black;
+//   border-radius: 5px;
+// }
+
+// button:hover#cancel {
+//     font-weight: bolder;
+//     background-color: #f11;
+// }
+
+// button:hover#submit {
+//     font-weight: bolder;
+//     background-color: #1f1;
+// }
+
+button:disabled {
+  opacity: 0.5;
+}

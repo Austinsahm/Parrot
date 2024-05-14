@@ -1,0 +1,75 @@
+.top-header {
+  width: 100%;
+  float: left;
+  background-color: #2FD5B4;
+  text-align: center;
+  padding: 15px 0px;
+  position: relative;
+  border-bottom: 2px solid #000;
+}
+
+.top-header h1 {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.top-header .button {
+  width: 14%;
+  float: right;
+  margin: 25px 0;
+}
+
+.logo {
+  float: left;
+}
+
+.logo .image {
+  position: relative;
+}
+
+.logo .image img {
+  transition: all .3s;
+  max-height:  70px;
+}
+
+.logo:hover .image img {
+  transform: scale(1.10);
+}
+
+.logo h5 {
+  font-family: 'Caveat', cursive;
+  font-size: 24px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+}
+
+.logo a {
+  color: #000000;
+  transition: all .3s;
+}
+
+.logo:hover a {
+  color: #fff20e;
+}
+
+.info {
+  float: right;
+  text-align: left;
+}
+
+.info div {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  display: block;
+}
+
+.info div span {
+  color: #FF7C21;
+  margin-left: 10px;
+}

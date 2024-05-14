@@ -1,0 +1,15 @@
+<ng-container *ngIf="contact | progress | async as payload">
+  <ngx-skeleton-loader *ngIf="payload.loading"></ngx-skeleton-loader>
+  <!-- <app-control-error *ngIf="payload.error">{{ payload.error.message }}</app-control-error> -->
+  <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+  <ng-container *ngIf="payload.value">
+    <app-company-contact-form
+      formTitle="Contact"
+      [subdomain]="subdomain"
+      [contact]="payload.value"
+      (onSave)="saveHandler($event)"
+      (onClose)="closeHandler()"
+    >
+    </app-company-contact-form>
+  </ng-container>
+</ng-container>

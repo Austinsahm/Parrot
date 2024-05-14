@@ -1,0 +1,73 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <!-- <div class="" style="padding-right: 0px; padding-left: 0px"> -->
+    <!-- <div class="card col-12"> -->
+    <a (click)="back()"
+      ><mat-icon style="cursor: pointer; color: black">arrow_back</mat-icon>
+    </a>
+    <br />
+
+    <div
+      class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+      *ngIf="asset$ | progress | async as payload"
+      style="padding-left: 0px; padding-right: 0px"
+    >
+      <div
+        class="card"
+        style="
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        "
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+      >
+        <!-- <strong
+          class="card-header"
+          style="font-weight: bolder; font-size: 1.3em"
+          [ngStyle]="{
+            'font-family': formFont || 'Times New Roman, Times, serif',
+            color: '#' + (formColor || 'ff9900')
+          }"
+          ></strong
+        >
+        <br /> -->
+        <app-title
+          class="card-header"
+          title="Asset Statistics Details"
+          size="md"
+        ></app-title>
+        <div class="card-body">
+          <ngx-datatable
+            class="bootstrap table-bordered table-striped table-hover"
+            #companyListTable
+            [rows]="payload.value"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [limit]="10"
+            [columnMode]="'force'"
+            [loadingIndicator]="payload.loading"
+            [rowHeight]="'auto'"
+          >
+            <ngx-datatable-column name="Name" prop="name">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["name"] }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Status" prop="status">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["status"] }}
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </div>
+</div>

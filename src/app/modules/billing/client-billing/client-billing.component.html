@@ -1,0 +1,480 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <div
+        class="card col-sm-12 col-xs-12 col-md-12"
+        style="
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        "
+      >
+        <div
+          class="card-body"
+          style="overflow: auto"
+          [ngStyle]="{
+            border: '1px solid ' + formBgColor,
+            'background-color': formBgColor,
+            color: formFontColor || 'black',
+            'font-family': formFont || 'Times New Roman, Times, serif'
+          }"
+        >
+          <ng-container>
+            <div
+              class="card"
+              [ngStyle]="{
+                border: '1px solid ' + formBgColor,
+                'background-color': formBgColor,
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif'
+              }"
+            >
+              <app-title
+                class="card-header"
+                title="Client billing"
+                size="lg"
+              ></app-title>
+
+              <div class="card-body">
+                <form [formGroup]="notifyForm">
+                  <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                    <div>
+                      <div class="row mb-3 ms-2 mt-5">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">Company</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <!-- placeholder="No" -->
+                          <span
+                            [ngStyle]="{
+                              fontSize: '16px',
+                              textTransform: 'uppercase'
+                            }"
+                            >{{ companyName }}</span
+                          >
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Device Quantity</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            readonly
+                            class="form-control"
+                            formControlName="deviceQty"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-item">Subscription Period</label>
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="number"
+                            formControlName="year"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                          <app-control-error
+                            *ngIf="
+                              notifyForm.get('year').invalid &&
+                              notifyForm.get('year').touched
+                            "
+                          >
+                            <span
+                              *ngIf="notifyForm.get('year').errors.required"
+                            >
+                              This field is required.
+                            </span>
+                            <span *ngIf="notifyForm.get('year').errors.pattern">
+                              Minimum of 1 year
+                            </span>
+                          </app-control-error>
+                        </div>
+                      </div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">
+                            Number of Text messages to be received</label
+                          >
+                          <!-- <label style="color: red">*</label> -->
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="number"
+                            formControlName="messages"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Number of phone calls to be received</label
+                          >
+                          <!-- <label style="color: red">*</label> -->
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="number"
+                            formControlName="phoneCall"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Number of users</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="number"
+                            formControlName="user"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                          <app-control-error
+                            *ngIf="
+                              notifyForm.get('user').invalid &&
+                              notifyForm.get('user').touched
+                            "
+                          >
+                            <span
+                              *ngIf="notifyForm.get('user').errors.required"
+                            >
+                              This field is required.
+                            </span>
+                            <span *ngIf="notifyForm.get('user').errors.pattern">
+                              Atleast one user is required
+                            </span>
+                          </app-control-error>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">Plan Name </label>
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="text"
+                            readonly
+                            formControlName="planName"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">Plan Code </label>
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="text"
+                            readonly
+                            formControlName="planCode"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-chexk-label">Payment Count </label>
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="Number"
+                            formControlName="paymentCount"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"> Billing Mode</label>
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <app-combo-select-field
+                            [options]="billingModes"
+                            (selectionChange)="modeSelectionChange($event)"
+                            [defaultOption]="billingModes[0]"
+                          >
+                          </app-combo-select-field>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Returning client <br />
+                          </label>
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <app-combo-select-field
+                            [options]="clientType"
+                            (selectionChange)="statusSelectionChange($event)"
+                            [defaultOption]="clientType[1]"
+                          >
+                          </app-combo-select-field>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">Billing Method</label>
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <app-combo-select-field
+                            [options]="billingMethods"
+                            (selectionChange)="billSelectionChange($event)"
+                            [defaultOption]="billingMethods[0]"
+                          >
+                          </app-combo-select-field>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">Payment option</label>
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <!-- !billingMethod ? '' : -->
+                          <app-combo-select-field
+                            [options]="payOptions"
+                            (selectionChange)="paySelectionChange($event)"
+                          ></app-combo-select-field>
+                        </div>
+                      </div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Billing Currency</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <ng-container
+                          *ngIf="currency$ | progress | async as currency"
+                        >
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <app-combo-select-field
+                              *ngIf="!currency.value"
+                              [options]="currency.value"
+                              (selectionChange)="
+                                currencySelectionChange($event)
+                              "
+                            ></app-combo-select-field>
+
+                            <app-combo-select-field
+                              *ngIf="currency.value"
+                              [options]="currency.value"
+                              [defaultOption]="currency.value[1]"
+                              (selectionChange)="
+                                currencySelectionChange($event)
+                              "
+                            ></app-combo-select-field></div
+                        ></ng-container>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">Total Bill</label>
+                          <!-- <label style="color: red">*</label> -->
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            readonly
+                            formControlName="totalBills"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">Current Bill </label>
+                          <!-- <label style="color: red">*</label> -->
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          {{ notifyForm.get("currentBills").value }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-5 ms-2 flex">
+                    <div class="col mt-3 mb-3">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        [ngStyle]="{
+                          backgroundColor: '#fff',
+                          width: '10em',
+                          color: '#' + (primaryColour || '3D95F7'),
+                          fontSize: '16px',
+                          border: '1px solid #' + (primaryColour || '3D95F7'),
+                          borderRadius: '10px',
+                          height: '40px'
+                        }"
+                        (click)="cancel()"
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        type="button"
+                        class="btn btn-danger float-end"
+                        [ngStyle]="{
+                          backgroundColor: '#' + (primaryColour || '3D95F7'),
+                          width: '10em',
+                          color: '#ffffff',
+                          fontSize: '16px',
+                          border: '0',
+                          borderRadius: '10px',
+                          height: '35px'
+                        }"
+                        (click)="final()"
+                      >
+                        Final
+                      </button>
+                      <!-- <a [routerLink]="['./company-billing/calculator']"> </a> -->
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

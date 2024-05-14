@@ -1,0 +1,13 @@
+table.borderles td, table.borderles th {
+    border-color: transparent !important;
+}
+
+button:hover#cancel {
+    font-weight: bolder;
+    background-color: red;
+}
+
+button:hover#submit {
+    font-weight: bolder;
+    background-color: green;
+}

@@ -1,0 +1,54 @@
+<ng-container>
+    <span
+      class="lg:my-3"
+      style="
+        padding: 6px;
+        margin: 12px auto;
+        font-size: 1.4em;
+        font-weight: bold;
+        color: #000000;
+      "
+    >
+     {{companyName}} Billing
+    </span>
+    <div style="padding: 1em">
+      <app-billing-payment-form
+        #formElement
+        [reload]="reloadGen"
+      ></app-billing-payment-form>
+    </div>
+    <div class="container-fluid">
+      <div class="row rowing">
+        <div class="col-sm-6" style="padding: 0.5em 0; margin: 10px 0">
+          <!-- <angular4-paystack
+            [disabled]="formElement.form.invalid"
+            [key]="key"
+            [email]="formElement.form.get('email').value"
+            [amount]="formElement.form.get('amount').value"
+            [ref]="formElement.form.get('ref').value"
+            [class]="'btn btn-primary float-end'"
+            (close)="paymentCancel()"
+            (callback)="paymentDone($event)"
+            (paymentInit)="paymentInit()"
+            >Pay with Paystack
+          </angular4-paystack> -->
+  
+          <button
+            [disabled]="formElement.form.invalid"
+            class="btn btn-primary float-end"
+            angular4-paystack
+            [key]="key"
+            [email]="formElement.form.get('email').value"
+            [amount]="amountValidate(formElement.form.get('amount').value)"
+            [ref]="formElement.form.get('ref').value"
+            (paymentInit)="paymentInit(formElement.form)"
+            (onClose)="paymentCancel()"
+            (callback)="paymentDone($event)"
+          >
+            Make Payment
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  

@@ -1,0 +1,16 @@
+// input {
+//     border: none;
+//     outline: none;
+//     border-bottom: 1px solid black;
+//     border-radius: 5px;
+// }
+
+button:hover#cancel {
+    font-weight: bolder;
+    background-color: red;
+}
+
+button:hover#submit {
+    font-weight: bolder;
+    background-color: green;
+}

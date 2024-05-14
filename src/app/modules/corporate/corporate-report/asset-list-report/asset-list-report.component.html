@@ -1,0 +1,185 @@
+<div class="col-12">
+  <div class="row">
+    <div class="col-6">
+      <app-title title="Asset List" size="lg"></app-title>
+    </div>
+    <div class="col-6">
+      <form class="nosubmit float-end">
+        <input
+          type="text"
+          [formControl]="searchField"
+          style="
+            padding: 4px;
+            margin: 8px auto;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+          "
+          placeholder="Search..."
+          class="nosubmit"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="report$ | progress | async as payload">
+  <ng-container *ngIf="showDevices; else unclicked">
+    <div class="row">
+      <div class="col-xs-8 col-sm-8 col-md-7">
+        <!-- [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }" -->
+        <ngx-skeleton-loader
+          *ngIf="payload.loading"
+          [count]="5"
+        ></ngx-skeleton-loader>
+        <app-control-error *ngIf="payload.error">
+          Assets cannot be loaded
+        </app-control-error>
+        <ng-container *ngIf="payload.value">
+          <ngx-datatable
+            class="bootstrap table-bordered table-striped table-hover"
+            #assetList
+            [rows]="payload.value"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [limit]="10"
+            [columnMode]="'force'"
+            [loadingIndicator]="payload.loading"
+            [rowHeight]="'auto'"
+            style="font-size: 15px !important"
+          >
+            <ngx-datatable-column name="Asset Name" prop="assetName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <a
+                  href="javascript:void(0);"
+                  (click)="openDetails(row)"
+                  placement="top"
+                >
+                  {{ row["assetName"] }}
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Asset Location" prop="locationName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["locationName"] }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Address" prop="locationAddress1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["locationAddress1"] }}
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </ng-container>
+      </div>
+
+      <div
+        class="col-xs-4 col-sm-4 col-md-5"
+        *ngIf="devices$ | progress | async as payload"
+      >
+        <ngx-skeleton-loader
+          *ngIf="payload.loading"
+          [count]="5"
+        ></ngx-skeleton-loader>
+        <app-control-error *ngIf="payload.error"
+          >Unknown Error</app-control-error
+        >
+        <ng-container *ngIf="payload.value">
+          <div
+            class="card"
+            style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px"
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif',
+              color: '#' + (formColor || 'ff9900')
+            }"
+          >
+            <div class="card-body">
+              <h4>{{ assetName }}</h4>
+              <ngx-datatable
+                class="bootstrap table-bordered table-striped table-hover"
+                #deviceList
+                [rows]="payload.value"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [limit]="10"
+                [columnMode]="'force'"
+                [loadingIndicator]="payload.loading"
+                [rowHeight]="'auto'"
+                style="font-size: 15px !important"
+              >
+                <ngx-datatable-column name="Device ID" prop="deviceId">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row["manufDeviceId"] }}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Device Name" prop="deviceName">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row["deviceName"] }}
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #unclicked>
+    <div class="col-12">
+      <!-- [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }" -->
+      <ngx-skeleton-loader
+        *ngIf="payload.loading"
+        [count]="5"
+      ></ngx-skeleton-loader>
+      <app-control-error *ngIf="payload.error">
+        Assets cannot be loaded
+      </app-control-error>
+      <ng-container *ngIf="payload.value">
+        <ngx-datatable
+          class="bootstrap table-bordered table-striped table-hover"
+          #assetList
+          [rows]="payload.value"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [limit]="10"
+          [columnMode]="'force'"
+          [loadingIndicator]="payload.loading"
+          [rowHeight]="'auto'"
+          style="font-size: 15px !important"
+        >
+          <ngx-datatable-column name="Asset Name" prop="assetName">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <a
+                href="javascript:void(0);"
+                (click)="openDetails(row)"
+                placement="top"
+              >
+                {{ row["assetName"] }}
+              </a>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Asset Location" prop="locationName">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row["locationName"] }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Address" prop="locationAddress1">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row["locationAddress1"] }}
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </ng-container>
+    </div>
+  </ng-template>
+</div>

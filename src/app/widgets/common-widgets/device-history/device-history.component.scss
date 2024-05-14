@@ -1,0 +1,18 @@
+.attribute-value {
+  overflow: hidden;
+  display: flex;
+}
+
+tr.attribute-details {
+  height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: whitesmoke;
+  cursor: pointer;
+}
+
+.tab {
+  width: 100%;
+  margin-top: 1em;
+}

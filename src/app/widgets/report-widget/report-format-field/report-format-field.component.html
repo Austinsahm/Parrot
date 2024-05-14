@@ -1,0 +1,5 @@
+<div class="form-check" style="padding: 0.5em;" *ngFor="let format of formats">
+    <input class="form-check-input" [formControl]="control" type="radio" [name]="groupName" [id]="groupName+format.value"
+        [value]="format.value">
+    <label class="form-check-label" [for]="groupName+format.value">{{ format.label }}</label>
+</div>

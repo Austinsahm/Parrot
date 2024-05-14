@@ -1,0 +1,173 @@
+<form autocomplete="off" style="border: 1px solid black">
+  <div
+    class="modal-header font-weight-bold"
+    style="font-weight: bolder; font-size: 1.3em"
+    [ngStyle]="{
+      border: '1px solid ' + formBgColor,
+      'background-color': formBgColor,
+      color: formFontColor || 'black',
+      'font-family': formFont || 'Times New Roman, Times, serif'
+    }"
+  >
+    DEVICE CATEGORY
+  </div>
+  <div
+    class="modal-body"
+    [ngStyle]="{
+      border: '1px solid ' + formBgColor,
+      'background-color': formBgColor,
+      color: formFontColor || 'black',
+      'font-family': formFont || 'Times New Roman, Times, serif'
+    }"
+  >
+    <div
+      class="card"
+      [ngStyle]="{
+        border: '1px solid ' + formBgColor,
+        'background-color': formBgColor,
+        color: formFontColor || 'black',
+        'font-family': formFont || 'Times New Roman, Times, serif'
+      }"
+    >
+      <div class="card-body">
+        <div class="row">
+          <ng-container *ngIf="options$ | progress | async as payload">
+            <ngx-skeleton-loader
+              *ngIf="payload.loading"
+              [count]="5"
+            ></ngx-skeleton-loader>
+            <!-- <app-control-error *ngIf="payload.error">{{
+              payload.error.message
+            }}</app-control-error> -->
+            <app-control-error *ngIf="payload.error"
+              >Unknown Error</app-control-error
+            >
+            <table
+              class="table borderles"
+              *ngIf="payload.value"
+              [ngStyle]="{
+                border: '1px solid ' + formBgColor,
+                'background-color': formBgColor,
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif'
+              }"
+            >
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 20em !important">
+                    Manufacturer Device ID
+                  </th>
+                  <th scope="col">Device Name</th>
+                  <th scope="col">
+                    <button
+                      [disabled]="
+                        control.invalid ||
+                        payload.value.length === control.controls.length
+                      "
+                      (click)="addControl()"
+                      class="btn btn-outline-primary btn-sm"
+                    >
+                      +
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let m of control.controls; let i = index">
+                  <td>
+                    <app-combo-select-field
+                      [formControl]="control.controls[i]"
+                      [options]="payload.value"
+                      [loading]="payload.loading"
+                      (selectionChange)="onSelectionChange($event, i)"
+                    >
+                    </app-combo-select-field>
+                  </td>
+                  <td>
+                    <ng-container *ngIf="mappings$ | async as bag">
+                      <div class="mt-3">
+                        {{ bag.get(control.controls[i].value)?.deviceName }}
+                      </div>
+                    </ng-container>
+                  </td>
+                  <td>
+                    <div class="mt-3">
+                      <a href="javascript:void(0);" (click)="deleteHandler(i)"
+                        >Delete</a
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal-footer"
+    [ngStyle]="{
+      border: '1px solid ' + formBgColor,
+      'background-color': formBgColor,
+      color: formFontColor || 'black',
+      'font-family': formFont || 'Times New Roman, Times, serif'
+    }"
+  >
+    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+          <!-- <button
+            type="button"
+            class="btn btn-danger"
+            aria-label="Close"
+            (click)="closeHandler()"
+          >
+            Close
+          </button> -->
+          <button
+            class="ms-3"
+            [ngStyle]="{
+              backgroundColor: '#fff',
+              width: '7em',
+              color: '#' + (primaryColour || '3D95F7'),
+              fontSize: '12px',
+              border: '1px solid #' + (primaryColour || '3D95F7'),
+              borderRadius: '10px',
+              height: '35px'
+            }"
+            (click)="closeHandler()"
+          >
+            Close
+          </button>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+          <!-- <button
+            type="button"
+            (click)="saveHandler()"
+            class="btn btn-success float-end"
+            [disabled]="control.invalid || control.pristine"
+          >
+            Save
+          </button> -->
+          <button
+            class="float-end"
+            [disabled]="control.invalid || control.pristine"
+            [ngStyle]="{
+              backgroundColor: '#' + (primaryColour || '3D95F7'),
+              width: '7em',
+              color: '#ffffff',
+              fontSize: '12px',
+              border: '0',
+              borderRadius: '10px',
+              height: '35px'
+            }"
+            (click)="saveHandler()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,973 @@
+<form
+  [formGroup]="form"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: formFontColor || 'black',
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor
+  }"
+>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="row" *ngIf="editable">
+      <div class="col-sm-12 col-lg-6">
+        <div class="row mb-2 form-group align-items-center">
+          <mat-form-field class="col-12" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Asset Name</mat-label
+            >
+            <input
+              matInput
+              placeholder="Asset Name"
+              formControlName="assetName"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetName').invalid && form.get('assetName').touched
+            "
+          >
+            <span *ngIf="form.get('assetName').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+          <label class="form-check-label">Asset Name</label
+          >
+        </div>
+        <input
+              class="form-control"
+              placeholder="Asset Name"
+              formControlName="assetName"
+              [ngStyle]="{
+                'color': formFontColor || 'black',
+                'background-color': formBgColor,
+                'border-bottom': '1px solid ' + formFontColor
+              }"
+            /> -->
+
+        <div class="row mb-2 form-group align-items-center">
+          <mat-form-field class="col-12" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Description</mat-label
+            >
+            <input
+              matInput
+              placeholder="Description"
+              formControlName="assetDesc"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetDesc').invalid && form.get('assetDesc').touched
+            "
+          >
+            <span *ngIf="form.get('assetDesc').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+      </div>
+      <!-- <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+        <label class="form-check-label">Description</label
+        ><label style="color: red">*</label>
+      </div>
+      <input
+        class="form-control"
+        placeholder="Description"
+        formControlName="assetDesc"
+        [ngStyle]="{
+          color: formFontColor || 'black',
+          'background-color': formBgColor,
+          'border-bottom': '1px solid ' + formFontColor
+        }"
+      /> -->
+
+      <!-- <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+        <label class="form-check-label">Asset Type</label
+        ><label style="color: red">*</label>
+      </div> -->
+
+      <div class="col-sm-12 col-lg-6">
+        <div class="row mb-2 form-group align-items-center">
+          <!-- <mat-form-field class="col-12" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Company</mat-label
+            >
+            <input
+              matInput
+              placeholder="Company name"
+              [value]="company?.companyName"
+              readonly
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field> -->
+          <app-asset-type-field
+            formControlName="assetTypeId"
+            placeholder="Select asset type..."
+            new="true"
+            (selectionChange)="changeAssetType($event)"
+            [defaultValue]="form.get('assetTypeId').value"
+          >
+          </app-asset-type-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTypeId').invalid && form.get('assetTypeId').touched
+            "
+          >
+            <span *ngIf="form.get('assetTypeId').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!--  <app-company-field formControlName="companyId" [subdomain]="subdomain" placeholder="Select company...">
+        </app-company-field>
+        <app-control-error *ngIf="form.get('companyId').invalid && form.get('companyId').touched">
+          <span *ngIf="form.get('companyId').errors.required">This field is required.</span>
+        </app-control-error> -->
+        <!-- <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+            <label class="form-check-label">Company</label
+            ><label style="color: red">*</label>
+          </div>
+        <input
+              class="form-control"
+              placeholder="Company name"
+              [value]="company?.companyName"
+              readonly
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'background-color': formBgColor,
+                'border-bottom': '1px solid ' + formFontColor
+              }"
+            />
+        -->
+
+        <div class="row mb-2 form-group align-items-center">
+          <app-branch-field
+            formControlName="locationId"
+            [companyId]="company?.companyId"
+            placeholder="Select location..."
+            new="true"
+            (selectionChange)="changeLocation($event)"
+            [defaultValue]="form.get('locationId').value"
+          >
+          </app-branch-field>
+          <app-control-error
+            *ngIf="
+              form.get('locationId').invalid && form.get('locationId').touched
+            "
+          >
+            <span *ngIf="form.get('locationId').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+
+        <!-- <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+          <label class="form-check-label">Location</label
+          ><label style="color: red">*</label>
+        </div> -->
+
+        <!-- <div formArrayName="floors">
+          <div *ngFor="let c of floors.controls; let i = index">
+            <div [formGroupName]="i">
+              <div class="row mb-3 form-group">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                  <label class="form-check-label">Floor Name</label>
+                  <label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <input
+                    class="form-control"
+                    placeholder="Floor name"
+                    formControlName="floorName"
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-3 form-group">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                  <label class="form-check-label">Upload Floor Plan</label>
+                  <label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <app-file-input formControlName="floorPlan"></app-file-input>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2 col-xl-2">
+                  <button
+                    [disabled]="floors.controls.length === 1"
+                    (click)="removeFloor(i)"
+                    class="btn btn-outline-danger btn-sm"
+                  >
+                    Delete Floor
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <button
+          (click)="addFloor()"
+          class="btn btn-outline-primary btn-sm float-en"
+        >
+          Add Floor
+        </button> -->
+      </div>
+    </div>
+
+    <app-asset-detail-viewer
+      *ngIf="!editable"
+      [asset]="assetValue"
+    ></app-asset-detail-viewer>
+  </div>
+
+  <div *ngIf="showTank">
+    <hr />
+
+    <app-title title="Tank Management" size="md"></app-title>
+    <br />
+
+    <div class="row mt-3" *ngIf="editable" formGroupName="assetTankModel">
+      <div class="col-lg-4">
+        <div class="row mb-2 form-group align-items-center">
+          <app-combo-select-field
+            class="col-11"
+            formControlName="contentType"
+            *ngIf="options$ | progress | async as payload"
+            [options]="payload.value"
+            placeholder="Select Content Type..."
+            (selectionChange)="changeContentType($event)"
+            [defaultSelection]="form.get('assetTankModel.contentType').value"
+          ></app-combo-select-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.contentType').invalid &&
+              form.get('assetTankModel.contentType').touched
+            "
+          >
+            <span *ngIf="form.get('assetTankModel.contentType').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <app-combo-box-field
+            formControlName="contentType"
+            *ngIf="options$ | progress | async as payload"
+            [options]="payload.value"
+            placeholder="Select Content Type..."
+            (change)="getContent()"
+          >
+          </app-combo-box-field> -->
+
+        <div class="row mb-2 form-group align-items-center">
+          <mat-form-field class="col-11" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Tank Height (mm)</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              placeholder="Tank Height"
+              formControlName="height"
+              [(ngModel)]="tankHeight"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.height').invalid &&
+              form.get('assetTankModel.height').touched
+            "
+          >
+            <span *ngIf="form.get('assetTankModel.height').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <input
+          type="number"
+          class="form-control"
+          placeholder="Tank Height"
+          formControlName="height"
+          [(ngModel)]="tankHeight"
+          [ngStyle]="{
+            color: formFontColor || 'black',
+            'background-color': formBgColor,
+            'border-bottom': '1px solid ' + formFontColor
+          }"
+        /> -->
+
+        <div class="row mb-2 form-group align-items-center">
+          <mat-form-field class="col-11" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Deliverable Volume</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              placeholder="Deliverable Volume"
+              formControlName="delVolume"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.delVolume').invalid &&
+              form.get('assetTankModel.delVolume').touched
+            "
+          >
+            <span *ngIf="form.get('assetTankModel.delVolume').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <input
+          type="number"
+          class="form-control"
+          placeholder="Deliverable Volume"
+          formControlName="delVolume"
+          [ngStyle]="{
+            color: formFontColor || 'black',
+            'background-color': formBgColor,
+            'border-bottom': '1px solid ' + formFontColor
+          }"
+        /> -->
+
+        <div
+          class="row mb-2 form-group align-items-center justify-content-between"
+        >
+          <mat-form-field class="col-11" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Consumption</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              placeholder="Consumption"
+              formControlName="consumption"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.consumption').invalid &&
+              form.get('assetTankModel.consumption').touched
+            "
+          >
+            <span *ngIf="form.get('assetTankModel.consumption').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+
+        <div
+          class="d-flex mb-2 form-group align-items-center justify-content-between col-11"
+        >
+          <div
+            class="col-8 bd-label fw-bold"
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif',
+              color: formFontColor || 'black'
+            }"
+          >
+            Content Color
+          </div>
+
+          <ngx-colors
+            ngx-colors-trigger
+            formControlName="contentColor"
+          ></ngx-colors>
+        </div>
+      </div>
+      <!-- <input
+        type="number"
+        class="form-control"
+        placeholder="Consumption"
+        formControlName="consumption"
+        [ngStyle]="{
+          color: formFontColor || 'black',
+          'background-color': formBgColor,
+          'border-bottom': '1px solid ' + formFontColor
+        }"
+      /> -->
+
+      <div class="col-lg-4">
+        <div class="row mb-2 form-group align-items-center">
+          <app-combo-select-field
+            class="col-11"
+            formControlName="contentId"
+            *ngIf="contents$ | progress | async as payload"
+            [options]="payload.value"
+            placeholder="Select Content"
+            [loading]="payload.loading"
+            (selectionChange)="changeContentId($event)"
+            [defaultSelection]="form.get('assetTankModel.contentId').value"
+          ></app-combo-select-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.contentId').invalid &&
+              form.get('assetTankModel.contentId').touched
+            "
+          >
+            <span *ngIf="form.get('assetTankModel.contentId').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <app-combo-box-field
+              formControlName="contentId"
+              *ngIf="contents$ | progress | async as payload"
+              [options]="payload.value"
+              placeholder="Select Content"
+              [loading]="payload.loading"
+            >
+            </app-combo-box-field> -->
+
+        <div class="row mb-2 form-group align-items-center">
+          <mat-form-field class="col-11" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Tank Diameter (mm)</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              placeholder="Tank Diameter"
+              formControlName="diameter"
+              [(ngModel)]="tankDiameter"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.diameter').invalid &&
+              form.get('assetTankModel.diameter').touched
+            "
+          >
+            <span *ngIf="form.get('assetTankModel.diameter').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <input
+          type="number"
+          class="form-control"
+          placeholder="Tank Diameter"
+          formControlName="diameter"
+          [(ngModel)]="tankDiameter"
+          [ngStyle]="{
+            color: formFontColor || 'black',
+            'background-color': formBgColor,
+            'border-bottom': '1px solid ' + formFontColor
+          }"
+        /> -->
+
+        <div class="row mb-2 form-group align-items-center">
+          <mat-form-field class="col-11" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Total Useful Volume</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              placeholder="Total Useful Volume"
+              formControlName="totalUsefVolume"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.totalUsefVolume').invalid &&
+              form.get('assetTankModel.totalUsefVolume').touched
+            "
+          >
+            <span
+              *ngIf="form.get('assetTankModel.totalUsefVolume').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <input
+            type="number"
+            class="form-control"
+            placeholder="Total Useful Volume"
+            formControlName="totalUsefVolume"
+            [ngStyle]="{
+              color: formFontColor || 'black',
+              'background-color': formBgColor,
+              'border-bottom': '1px solid ' + formFontColor
+            }"
+          /> -->
+
+        <div class="row mb-2 form-group align-items-center">
+          <mat-form-field class="col-11" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Filling</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              placeholder="Filling"
+              formControlName="filling"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.filling').invalid &&
+              form.get('assetTankModel.filling').touched
+            "
+          >
+            <span *ngIf="form.get('assetTankModel.filling').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <input
+          type="number"
+          class="form-control"
+          placeholder="Filing"
+          formControlName="filling"
+          [ngStyle]="{
+            color: formFontColor || 'black',
+            'background-color': formBgColor,
+            'border-bottom': '1px solid ' + formFontColor
+          }"
+        /> -->
+      </div>
+
+      <div class="col-lg-4">
+        <div class="row mb-2 form-group align-items-center">
+          <mat-form-field class="col-11" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Last Reading</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              placeholder="Last Reading"
+              formControlName="lastReading"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.lastReading').invalid &&
+              form.get('assetTankModel.lastReading').touched
+            "
+          >
+            <span *ngIf="form.get('assetTankModel.lastReading').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <input
+          type="number"
+          class="form-control"
+          placeholder="Last Reading"
+          formControlName="lastReading"
+          [ngStyle]="{
+            color: formFontColor || 'black',
+            'background-color': formBgColor,
+            'border-bottom': '1px solid ' + formFontColor
+          }"
+        /> -->
+
+        <div class="row mb-2 form-group align-items-center">
+          <mat-form-field class="col-11" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Total Volume</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              placeholder="Total Volume"
+              formControlName="totalVolume"
+              readonly
+              [(ngModel)]="totVol"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.totalVolume').invalid &&
+              form.get('assetTankModel.totalVolume').touched
+            "
+          >
+            <span *ngIf="form.get('assetTankModel.totalVolume').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <input
+          type="number"
+          class="form-control"
+          placeholder="Total Volume"
+          formControlName="totalVolume"
+          readonly
+          [(ngModel)]="totVol"
+          [ngStyle]="{
+            color: formFontColor || 'black',
+            'background-color': formBgColor,
+            'border-bottom': '1px solid ' + formFontColor
+          }"
+        /> -->
+
+        <div class="row mb-2 form-group align-items-center">
+          <mat-form-field class="col-11" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Min. Useful Volume</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              placeholder="Min. Useful Volume"
+              formControlName="minUsefVolume"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('assetTankModel.minUsefVolume').invalid &&
+              form.get('assetTankModel.minUsefVolume').touched
+            "
+          >
+            <span
+              *ngIf="form.get('assetTankModel.minUsefVolume').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+
+        <div class="row mb-2 form-group align-items-center">
+          <app-combo-select-field
+            class="col-11"
+            formControlName="contentShape"
+            [options]="contentShape"
+            placeholder="Select Content Shape"
+            (selectionChange)="changeContentShape($event)"
+            [defaultSelection]="form.get('assetTankModel.contentShape').value"
+          ></app-combo-select-field>
+        </div>
+        <!-- <input
+          type="number"
+          class="form-control"
+          placeholder="Min. Useful Volume"
+          formControlName="minUsefVolume"
+          [ngStyle]="{
+            color: formFontColor || 'black',
+            'background-color': formBgColor,
+            'border-bottom': '1px solid ' + formFontColor
+          }"
+        /> -->
+
+        <!-- <div class="row mb-2 form-group">
+          <div class="col-md-5">
+            <label class="form-check-label">Update Interval (s)</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Update Interval"
+            />
+            formControlName="minUsefVolume"
+            <app-control-error
+              *ngIf="
+                form.get('assetTankModel.minUsefVolume').invalid &&
+                form.get('assetTankModel.minUsefVolume').touched
+              "
+            >
+              <span
+                *ngIf="form.get('assetTankModel.minUsefVolume').errors.required"
+                >This field is required.</span
+              >
+            </app-control-error>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="!editable">
+      <div class="col-md-4">
+        <div class="row mb-2 align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Content Type</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.contentType }}
+          </div>
+        </div>
+
+        <div class="row mb-2 form-group align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Tank Height (mm)</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.height }}
+          </div>
+        </div>
+
+        <div class="row mb-2 form-group align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Deliverable Volume</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.delVolume }}
+          </div>
+        </div>
+
+        <div class="row mb-2 form-group align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Consumption</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.consumption }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row mb-2 form-group align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Content</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.contentName }}
+          </div>
+        </div>
+
+        <div class="row mb-2 form-group align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Tank Diameter (mm)</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.diameter }}
+          </div>
+        </div>
+
+        <div class="row mb-2 form-group align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Total Useful Volume</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.totalUsefVolume }}
+          </div>
+        </div>
+
+        <div class="row mb-2 form-group align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Filling</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.filling }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row mb-2 form-group align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Last Reading</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.lastReading }}
+          </div>
+        </div>
+
+        <div class="row mb-2 form-group align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Total Volume</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.totalVolume }}
+          </div>
+        </div>
+
+        <div class="row mb-2 form-group align-items-center">
+          <div class="col-md-5">
+            <label class="form-check-label">Minimum Useful Volume</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{ assetValue.minUsefVolume }}
+          </div>
+        </div>
+        <!-- 
+        <div class="row mb-2 form-group">
+          <div class="col-md-5">
+            <label class="form-check-label">Update Interval (s)</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showFloors">
+    <hr />
+    <app-asset-floor-viewer [assetId]="assetId"></app-asset-floor-viewer>
+  </div>
+
+  <div style="margin: 2em 0; border-top: 1px solid #ddd; padding-top: 2em">
+    <div
+      clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+      *ngIf="editable"
+    >
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+          <button class="btn btn-primary float-end" (click)="addDevice()">
+            Add Device
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <app-title title="Asset Devices" size="md"></app-title>
+    <app-asset-device-list
+      [editing]="editable"
+      [devices]="devices"
+      (onNameSelected)="deviceSelectHandler($event)"
+      (onDelete)="deviceDeleteHandler($event)"
+    ></app-asset-device-list>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button
+        (click)="closeHandler()"
+        type="button"
+        [ngStyle]="{
+          backgroundColor: '#fff',
+          width: '10em',
+          color: '#' + (primaryColour || '3D95F7'),
+          fontSize: '16px',
+          border: '1px solid #' + (primaryColour || '3D95F7'),
+          borderRadius: '10px',
+          height: '35px'
+        }"
+      >
+        Cancel
+      </button>
+    </div>
+
+    <div class="col">
+      <button
+        type="button"
+        *ngIf="editable"
+        [disabled]="!form.valid || form.pristine"
+        (click)="saveHandler()"
+        type="button"
+        class="ms-2 float-end"
+        [ngStyle]="{
+          backgroundColor: '#' + (primaryColour || '3D95F7'),
+          width: '10em',
+          color: '#ffffff',
+          fontSize: '16px',
+          border: '0',
+          borderRadius: '10px',
+          height: '35px'
+        }"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,76 @@
+<div
+  class="row mb-1 py-1 rounded"
+  [ngStyle]="{
+    border: '1px solid ' + formFontColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 pe-0">
+    <app-combo-select-field
+      placeholder="Geofencing Task"
+      [defaultOption]="taskOptions[0]"
+      [options]="taskOptions"
+      (selectionChange)="onGeofencingTask($event)"
+    ></app-combo-select-field>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pe-0">
+    <app-device-category-field
+      placeholder="Device Category"
+      [selectable]="true"
+      [subdomain]="companyId"
+      (selectionChange)="onDeviceCategory($event)"
+    ></app-device-category-field>
+  </div>
+
+  <ng-container *ngIf="!isDeviceCategory; else category">
+    <div class="ps-2 col-xs-12 col-sm-8 col-md-4 col-lg-4 pe-0">
+      <app-dashboard-device-field
+        placeholder="Device"
+        [selectable]="true"
+        (selectionChange)="onDeviceId($event)"
+      >
+      </app-dashboard-device-field>
+    </div>
+  </ng-container>
+
+  <ng-template #category>
+    <div
+      class="col-sm-4 col-xs-12 col-md-3 col-lg-3 pe-0"
+      *ngIf="deviceIdOptions$ | progress | async as payload"
+    >
+      <app-combo-select-field
+        placeholder="Device"
+        [options]="payload.value"
+        [loading]="payload.loading"
+        (selectionChange)="onDeviceId($event)"
+      >
+      </app-combo-select-field></div
+  ></ng-template>
+
+  <!-- <div
+    class="col-xs-10 col-sm-5 col-md-3 col-lg-3 pe-0"
+    *ngIf="geofenceNameOptions$ | progress | async as payload"
+  >
+    <app-combo-select-field
+      placeholder="Select Geofencing"
+      [options]="payload.value"
+      (selectionChange)="onGeofencingName($event)"
+    ></app-combo-select-field>
+  </div> -->
+
+  <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1 pe-0 center">
+    <button type="button" class="btn mt-2" (click)="onSearch()">
+      <mat-icon class="search">search</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="maps" #map (click)="updateMapView()"></div>
+<div class="pano">
+  <button *ngIf="showPanorama" (click)="toggleView()">
+    {{ !togglePanoramaState ? "Street View" : "Map View" }}
+  </button>
+</div>

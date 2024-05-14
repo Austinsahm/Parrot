@@ -1,0 +1,547 @@
+<div
+  class="card px-4"
+  *ngIf="permission$ | async as payload"
+  [ngStyle]="{
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <div *ngIf="payload.utility.bulkDeviceLoad.menuAccess">
+    <div>
+      <app-title title="Bulk Device Load" size="lg"></app-title>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="deviceForm">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+          <div class="row">
+            <div class="col-12">
+              <div class="row mb-3">
+                <div class="col-2">
+                  <mat-form-field appearance="outline">
+                    <mat-label
+                      [ngStyle]="{
+                        'font-family':
+                          formFont || 'Times New Roman, Times, serif',
+                        color: formFontColor || 'black'
+                      }"
+                      >Company</mat-label
+                    >
+                    <input
+                      matInput
+                      type="text"
+                      readonly
+                      disabled
+                      [value]="subdomain"
+                      [ngStyle]="{
+                        color: formFontColor || 'black',
+                        'font-family':
+                          formFont || 'Times New Roman, Times, serif',
+                        'background-color': formBgColor
+                      }"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row mb-3 align-items-center">
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                  <mat-form-field class="col-12" appearance="outline">
+                    <mat-label
+                      [ngStyle]="{
+                        'font-family':
+                          formFont || 'Times New Roman, Times, serif',
+                        color: formFontColor || 'black'
+                      }"
+                      >Title</mat-label
+                    >
+                    <input
+                      matInput
+                      formControlName="title"
+                      placeholder="Title"
+                      [ngStyle]="{
+                        color: formFontColor || 'black',
+                        'font-family':
+                          formFont || 'Times New Roman, Times, serif',
+                        'background-color': formBgColor
+                      }"
+                    />
+                  </mat-form-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('title').invalid &&
+                      deviceForm.get('title').touched
+                    "
+                  >
+                    <span *ngIf="deviceForm.get('title').errors.required">
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                  <app-device-network-field
+                    [selectable]="selectable"
+                    formControlName="networkId"
+                    placeholder="Select network..."
+                    (selectionChange)="onNetworkChange($event)"
+                  >
+                  </app-device-network-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('networkId').invalid &&
+                      deviceForm.get('networkId').touched
+                    "
+                  >
+                    <span *ngIf="deviceForm.get('networkId').errors.required">
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                  <app-use-case-field
+                    formControlName="useCaseId"
+                    placeholder="Select device use case..."
+                    new="true"
+                    (selectionChange)="onUseCaseChange($event)"
+                  >
+                  </app-use-case-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('useCaseId').invalid &&
+                      deviceForm.get('useCaseId').touched
+                    "
+                  >
+                    <span *ngIf="deviceForm.get('useCaseId').errors.required">
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                  <app-device-category-field
+                    [subdomain]="companyId"
+                    [networkId]="deviceForm.value.networkId"
+                    formControlName="clientDeviceCategId"
+                    placeholder="Select category..."
+                    selectable="true"
+                    (selectionChange)="onDevCategChange($event)"
+                  >
+                  </app-device-category-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('clientDeviceCategId').invalid &&
+                      deviceForm.get('clientDeviceCategId').touched
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        deviceForm.get('clientDeviceCategId').errors.required
+                      "
+                    >
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                  <app-device-manufacturer-field
+                    formControlName="manufacturerId"
+                    placeholder="Select manufacturer..."
+                    new="true"
+                    (selectionChange)="onDevManufChange($event)"
+                  >
+                  </app-device-manufacturer-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('manufacturerId').invalid &&
+                      deviceForm.get('manufacturerId').touched
+                    "
+                  >
+                    <span
+                      *ngIf="deviceForm.get('manufacturerId').errors.required"
+                    >
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                  <app-device-manufacturer-type-field
+                    formControlName="manufDeviceTypeId"
+                    placeholder="Select manufacturer type..."
+                    [manufacturerId]="deviceForm.value?.manufacturerId"
+                    new="true"
+                    (selectionChange)="onDevManufTypeChange($event)"
+                  >
+                  </app-device-manufacturer-type-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('manufDeviceTypeId').invalid &&
+                      deviceForm.get('manufDeviceTypeId').touched
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        deviceForm.get('manufDeviceTypeId').errors.required
+                      "
+                    >
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+              </div>
+              <!-- <input
+                id="file"
+                type="text"
+                readonly
+                [value]="subdomain"
+                
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+                  'background-color': formBgColor,
+                  'border-bottom': '1px solid ' + formFontColor
+                }"
+              /> -->
+
+              <!-- <div class="row mb-2">
+                <div class="col-xs-12 col-sm-12 col-md-5">
+                  <label class="form-check-label">Device Network</label
+                  ><label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <app-device-network-field
+                    [selectable]="selectable"
+                    formControlName="networkId"
+                    placeholder="Select network..."
+                    [defaultValue]="deviceForm.get('networkId').value"
+                  >
+                  </app-device-network-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('networkId').invalid &&
+                      deviceForm.get('networkId').touched
+                    "
+                  >
+                    <span *ngIf="deviceForm.get('networkId').errors.required">
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+              </div> -->
+
+              <!-- <div class="row mb-2">
+                <div class="col-xs-12 col-sm-12 col-md-5">
+                  <label class="form-check-label">Title</label
+                  ><label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <input
+                    
+                    formControlName="title"
+                    placeholder="Title"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor,
+                      'border-bottom': '1px solid ' + formFontColor
+                    }"
+                  />
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('title').invalid &&
+                      deviceForm.get('title').touched
+                    "
+                  >
+                    <span *ngIf="deviceForm.get('title').errors.required">
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+              </div> -->
+
+              <!-- <div class="row mb-2">
+                <div class="col-xs-12 col-sm-12 col-md-5">
+                  <label class="form-check-label"
+                    >Device Manufacturer Type</label
+                  ><label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                  <app-device-manufacturer-type-field
+                    formControlName="manufDeviceTypeId"
+                    placeholder="Select manufacturer type..."
+                    [manufacturerId]="deviceForm.value?.manufacturerId"
+                  >
+                  </app-device-manufacturer-type-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('manufDeviceTypeId').invalid &&
+                      deviceForm.get('manufDeviceTypeId').touched
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        deviceForm.get('manufDeviceTypeId').errors.required
+                      "
+                    >
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+              </div> -->
+
+              <!-- <div class="row mb-2">
+                <div class="col-xs-12 col-sm-12 col-md-5">
+                  <label class="form-check-label">File</label
+                  ><label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                  <input
+                    formControlName="file"
+                    id="file"
+                    type="file"
+                    (change)="onFileChange($event)"
+                    
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor,
+                      'border-bottom': '1px solid ' + formFontColor
+                    }"
+                  />
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('file').invalid &&
+                      deviceForm.get('file').touched
+                    "
+                  >
+                    <span *ngIf="deviceForm.get('file').errors.required">
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+              </div> -->
+
+              <!-- <div class="row mb-2">
+                <div class="col-xs-12 col-sm-12 col-md-5">
+                  <label class="form-check-label">Use case</label
+                  ><label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <app-use-case-field
+                    formControlName="useCaseId"
+                    placeholder="Select device use case..."
+                  >
+                  </app-use-case-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('useCaseId').invalid &&
+                      deviceForm.get('useCaseId').touched
+                    "
+                  >
+                    <span *ngIf="deviceForm.get('useCaseId').errors.required">
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+              </div> -->
+
+              <div class="row mb-3 align-items-center">
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                  <input
+                    formControlName="file"
+                    id="file"
+                    type="file"
+                    class="file-input"
+                    #fileUpload
+                    (change)="onFileChange($event)"
+                    [ngStyle]="{
+                      'font-family': formFont || 'Times New Roman, Times, serif',
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor,
+                      'border-bottom': '1px solid ' + formFontColor
+                    }"
+                  />
+                  <mat-form-field
+                    class="col-12"
+                    appearance="outline"
+                    (click)="fileUpload.click()"
+                    role="button"
+                  >
+                    <mat-label
+                      [ngStyle]="{
+                        color: formFontColor || 'black',
+                        'font-family':
+                          formFont || 'Times New Roman, Times, serif'
+                      }"
+                      >Upload Device File</mat-label
+                    >
+                    <mat-hint
+                      class="mt-3 p-0"
+                      
+                      >Upload your filled template
+                    </mat-hint>
+                    <input
+                      matInput
+                      readonly
+                      [value]="filename || ''"                                              
+                      [ngStyle]="{
+                        color: formFontColor || 'black',
+                        'background-color': formBgColor
+                      }"
+                      role="button"
+                    />
+                    <mat-icon
+                      matSuffix
+                      [ngStyle]="{
+                        color: formFontColor || 'black'
+                      }"
+                      >attach_file</mat-icon
+                    >
+                  </mat-form-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('file').invalid &&
+                      deviceForm.get('file').touched
+                    "
+                  >
+                    <span *ngIf="deviceForm.get('file').errors.required">
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 mb-2 mt-4">
+                  <button
+                    [ngStyle]="{
+                      'font-family': formFont || 'Times New Roman, Times, serif',
+                      backgroundColor: '#' + (primaryColour || '3D95F7'),
+                      color: '#ffffff',
+                      fontSize: '16px',
+                      border: '0',
+                      borderRadius: '10px',
+                      height: '35px'
+                    }"
+                    (click)="viewTemplate()"
+                    [disabled]="deviceForm.get('networkId').invalid"
+                    type="button"
+                    class="btn btn-secondary mb-2"
+                    [style]="{
+                      opacity: deviceForm.get('networkId').invalid ? '0.5' : ''
+                    }"
+                  >
+                    Download Template
+                  </button>
+                </div>
+              </div>
+              <!-- <button
+                type="button"
+                (click)="fileInput.click()"
+                [ngStyle]="{
+                  'font-family': formFont || 'Times New Roman, Times, serif',
+                  backgroundColor: '#fff',
+                  width: '10em',
+                  color: '#' + (primaryColour || '3D95F7'),
+                  fontSize: '16px',
+                  border: '1px solid #' + (primaryColour || '3D95F7'),
+                  borderRadius: '10px',
+                  height: '35px'
+                }"
+              >
+                Choose File
+              </button>
+              <input
+                formControlName="file"
+                hidden
+                
+                (change)="onFileChange($event)"
+                #fileInput
+                type="file"
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+                  'font-family': formFont || 'Times New Roman, Times, serif',
+                  'background-color': formBgColor
+                }"
+              />
+              <span class="file-name">{{ selectedFile?.name }}</span>
+              <app-control-error
+                *ngIf="
+                  deviceForm.get('file').invalid &&
+                  deviceForm.get('file').touched
+                "
+              >
+                <span *ngIf="deviceForm.get('file').errors.required">
+                  This field is required.
+                </span>
+              </app-control-error> -->
+
+              <!-- <div class="row mb-2">
+                <div class="col-xs-12 col-sm-12 col-md-5">
+                  <label class="form-check-label">Device Category</label
+                  ><label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                  <app-device-category-field
+                    [subdomain]="companyId"
+                    [networkId]="deviceForm.value.networkId"
+                    formControlName="clientDeviceCategId"
+                    placeholder="Select category..."
+                  >
+                  </app-device-category-field>
+                  <app-control-error
+                    *ngIf="
+                      deviceForm.get('clientDeviceCategId').invalid &&
+                      deviceForm.get('clientDeviceCategId').touched
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        deviceForm.get('clientDeviceCategId').errors.required
+                      "
+                    >
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-sm-12 col-xs-12 col-md-12">
+              <button
+                (click)="cancel()"
+                type="button"
+                [ngStyle]="{
+                  backgroundColor: '#fff',
+                  width: '10em',
+                  color: '#' + (primaryColour || '3D95F7'),
+                  fontSize: '16px',
+                  border: '1px solid #' + (primaryColour || '3D95F7'),
+                  borderRadius: '10px',
+                  height: '35px'
+                }"
+              >
+                Reset
+              </button>
+              <button
+                *ngIf="payload.utility.bulkDeviceLoad.creater"
+                [disabled]="!deviceForm.valid"
+                (click)="submit()"
+                type="button"
+                class="float-end btn"
+                [ngStyle]="{
+                  backgroundColor: '#' + (primaryColour || '3D95F7'),
+                  width: '10em',
+                  color: '#ffffff',
+                  fontSize: '16px',
+                  border: '0',
+                  borderRadius: '10px',
+                  height: '35px'
+                }"
+              >
+                Import
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

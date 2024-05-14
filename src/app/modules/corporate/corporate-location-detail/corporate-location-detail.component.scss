@@ -1,0 +1,24 @@
+// input {
+//   border: none;
+//   outline: none;
+//   border-bottom: 1px solid black;
+//   border-radius: 5px;
+// }
+
+// button:hover#submit {
+//     background-color: #1f1;
+//     font-weight: bolder;
+// }
+
+// button:hover#cancel {
+//     background-color: #f11;
+//     font-weight: bolder;
+// }
+
+button:disabled {
+  opacity: 0.5;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}

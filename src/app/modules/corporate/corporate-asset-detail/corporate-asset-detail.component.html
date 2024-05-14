@@ -1,0 +1,82 @@
+<ng-container *ngIf="source$ | progress | async as payload">
+  <ngx-skeleton-loader
+    [count]="5"
+    *ngIf="payload.loading"
+  ></ngx-skeleton-loader>
+  <p *ngIf="payload.error" style="color: red">Unknown Error</p>
+
+  <ng-container *ngIf="payload.value">
+    <div
+      class="container-fluid"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: formFontColor || 'black',
+        border: '1px solid ' + formBgColor,
+        'background-color': formBgColor
+      }"
+    >
+      <!-- <div
+        class="card"
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif',
+          color: '#' + (formColor || 'ff9900')
+        }"
+      > -->
+      <div class="card-body">
+        <ng-container>
+          <div
+            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+            *ngIf="permission$ | async as payload"
+          >
+            <div class="row" *ngIf="!editMode">
+              <div
+                class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2"
+              >
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <app-title title="Asset Details" size="lg"></app-title>
+                  </div>
+                  <div class="col-6">
+                    <button
+                      *ngIf="payload.setup.asset.updater"
+                      (click)="edit()"
+                      class="col-md-6 col-xl-4 col-lg-4 float-end"
+                      [ngStyle]="{
+                        backgroundColor: '#fff',
+                        color: '#' + (primaryColour || '3D95F7'),
+                        fontSize: '16px',
+                        border: '1px solid #' + (primaryColour || '3D95F7'),
+                        borderRadius: '10px',
+                        height: '35px'
+                      }"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="editMode">
+              <div class="mb-2">
+                <app-title title="Edit Asset" size="lg"></app-title>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <app-asset-form
+          [editable]="editMode"
+          [company]="company"
+          [asset]="payload.value.asset"
+          [devices]="payload.value.devices"
+          (onDevicesChanged)="deviceChangeHandler($event)"
+          (onDevicesModified)="deviceDeleteHandler($event)"
+          (onSave)="submit($event)"
+          (onClose)="cancel()"
+        >
+        </app-asset-form>
+      </div>
+      <!-- </div> -->
+    </div>
+  </ng-container>
+</ng-container>

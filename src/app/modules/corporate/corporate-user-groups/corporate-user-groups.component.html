@@ -1,0 +1,97 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 px-3">
+  <!-- [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: '#' + (formColor || 'ff9900')
+  }" -->
+  <div class="row align-items-center" *ngIf="permission$ | async as payload">
+    <div class="col-7 mb-2">
+      <app-title title="Group/Role Directory" size="lg"></app-title>
+    </div>
+    <div class="col-3">
+      <form class="nosubmit">
+        <input
+          type="text"
+          style="padding: 4px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px"
+          placeholder="Search..."
+          [formControl]="searchField"
+          class="nosubmit float-end"
+        />
+      </form>
+    </div>
+    <div class="col-2">
+      <button
+        *ngIf="payload.security.groupRoles.creater"
+        type="button"
+        [ngStyle]="{
+          backgroundColor: '#' + (primaryColour || '3D95F7'),
+          width: '10em',
+          color: '#ffffff',
+          fontSize: '16px',
+          border: '0',
+          borderRadius: '10px',
+          height: '35px'
+        }"
+        class="btn btn-secondary btn-sm"
+        (click)="addGroupHandler()"
+      >
+        Add Group
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div
+      class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+      *ngIf="groups$ | progress | async as payload"
+    >
+      <ngx-skeleton-loader
+        *ngIf="payload.loading"
+        [count]="5"
+      ></ngx-skeleton-loader>
+      <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+      <ng-container *ngIf="payload.value">
+        <ngx-datatable
+          class="bootstrap table-bordered table-striped table-hover"
+          #companyListTable
+          [rows]="payload.value"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [limit]="10"
+          [columnMode]="'force'"
+          [loadingIndicator]="payload.loading"
+          [rowHeight]="'auto'"
+          style="font-size: 15px !important"
+        >
+          <!-- [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif',
+          color: '#' + (formColor || 'ff9900')
+        }" -->
+          <ngx-datatable-column name="Group" prop="roleName">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <a
+                href="javascript:void(0);"
+                (click)="openDetails(row)"
+                placement="top"
+                [ngbTooltip]="row.deviceId"
+              >
+                {{ row["roleName"] }}
+              </a>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Description" prop="roleDesc">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row["roleDesc"] }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Status" prop="statusName">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row["statusName"] }}
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </ng-container>
+    </div>
+  </div>
+</div>

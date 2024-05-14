@@ -1,0 +1,392 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <div
+        class="card col-sm-12 col-xs-12 col-md-12"
+        style="
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        "
+      >
+        <div
+          class="card-body"
+          style="overflow: auto"
+          [ngStyle]="{
+            border: '1px solid ' + formBgColor,
+            'background-color': formBgColor,
+            color: formFontColor || 'black',
+            'font-family': formFont
+          }"
+        >
+          <ng-container>
+            <div
+              class="card"
+              [ngStyle]="{
+                border: '1px solid ' + formBgColor,
+                'background-color': formBgColor,
+                color: formFontColor || 'black',
+                'font-family': formFont
+              }"
+            >
+              <app-title
+                class="card-header"
+                title="Subscription calculator"
+                size="lg"
+              ></app-title>
+              <div class="card-body">
+                <form [formGroup]="formData">
+                  <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                    <div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Number of devices</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="number"
+                            min="1"
+                            max="999"
+                            formControlName="devices"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                          <app-control-error
+                            *ngIf="
+                              formData.get('devices').invalid &&
+                              formData.get('devices').touched
+                            "
+                          >
+                            <span
+                              *ngIf="formData.get('devices').errors.required"
+                            >
+                              This field is required.
+                            </span>
+                            <span
+                              *ngIf="formData.get('devices').errors.pattern"
+                            >
+                              Devices must be between 1 - 999.
+                            </span>
+                          </app-control-error>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-item"
+                            >Number of years of subscription</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="number"
+                            formControlName="subscrYears"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                          <app-control-error
+                            *ngIf="
+                              formData.get('subscrYears').invalid &&
+                              formData.get('subscrYears').touched
+                            "
+                          >
+                            <span
+                              *ngIf="
+                                formData.get('subscrYears').errors.required
+                              "
+                            >
+                              This field is required.
+                            </span>
+                            <span
+                              *ngIf="formData.get('subscrYears').errors.pattern"
+                            >
+                              Years should be between 1 and 2.
+                            </span>
+                          </app-control-error>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">
+                            Number of Text messages to be received</label
+                          >
+                          <!-- <label style="color: red">*</label> -->
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="text"
+                            formControlName="messages"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Number of phone calls to be received</label
+                          >
+                          <!-- <label style="color: red">*</label> -->
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="text"
+                            formControlName="phoneCall"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Number of users</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="text"
+                            formControlName="user"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor,
+                              'border-bottom': '1px solid ' + formFontColor
+                            }"
+                          />
+                          <app-control-error
+                            *ngIf="
+                              formData.get('user').invalid &&
+                              formData.get('user').touched
+                            "
+                          >
+                            <span *ngIf="formData.get('user').errors.required">
+                              This field is required.
+                            </span>
+                            <span *ngIf="formData.get('user').errors.pattern">
+                              Atleast one user is required
+                            </span>
+                          </app-control-error>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Returning Client</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <app-combo-select-field
+                            [options]="clientType"
+                            [defaultOption]="clientType[0]"
+                            (selectionChange)="statusSelectionChange($event)"
+                          >
+                          </app-combo-select-field>
+                          <app-control-error
+                            *ngIf="
+                              formData.get('clientStatus').invalid &&
+                              formData.get('clientStatus').touched
+                            "
+                          >
+                            <span
+                              *ngIf="
+                                formData.get('clientStatus').errors.required
+                              "
+                            >
+                              This field is required.
+                            </span>
+                          </app-control-error>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Billing Currency</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <ng-container
+                          *ngIf="currency$ | progress | async as currency"
+                        >
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <app-combo-select-field
+                              *ngIf="!currency.value"
+                              [options]="currency.value"
+                              (selectionChange)="
+                                currencySelectionChange($event)
+                              "
+                            ></app-combo-select-field>
+
+                            <app-combo-select-field
+                              *ngIf="currency.value"
+                              [options]="currency.value"
+                              [defaultOption]="currency?.value[1]"
+                              (selectionChange)="
+                                currencySelectionChange($event)
+                              "
+                            ></app-combo-select-field>
+                            <app-control-error
+                              *ngIf="
+                                formData.get('valCurrency').invalid &&
+                                formData.get('valCurrency').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  formData.get('valCurrency').errors.required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div></ng-container
+                        >
+                      </div>
+                      <div
+                        class="row mb-3 ms-2"
+                        *ngIf="formData.get('clientStatus').value === 'return'"
+                      >
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Platform Access fees</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          {{ formData.get("platformFees").value }}
+                        </div>
+                      </div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">Subscription</label>
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 fw-bold"
+                          *ngIf="showValue"
+                        >
+                          {{ formData.get("result").value }}
+                        </div>
+                      </div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Monthly Subscription</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 fw-bold"
+                          *ngIf="showValue"
+                        >
+                          {{ formData.get("resultMonth").value }}
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2" *ngIf="showValue">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">
+                            **This price is subject to change dollar exchange
+                            rate**</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-5 ms-2">
+                    <div class="col mt-3 mb-3">
+                      <button
+                        type="button"
+                        class="btn btn-danger float-end"
+                        [ngStyle]="{
+                          backgroundColor: '#' + '3D95F7',
+                          width: '10em',
+                          color: '#ffffff',
+                          fontSize: '16px',
+                          border: '0',
+                          borderRadius: '10px',
+                          height: '35px'
+                        }"
+                        (click)="submit()"
+                      >
+                        Calculate
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

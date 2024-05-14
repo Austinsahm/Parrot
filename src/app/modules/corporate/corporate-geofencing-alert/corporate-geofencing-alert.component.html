@@ -1,0 +1,278 @@
+<div *ngIf="permission$ | async as payload">
+  <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="row mb-3">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+        <app-title title="Geofencing" size="lg"></app-title>
+      </div>
+    </div>
+
+    <div
+      class="row mb-1 py-1 border border-dark rounded"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: '#' + (formColor || 'ff9900')
+      }"
+      [formGroup]="form"
+    >
+      <div class="col-sm-6 col-md-4 col-lg-2 pe-0">
+        <app-combo-select-field
+          placeholder="Geofencing Task"
+          [options]="taskOptions"
+          (selectionChange)="onGeofencingTask($event)"
+        ></app-combo-select-field>
+      </div>
+
+      <ng-container *ngIf="geofencingTask === 'search'">
+        <div class="col-sm-6 col-md-4 col-lg-3 pe-0">
+          <app-device-category-field
+            placeholder="Device Category"
+            [selectable]="selectable"
+            [subdomain]="companyId"
+            (selectionChange)="changeDeviceCategoryId($event)"
+          ></app-device-category-field>
+        </div>
+
+        <ng-container *ngIf="!devCat; else category">
+          <div class="ps-2 col-sm-6 col-md-4 col-lg-3 pe-0">
+            <app-dashboard-device-field
+              placeholder="Device"
+              [selectable]="selectable"
+              (selectionChange)="changeDeviceId($event)"
+            >
+            </app-dashboard-device-field>
+          </div>
+        </ng-container>
+
+        <ng-template #category>
+          <div
+            class="col-sm-6 col-md-4 col-lg-3 pe-0"
+            *ngIf="deviceIdOptions$ | progress | async as payload"
+          >
+            <app-combo-select-field
+              placeholder="Device"
+              [options]="payload.value"
+              [loading]="payload.loading"
+              (selectionChange)="changeDeviceId($event)"
+            >
+            </app-combo-select-field></div
+        ></ng-template>
+
+        <div
+          class="col-sm-6 col-md-4 col-lg-3 pe-0"
+          *ngIf="geofenceNameOptions$ | progress | async as payload"
+        >
+          <app-combo-select-field
+            placeholder="Select Geofencing"
+            [options]="payload.value"
+            (selectionChange)="changeGeofencing($event)"
+          ></app-combo-select-field>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-1 pe-0 center">
+          <button
+            [disabled]="!deviceId"
+            type="button"
+            class="btn mt-2"
+            (click)="search()"
+          >
+            <mat-icon class="search">search</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="geofencingTask === 'tracing'">
+        <div class="col-sm-6 col-md-4 col-lg-3 pe-0">
+          <app-device-category-field
+            placeholder="Device Category"
+            [selectable]="selectable"
+            [subdomain]="companyId"
+            (selectionChange)="changeDeviceCategoryId($event)"
+          ></app-device-category-field>
+        </div>
+
+        <ng-container *ngIf="!devCat; else category">
+          <div class="ps-2 col-sm-6 col-md-4 col-lg-4 pe-0">
+            <app-dashboard-device-field
+              placeholder="Device"
+              [selectable]="selectable"
+              (selectionChange)="changeDeviceId($event)"
+            >
+            </app-dashboard-device-field>
+          </div>
+        </ng-container>
+        <ng-template #category>
+          <div
+            class="col-sm-6 col-md-4 col-lg-4 pe-0"
+            *ngIf="deviceIdOptions$ | progress | async as payload"
+          >
+            <app-combo-select-field
+              placeholder="Device"
+              [options]="payload.value"
+              [loading]="payload.loading"
+              (selectionChange)="changeDeviceId($event)"
+            >
+            </app-combo-select-field></div
+        ></ng-template>
+
+        <!-- <div
+          class="col-sm-6 col-md-4 col-lg-3 pe-0"
+          *ngIf="geofenceNameOptions$ | progress | async as payload"
+        >
+          <app-combo-select-field
+            placeholder="Select Geofencing"
+            [options]="payload.value"
+            (selectionChange)="changeGeofencing($event)"
+          ></app-combo-select-field>
+        </div> -->
+
+        <div class="ps-2 col-sm-6 col-md-4 col-lg-3 mt-1 mt-md-2 pe-0">
+          <app-combo-select-field
+            placeholder="Geodata Source"
+            [options]="sourceOptions"
+            (selectionChange)="changeSource($event)"
+          ></app-combo-select-field>
+        </div>
+
+        <div
+          [ngClass]="{
+            'col-sm-6 col-md-3 col-lg-3': geodataDisplay === 'motion_tracker',
+            'col-sm-6 col-md-4 col-lg-4': geodataDisplay !== 'motion_tracker'
+          }"
+          class="mt-1 pe-0"
+        >
+          <app-combo-select-field
+            placeholder="Geodata Display"
+            [options]="geodataDisplayOptions"
+            (selectionChange)="changeDisplay($event)"
+          ></app-combo-select-field>
+        </div>
+
+        <div
+          class="ps-0 col-sm-6 mt-1 pe-0"
+          [ngClass]="{
+            'col-md-4 col-lg-4': geodataDisplay === 'motion_tracker',
+            'col-md-5 col-lg-5': geodataDisplay !== 'motion_tracker'
+          }"
+        >
+          <mat-form-field appearance="standard">
+            <mat-label>Date range</mat-label>
+            <mat-date-range-input [max]="today" [rangePicker]="picker">
+              <input
+                matStartDate
+                readonly
+                formControlName="startDate"
+                placeholder="Start date"
+              />
+              <input
+                matEndDate
+                readonly
+                formControlName="endDate"
+                placeholder="End date"
+              />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+
+        <div
+          *ngIf="geodataDisplay === 'motion_tracker'"
+          class="ps-0 row col-sm-6 col-md-4 col-lg-3 mt-1 pe-0"
+        >
+          <div class="ps-0 col-8 pe-0">
+            <app-combo-select-field
+              placeholder="Marker Icons"
+              [options]="markerIconOptions"
+              (selectionChange)="changeMarkerIcon($event)"
+            >
+            </app-combo-select-field>
+          </div>
+          <div class="ps-0 col-4 pe-0">
+            <app-combo-select-field
+              placeholder="Speed"
+              [options]="markerSpeeedOptions"
+              (selectionChange)="changeMarkerSpeed($event)"
+            >
+            </app-combo-select-field>
+          </div>
+        </div>
+
+        <div
+          [ngClass]="{
+            'col-sm-6 col-md-4 col-lg-1': geodataDisplay === 'motion_tracker',
+            'col-sm-6 col-md-3 col-lg-3': geodataDisplay !== 'motion_tracker'
+          }"
+          class="mt-1 pe-0 center"
+        >
+          <button
+            [disabled]="!deviceId || !geodatSource || !geodataDisplay"
+            type="button"
+            class="btn mt-2"
+            (click)="searchTracing()"
+          >
+            <mat-icon class="search">search</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="geofencingTask === 'create'">
+        <div class="col-sm-6 col-md-4 col-lg-4 pe-0">
+          <app-device-category-field
+            placeholder="Device Category"
+            [selectable]="selectable"
+            [subdomain]="companyId"
+            (selectionChange)="changeDeviceCategoryId($event)"
+          ></app-device-category-field>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-4 pe-0">
+          <mat-form-field appearance="standard">
+            <mat-label>Enter Geofencing Name</mat-label>
+            <input matInput formControlName="newGeofence" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-2 pe-0">
+          <button
+            [disabled]="!form.valid || !devCat || !enableGeofence"
+            type="button"
+            class="btn mt-2"
+            (click)="saveGeofence()"
+          >
+            <mat-icon class="search">save</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div id="map"></div>
+        <div class="row mt-1" *ngIf="geofenceSourceResult">
+          <div
+            style="font-size: small"
+            class="col-md-4"
+            *ngFor="let sourceResult of geofenceSourceResult"
+            [ngSwitch]="sourceResult.dataSource"
+          >
+            <div *ngSwitchCase="'WIFI'">
+              <span class="wifi"></span>
+              <span class="ms-2">WIFI</span>
+            </div>
+            <div *ngSwitchCase="'SIGFOX'">
+              <span class="sigfox"></span>
+              <span class="ms-2">SIGFOX</span>
+            </div>
+            <div class="col-4" *ngSwitchCase="'GPS'">
+              <span class="gps"></span>
+              <span class="ms-2">GPS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

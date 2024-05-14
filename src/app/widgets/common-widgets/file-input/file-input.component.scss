@@ -1,0 +1,21 @@
+.file-box {
+  height: 3em;
+  border: 2px dashed #ddd;
+  background-color: #efefef;
+  color: #ddd;
+  font-size: 1.4em;
+  text-align: center;
+  cursor: pointer;
+}
+
+input[type="file"] {
+  /* display: none; */
+}
+
+.file-input {
+  display: none;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}

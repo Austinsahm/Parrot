@@ -1,0 +1,191 @@
+<div
+  class="container-fluid"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+  style="border-radius: 10px"
+>
+  <div
+    class="modal-header"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }"
+  >
+    <span 
+      >{{ device.deviceName }} ({{ device.manufDeviceId }}) > Data Details</span
+    >
+    <!-- <button
+      type="button"
+      class="btn float-end"
+      aria-label="Close"
+      (click)="close()"
+    >
+      <mat-icon>close</mat-icon>
+    </button> -->
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="close()"
+    ></button>
+  </div>
+  <div
+    class="modal-body"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }"
+  >
+    <div
+      class="card"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: '#' + (formColor || 'ff9900')
+      }"
+    >
+      <div class="card-body justify-content-center align-items-center">
+        <mat-tab-group
+          style="max-height: 27em; overflow: auto"
+          (selectedTabChange)="onTabChange($event)"
+        >
+          <mat-tab label="Last Status">
+            <ng-template matTabContent>
+              <ngx-skeleton-loader
+                *ngIf="loadingState"
+                [count]="5"
+              ></ngx-skeleton-loader
+              ><app-empty-data
+                template="No data available"
+                text="Last status not available this time"
+                *ngIf="!loadingState && !lastStatusData.length"
+              ></app-empty-data>
+              <app-device-last-status
+                [data]="lastStatusData"
+                *ngIf="!loadingState && lastStatusData.length"
+              ></app-device-last-status
+            ></ng-template>
+          </mat-tab>
+
+          <mat-tab label="Logs">
+            <ng-template matTabContent
+              ><ngx-skeleton-loader
+                *ngIf="loadingHistory"
+                [count]="5"
+              ></ngx-skeleton-loader>
+              <div style="margin-top: 1em">
+                <app-empty-data
+                  template="No data available"
+                  text="Device History not available this time"
+                  *ngIf="!loadingHistory && !deviceHistoryData.length"
+                ></app-empty-data
+                ><app-device-history
+                  [logs]="deviceHistoryData"
+                  *ngIf="!loadingHistory && deviceHistoryData.length"
+                ></app-device-history></div
+            ></ng-template>
+          </mat-tab>
+
+          <ng-container *ngIf="device.tab4"
+            ><mat-tab label="Time Series Charts (Summarized)">
+              <ng-template matTabContent>
+                <ngx-skeleton-loader
+                  *ngIf="loadingSummaryData"
+                  [count]="5"
+                ></ngx-skeleton-loader>
+                <app-empty-data
+                  template="No data available"
+                  text="No Charts available this time"
+                  *ngIf="!loadingSummaryData && !data.length"
+                ></app-empty-data>
+                <ng-container *ngFor="let item of data">
+                  <app-line-chart-multiple-sources
+                    [data]="item.data"
+                    [title]="item.sensorCategName"
+                    [brushes]="chartColours"
+                  ></app-line-chart-multiple-sources>
+                </ng-container>
+              </ng-template> </mat-tab
+          ></ng-container>
+
+          <ng-container *ngIf="device.tab4"
+            ><mat-tab label="Time Series Charts (Explicit)">
+              <ng-template matTabContent>
+                <ngx-skeleton-loader
+                  *ngIf="loadingSingle"
+                  [count]="5"
+                ></ngx-skeleton-loader>
+                <app-empty-data
+                  template="No data available"
+                  text="No Charts available this time"
+                  *ngIf="!loadingSingle && !singleData.length"
+                ></app-empty-data>
+                <ng-container *ngFor="let item of singleData">
+                  <app-line-chart-single-source
+                    [data]="item"
+                    [brushes]="chartColours"
+                  ></app-line-chart-single-source>
+                </ng-container>
+              </ng-template> </mat-tab
+          ></ng-container>
+
+          <ng-container *ngIf="device.tab3"
+            ><mat-tab label="Static Charts">
+              <ng-template matTabContent>
+                <ngx-skeleton-loader
+                  *ngIf="loadingStaticChartsData"
+                  [count]="5"
+                ></ngx-skeleton-loader>
+                <app-empty-data
+                  template="No data available"
+                  text="No Charts available this time"
+                  *ngIf="!loadingStaticChartsData && !staticChartsData.length"
+                ></app-empty-data>
+                <ng-container *ngFor="let item of staticChartsData">
+                  <!-- <app-donut-guage-chart [data]="item"></app-donut-guage-chart>
+                  <app-pie-guage-chart [data]="item"></app-pie-guage-chart> -->
+                  <app-radial-gauge-chart
+                    [data]="item"
+                  ></app-radial-gauge-chart>
+                </ng-container>
+              </ng-template> </mat-tab
+          ></ng-container>
+
+              <ng-container *ngIf="device.latitude != 0 && device.longitude != 0">
+                ><mat-tab label="Geolocation">
+                  <ng-template matTabContent>
+                    <app-device-location
+                      [latitude]="device.latitude"
+                      [longitude]="device.longitude"
+                    ></app-device-location>
+                    <!-- <app-device-geolocation
+                      [latitude]="device.latitude"
+                      [longitude]="device.longitude"
+                      [address]="device.address"
+                    ></app-device-geolocation> -->
+                  </ng-template>
+                </mat-tab>
+              </ng-container>
+
+          <ng-container *ngIf="!device.tab3 && !device.tab4">
+            <mat-tab label="MapView">
+              <ng-template matTabContent>
+                <app-device-asset-tracing
+                  [companyId]="companyId"
+                  [deviceId]="device.deviceId"
+                ></app-device-asset-tracing>
+
+                <!-- <app-device-tracing
+                  [companyId]="companyId"
+                  [deviceId]="device.deviceId"
+                ></app-device-tracing> -->
+              </ng-template>
+            </mat-tab>
+          </ng-container>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer"></div>
+</div>

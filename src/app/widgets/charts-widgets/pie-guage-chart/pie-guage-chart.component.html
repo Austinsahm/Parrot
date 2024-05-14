@@ -1,0 +1,25 @@
+<div class="container sample">
+  <div class="options vertical">
+    <span id="legendTitle">{{ title }}</span>
+    <igx-item-legend #legend></igx-item-legend>
+  </div>
+
+  <div class="container">
+    <igx-pie-chart
+      #piechart
+      [height]="height"
+      width="100%"
+      [dataSource]="data"
+      valueMemberPath="Value"
+      labelMemberPath="Label"
+      legendLabelMemberPath="Summary"
+      labelsPosition="BestFit"
+      labelExtent="0"
+      [legend]="legend"
+      radiusFactor="0.7"
+      startAngle="210"
+      [brushes]="brushes"
+    >
+    </igx-pie-chart>
+  </div>
+</div>

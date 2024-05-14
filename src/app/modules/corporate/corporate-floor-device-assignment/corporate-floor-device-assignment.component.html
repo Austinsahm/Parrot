@@ -1,0 +1,100 @@
+<div
+  class="px-3"
+  [ngStyle]="{
+    'border-bottom': '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <app-title title="Floor Plan Device Assignment" size="lg"></app-title>
+  <div class="row" *ngIf="smartHome$ | progress | async as payload">
+    <!-- Floor dropdown -->
+    <div class="row align-items-center">
+      <div class="col-sm-6 col-md-8">
+        Drag a device onto the floor plan to assign it to the floor. Click on an
+        icon to remove that device. When done, click Save Changes.
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4 pe-0">
+        <app-combo-select-field
+          [defaultOption]="payload.value?.floor[0]"
+          placeholder="Select Floor"
+          [options]="payload.value?.floor"
+          (selectionChange)="onFloorSelect($event)"
+        ></app-combo-select-field>
+      </div>
+    </div>
+
+    <!-- (dragstart)="onUpdateDrop()" (dragend)="onUpdateDrop()" -->
+    <div class="row">
+      <!-- (Draggable) Device List -->
+      <div
+        class="col-3"
+        [ngStyle]="{
+          border: '1px solid ' + formBgColor,
+          'background-color': formBgColor,
+          color: formFontColor || 'black',
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+      >
+        <div
+          style="max-height: 30em"
+          class="col-12 card"
+          [ngStyle]="{
+            'background-color': formBgColor,
+            color: formFontColor || 'black',
+            'font-family': formFont || 'Times New Roman, Times, serif'
+          }"
+        >
+          <div class="card-header text-white bg-primary mb-2">Devices</div>
+
+          <input
+            type="text"
+            placeholder="Search..."
+            class="mb-3"
+            (keyup)="availableDeviceSearch($event)"
+            [ngStyle]="{
+              color: formFontColor || 'black',
+              'background-color': formBgColor,
+              border: '1px solid ' + formFontColor
+            }"
+          />
+
+          <div *ngIf="searchAssetDevices?.length" style="overflow: auto">
+            <div
+              *ngFor="let device of searchAssetDevices"
+              draggable="true"
+              (dragstart)="onDrop($event, device)"
+              class="userAccessDevice card mb-2 p-1 draggable"
+              style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px"
+              [ngStyle]="{
+                border: '1px solid ' + formFontColor,
+                'background-color': formBgColor,
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif'
+              }"
+            >
+              {{ device.deviceName }}
+            </div>
+          </div>
+
+          <div *ngIf="!searchAssetDevices?.length">
+            No device available for User...
+          </div>
+        </div>
+      </div>
+
+      <!-- Floor Plan -->
+      <div class="col-9 floor" *ngIf="payload.value?.devices[floorIndex]">
+        <app-corporate-floor-plan
+          [floorId]="payload.value?.devices[floorIndex][0].floorId"
+          [device]="assignedDevice"
+          [devices]="payload.value?.devices[floorIndex]"
+          design="true"
+          (removeDroppedDevice)="dropDeviceFromList($event)"
+          (addDeviceToList)="returnDeviceToList($event)"
+        ></app-corporate-floor-plan>
+      </div>
+    </div>
+  </div>
+</div>

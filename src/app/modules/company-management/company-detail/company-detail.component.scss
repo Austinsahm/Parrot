@@ -1,0 +1,115 @@
+:host
+::ng-deep {
+  .ngx-datatable.bootstrap .datatable-footer {
+    background: #424242;
+    color: #ededed;
+    margin-top: -1px;
+  }
+  .ngx-datatable.bootstrap .datatable-footer .page-count {
+    line-height: 50px;
+    height: 50px;
+    padding: 0 1.2rem;
+  }
+  .ngx-datatable.bootstrap .datatable-footer .datatable-pager {
+    margin: 0 10px;
+    vertical-align: top;
+  }
+  .ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li {
+    margin: 10px 0px;
+  }
+  .ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled).active a,
+  .ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled):hover a {
+    background-color: #545454;
+    font-weight: bold;
+  }
+  .ngx-datatable.bootstrap .datatable-footer .datatable-pager a {
+    height: 22px;
+    min-width: 24px;
+    line-height: 22px;
+    padding: 0;
+    border-radius: 3px;
+    margin: 0 3px;
+    text-align: center;
+    vertical-align: top;
+    text-decoration: none;
+    vertical-align: bottom;
+    color: #ededed;
+  }
+  .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-left,
+  .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-skip,
+  .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-right,
+  .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-prev {
+    font-size: 18px;
+    line-height: 27px;
+    padding: 0 3px;
+  }
+
+  .ngx-datatable.bootstrap .datatable-body .progress-linear {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 5px;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+  }
+  .ngx-datatable.bootstrap .datatable-body .progress-linear .container {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 5px;
+    -webkit-transform: translate(0, 0) scale(1, 1);
+    transform: translate(0, 0) scale(1, 1);
+    background-color: #aad1f9;
+  }
+  .ngx-datatable.bootstrap .datatable-body .progress-linear .container .bar {
+    transition: all .2s linear;
+    -webkit-animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
+    animation: query 0.8s infinite cubic-bezier(0.39, 0.575, 0.565, 1);
+    transition: -webkit-transform .2s linear;
+    transition: transform .2s linear;
+    background-color: #106cc8;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+  }
+  /**
+   * Progress bar animations
+   */
+  @keyframes query {
+    0% {
+      opacity: 1;
+      transform: translateX(35%) scale(0.3, 1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-50%) scale(0, 1);
+    }
+  }
+}
+// input{
+//   border: none;
+//   border-bottom: 1px solid black;
+//   border-radius: 5px;
+// }
+// button{
+//   font-family: Times New Roman, Times, serif;
+// }
+button.btn-danger:hover{
+  background-color: red;
+}
+button.btn-success:hover{
+  background-color: green;
+}
+
+.box{
+  box-shadow: rgb(50 50 93 / 25%) 0px 6px 12px -2px, rgb(0 0 0 / 30%) 0px 3px 7px -3px;
+}
+
+label{
+  text-align: justify;
+}

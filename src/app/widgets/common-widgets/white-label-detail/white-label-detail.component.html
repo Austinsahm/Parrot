@@ -1,0 +1,155 @@
+<div
+  class="container col-sm-12"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <div class="row mb-4" *ngIf="company?.companyUrl">
+    <div class="col-3 bd-label">Company URL</div>
+    <div class="col-3">{{ company?.companyUrl }}</div>
+  </div>
+  <div class="row mb-4">
+    <div class="col-xs-12 col-sm-6 col-md-6" style="">
+      <div class="row">
+        <div class="col-4 bd-label title ">Company Logo</div>
+        <div class="col-8">
+          <div class="text-center">
+            <div class="text-center bd-image" *ngIf="true">
+              <img
+                [src]="company?.logo"
+                class="rounded img-thumbnail"
+                alt="Company Logo"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-xs-12 col-sm-6 col-md-4" style="">
+      <div class="row">
+        <div class="col-8 bd-label title">Company Header Color</div>
+        <!-- <div
+      class="col-8 circle"
+      [ngStyle]="{
+        'background-color': company?.headerColour
+          ? '#' + company.headerColour
+          : ''
+      }"
+    >
+      <span></span> -->
+        <div class="col-4">
+          <input
+            type="color"
+            disabled
+            [value]="company?.headerColour ? company.headerColour : ''"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4" style="">
+      <div class="row">
+        <div class="col-8 bd-label">Company Header Font Color</div>
+        <div class="col-4">
+          <input
+            type="color"
+            disabled
+            [value]="company?.headerFontColour ? company.headerFontColour : ''"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4" style="">
+      <div class="row">
+        <div class="col-8 bd-label title">Company Sidebar Color</div>
+        <div class="col-4">
+          <input
+            type="color"
+            disabled
+            [value]="company?.sideBarColor ? company.sideBarColor : ''"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row mb-3">
+    <div class="col-4 bd-label">Company Body Color</div>
+    <div class="col-8">
+      <input
+        type="color"
+        disabled
+        [value]="company?.bodyColour ? '#' + company.bodyColour : ''"
+      />
+    </div>
+  </div> -->
+
+  <div class="row mb-3">
+    <div class="col-xs-12 col-sm-6 col-md-4" style="">
+      <div class="row">
+        <div class="col-8 bd-label title">Company Footer Color</div>
+        <div class="col-4">
+          <input
+            type="color"
+            disabled
+            [value]="company?.footerColour ? company.footerColour : ''"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4" style="">
+      <div class="row">
+        <div class="col-8 bd-label title">Company Footer Font Color</div>
+        <div class="col-4">
+          <input
+            type="color"
+            disabled
+            [value]="company?.footerFontColour ? company.footerFontColour : ''"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4" style="">
+      <div class="row">
+        <div class="col-8 bd-label title">Company Form Color</div>
+        <div class="col-4">
+          <input
+            type="color"
+            disabled
+            [value]="company?.formColor ? company.formColor : ''"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-xs-12 col-sm-6 col-md-4" style="">
+      <div class="row">
+        <div class="col-8 bd-label title">Company Form Font Color</div>
+        <div class="col-4">
+          <input
+            type="color"
+            disabled
+            [value]="company?.formFontColor ? company.formFontColor : ''"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Company Form Font Style</mat-label>
+        <input
+          matInput
+          disabled
+          [value]="company?.formFontType ? company.formFontType : ''"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+</div>

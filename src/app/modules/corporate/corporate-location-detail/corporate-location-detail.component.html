@@ -1,0 +1,470 @@
+<form
+  [formGroup]="form"
+  class="p-3"
+  [ngStyle]="{
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <ng-container>
+    <div
+      class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+      *ngIf="permission$ | async as payload"
+    >
+      <div class="row" *ngIf="!editable">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2">
+          <div class="row">
+            <div class="col-6">
+              <app-title title="Location Details" size="lg"></app-title>
+            </div>
+            <div class="col-6">
+              <button
+                *ngIf="payload.setup.location.updater"
+                (click)="edit()"
+                class="col-md-12 col-xl-6 col-lg-6 float-end"
+                [ngStyle]="{
+                  backgroundColor: '#fff',
+                  color: '#' + (primaryColour || '3D95F7'),
+                  fontSize: '16px',
+                  border: '1px solid #' + (primaryColour || '3D95F7'),
+                  borderRadius: '10px',
+                  height: '35px'
+                }"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="editable">
+        <div class="mb-1">
+          <app-title title="Edit Location" size="lg"></app-title>
+        </div>
+      </div>
+    </div> </ng-container
+  ><br />
+
+  <div
+    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+    *ngIf="source$ | progress | async"
+  >
+    <div class="row">
+      <div class="col-sm-12 col-lg-6">
+        <div *ngIf="!editable" class="row mb-4 align-items-center">
+          <div class="col-md-4">
+            <label class="form-check-label">Location</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <span>{{ details?.locationName }}</span>
+          </div>
+        </div>
+        <div *ngIf="editable" class="row mb-4 align-items-center">
+          <mat-form-field class="col-12" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Location</mat-label
+            >
+            <input
+              matInput
+              placeholder="Location Name"
+              formControlName="locationName"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('locationName').invalid &&
+              form.get('locationName').touched
+            "
+          >
+            <span *ngIf="form.get('locationName').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <label *ngIf="editable" style="color: red">*</label> -->
+        <!-- <input
+            class="form-control"
+            placeholder="Location Name"
+            formControlName="locationName"
+            *ngIf="editable"
+            [ngStyle]="{
+              color: formFontColor || 'black',
+              'background-color': formBgColor,
+              'border-bottom': '1px solid ' + formFontColor
+            }"
+          /> -->
+
+        <div *ngIf="!editable" class="row mb-4 align-items-center">
+          <div class="col-md-4">
+            <label class="form-check-label">Description</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <span>{{ details?.locationDesc }}</span>
+          </div>
+        </div>
+        <div *ngIf="editable" class="row mb-4 align-items-center">
+          <mat-form-field class="col-12" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Description</mat-label
+            >
+            <input
+              matInput
+              placeholder="Description"
+              formControlName="locationDesc"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('locationDesc').invalid &&
+              form.get('locationDesc').touched
+            "
+          >
+            <span *ngIf="form.get('locationDesc').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <label *ngIf="editable" style="color: red">*</label>
+        <input
+        class="form-control"
+        placeholder="Description"
+        formControlName="locationDesc"
+        *ngIf="editable"
+        [ngStyle]="{
+          color: formFontColor || 'black',
+          'background-color': formBgColor,
+          'border-bottom': '1px solid ' + formFontColor
+        }"
+      /> -->
+
+        <div *ngIf="!editable" class="row mb-4 align-items-center">
+          <div class="col-md-4">
+            <label class="form-check-label">Address 1</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <span>{{ details?.locationAddress1 }}</span>
+          </div>
+        </div>
+        <div *ngIf="editable" class="row mb-4 align-items-center">
+          <mat-form-field class="col-12" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Address 1</mat-label
+            >
+            <input
+              matInput
+              placeholder="Address 1"
+              formControlName="locAddress1"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('locAddress1').invalid && form.get('locAddress1').touched
+            "
+          >
+            <span *ngIf="form.get('locAddress1').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <label *ngIf="editable" style="color: red">*</label>
+        <input
+          class="form-control"
+          placeholder="Address 1"
+          formControlName="locAddress1"
+          *ngIf="editable"
+          [ngStyle]="{
+            color: formFontColor || 'black',
+            'background-color': formBgColor,
+            'border-bottom': '1px solid ' + formFontColor
+          }"
+        /> -->
+
+        <div *ngIf="!editable" class="row mb-4 align-items-center">
+          <div class="col-md-4">
+            <label class="form-check-label">Address 2</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <span>{{ details?.locationAddress2 }}</span>
+          </div>
+        </div>
+        <div *ngIf="editable" class="row mb-4 align-items-center">
+          <mat-form-field class="col-12" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Address 2</mat-label
+            >
+            <input
+              matInput
+              placeholder="Address 2"
+              formControlName="locAddress2"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('locAddress2').invalid && form.get('locAddress2').touched
+            "
+          >
+            <span *ngIf="form.get('locAddress2').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+      </div>
+      <!-- <label style="color: red">*</label>
+      <input
+        class="form-control"
+        placeholder="Address 2"
+        formControlName="locAddress2"
+        *ngIf="editable"
+        [ngStyle]="{
+          color: formFontColor || 'black',
+          'background-color': formBgColor,
+          'border-bottom': '1px solid ' + formFontColor
+        }"
+      /> -->
+
+      <div *ngIf="editLocation$ | progress | async" class="col-sm-12 col-lg-6">
+        <div *ngIf="!editable" class="row mb-4 align-items-center">
+          <div class="col-xs-12 col-sm-12 col-md-4">
+            <label class="form-check-label">Postal Code</label
+            ><label *ngIf="editable" style="color: red"></label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <span></span>
+          </div>
+        </div>
+        <div *ngIf="editable" class="row mb-4 align-items-center">
+          <mat-form-field class="col-12" appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Postal Code</mat-label
+            >
+            <input
+              matInput
+              placeholder="Postal Code"
+              formControlName="postalCode"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+        </div>
+        <!-- <input
+        class="form-control"
+        placeholder="Postal Code"
+        formControlName="postalCode"
+        *ngIf="editable"
+        [ngStyle]="{
+          color: formFontColor || 'black',
+          'background-color': formBgColor,
+          'border-bottom': '1px solid ' + formFontColor
+        }"
+      /> -->
+
+        <div *ngIf="!editable" class="row mb-4 align-items-center">
+          <div class="col-xs-12 col-sm-12 col-md-4">
+            <label class="form-check-label">State</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <span>{{ details?.stateName }}</span>
+          </div>
+        </div>
+        <div *ngIf="editable" class="row mb-4 align-items-center">
+          <app-state-field
+            formControlName="stateId"
+            placeholder="Select State..."
+            new="true"
+            (selectionChange)="changeState($event)"
+            [defaultValue]="form.get('stateId').value"
+          >
+          </app-state-field>
+          <app-control-error
+            *ngIf="form.get('stateId').invalid && form.get('stateId').touched"
+          >
+            <span *ngIf="form.get('stateId').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <label *ngIf="editable" style="color: red">*</label> -->
+
+        <div *ngIf="!editable" class="row mb-4 align-items-center">
+          <div class="col-xs-12 col-sm-12 col-md-4">
+            <label class="form-check-label">City</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <span>{{ details?.cityName }}</span>
+          </div>
+        </div>
+        <div *ngIf="editable" class="row mb-4 align-items-center">
+          <app-city-field
+            formControlName="cityId"
+            [stateId]="form.value.stateId"
+            placeholder="Select City..."
+            new="true"
+            (selectionChange)="changeCity($event)"
+            [defaultValue]="form.get('cityId').value"
+          >
+          </app-city-field>
+          <app-control-error
+            *ngIf="form.get('cityId').invalid && form.get('cityId').touched"
+          >
+            <span *ngIf="form.get('cityId').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <label *ngIf="editable" style="color: red">*</label> -->
+
+        <div *ngIf="!editable" class="row mb-4 align-items-center">
+          <div class="col-xs-12 col-sm-12 col-md-4">
+            <label class="form-check-label">Status</label>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <span>{{ details?.statusName }}</span>
+          </div>
+        </div>
+        <div *ngIf="editable" class="row mb-4 align-items-center">
+          <app-status-field
+            formControlName="statusId"
+            placeholder="Select Status..."
+            new="true"
+            (selectionChange)="changeStatus($event)"
+            [defaultValue]="form.get('statusId').value"
+          >
+          </app-status-field>
+          <app-control-error
+            *ngIf="form.get('statusId').invalid && form.get('statusId').touched"
+          >
+            <span *ngIf="form.get('statusId').errors.required"
+              >This field is required.</span
+            >
+          </app-control-error>
+        </div>
+        <!-- <label *ngIf="editable" style="color: red">*</label> -->
+      </div>
+    </div>
+    <hr />
+
+    <div class="row">
+      <div
+        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+        *ngIf="devices$ | progress | async as payload"
+      >
+        <ngx-datatable
+          class="bootstrap table-bordered table-striped table-hover"
+          #locationsListTable
+          [rows]="payload.value"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [limit]="10"
+          [loadingIndicator]="payload.loading"
+          [columnMode]="'force'"
+          [rowHeight]="'auto'"
+          style="font-size: 15px !important"
+        >
+          <ngx-datatable-column name="Device ID" prop="deviceId">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <a href="javascript:void(0);" placement="top">
+                {{ row["manufDeviceId"] }}
+              </a>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Device Name" prop="deviceName">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row["deviceName"] }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Asset Name" prop="assetName">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row["assetName"] }}
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col">
+        <button
+          (click)="closeHandler()"
+          type="button"
+          [ngStyle]="{
+            backgroundColor: '#fff',
+            width: '10em',
+            color: '#' + (primaryColour || '3D95F7'),
+            fontSize: '16px',
+            border: '1px solid #' + (primaryColour || '3D95F7'),
+            borderRadius: '10px',
+            height: '35px'
+          }"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          *ngIf="editable"
+          [disabled]="!form.valid || form.pristine"
+          (click)="saveHandler()"
+          type="button"
+          class="ms-2 float-end"
+          [ngStyle]="{
+            backgroundColor: '#' + (primaryColour || '3D95F7'),
+            width: '10em',
+            color: '#ffffff',
+            fontSize: '16px',
+            border: '0',
+            borderRadius: '10px',
+            height: '35px'
+          }"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

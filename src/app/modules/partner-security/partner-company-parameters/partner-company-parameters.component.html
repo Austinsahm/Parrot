@@ -1,0 +1,485 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <div
+        class="card col-sm-12 col-xs-12 col-md-12"
+        style="
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        "
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif',
+          color: formFontColor || 'black',
+          border: '1px solid ' + formBgColor,
+          'background-color': formBgColor
+        }"
+      >
+        <div class="card-body" style="overflow: auto">
+          <ng-container>
+            <div
+              class="card"
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black',
+                border: '1px solid ' + formBgColor,
+                'background-color': formBgColor
+              }"
+            >
+              <app-title
+                class="card-header"
+                title="Company Parameters"
+                size="lg"
+              ></app-title>
+              <div class="card-body">
+                <form [formGroup]="notifyForm">
+                  <div
+                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                  >
+                    <div class="row" *ngIf="!editMode">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2"
+                      >
+                        <button
+                          class="float-end"
+                          [ngStyle]="{
+                            backgroundColor: '#ffffff',
+                            width: '10em',
+                            color: '#' + (primaryColour || '3D95F7'),
+                            fontSize: '16px',
+                            border: '1px solid #' + (primaryColour || '3D95F7'),
+                            borderRadius: '10px',
+                            height: '35px'
+                          }"
+                          (click)="edit()"
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row" style="max-width: 40em">
+                      <div class="row mb-4">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"
+                        >
+                          <label class="form-check-label">Company</label>
+                          <!-- <label *ngIf="editMode" style="color: red">*</label> -->
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"
+                        >
+                          <span *ngIf="!editMode">{{ companyName }}</span>
+                          <ng-container *ngIf="editMode">
+                            <input
+                              readonly
+                              type="text"
+                              placeholder="companyName"
+                              formControlName="companyName"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                            />
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <span
+                        class="fw-bold mb-2"
+                        [ngStyle]="{
+                          'background-color': formBgColor,
+                          color: formFontColor || 'black',
+                          'font-family':
+                            formFont || 'Times New Roman, Times, serif'
+                        }"
+                        >Default Number of Days Setup</span
+                      >
+                    </div>
+
+                    <div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4"
+                        >
+                          <mat-form-field class="col-12" appearance="outline">
+                            <mat-label
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'font-family':
+                                  formFont || 'Times New Roman, Times, serif'
+                              }"
+                              >Default No. of Days for Device Reports</mat-label
+                            >
+                            <input
+                              matInput
+                              *ngIf="!editMode"
+                              readonly
+                              disabled
+                              type="number"
+                              min="0"
+                              formControlName="device_rep_def_days"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                              style="border-top-width: 0px"
+                            />
+                            <input
+                              matInput
+                              *ngIf="editMode"
+                              type="number"
+                              min="0"
+                              formControlName="device_rep_def_days"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                            />
+                          </mat-form-field>
+                        </div>
+
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4"
+                        >
+                          <mat-form-field class="col-12" appearance="outline">
+                            <mat-label
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'font-family':
+                                  formFont || 'Times New Roman, Times, serif'
+                              }"
+                              >Default No. of Days for Company
+                              Reports</mat-label
+                            >
+                            <input
+                              matInput
+                              *ngIf="!editMode"
+                              readonly
+                              disabled
+                              class=""
+                              type="number"
+                              min="0"
+                              formControlName="company_rep_day"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                              style="border-top-width: 0px"
+                            />
+                            <input
+                              matInput
+                              *ngIf="editMode"
+                              class=""
+                              type="number"
+                              min="0"
+                              formControlName="company_rep_day"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                            />
+                          </mat-form-field>
+                        </div>
+
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4"
+                        >
+                          <mat-form-field class="col-12" appearance="outline">
+                            <mat-label
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'font-family':
+                                  formFont || 'Times New Roman, Times, serif'
+                              }"
+                              >Default No. of Days for Company
+                              Reports</mat-label
+                            >
+                            <input
+                              matInput
+                              *ngIf="!editMode"
+                              readonly
+                              disabled
+                              class=""
+                              type="number"
+                              min="0"
+                              formControlName="company_rep_day"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                              style="border-top-width: 0px"
+                            />
+                            <input
+                              matInput
+                              *ngIf="editMode"
+                              class=""
+                              type="number"
+                              min="0"
+                              formControlName="company_rep_day"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                            />
+                          </mat-form-field>
+                        </div>
+
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4"
+                        >
+                          <mat-form-field class="col-12" appearance="outline">
+                            <mat-label
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'font-family':
+                                  formFont || 'Times New Roman, Times, serif'
+                              }"
+                              >Default No. of Days for Billing
+                              Reports</mat-label
+                            >
+                            <input
+                              matInput
+                              *ngIf="!editMode"
+                              readonly
+                              disabled
+                              class=""
+                              type="number"
+                              min="0"
+                              formControlName="billing_rep_day"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                              style="border-top-width: 0px"
+                            />
+                            <input
+                              matInput
+                              *ngIf="editMode"
+                              class=""
+                              type="number"
+                              min="0"
+                              formControlName="billing_rep_day"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                            />
+                          </mat-form-field>
+                        </div>
+
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4"
+                        >
+                          <mat-form-field class="col-12" appearance="outline">
+                            <mat-label
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'font-family':
+                                  formFont || 'Times New Roman, Times, serif'
+                              }"
+                              >Default No. of Days for Message
+                              Reports</mat-label
+                            >
+                            <input
+                              matInput
+                              *ngIf="!editMode"
+                              readonly
+                              disabled
+                              class=""
+                              type="number"
+                              min="0"
+                              formControlName="message_rep_def_days"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                              style="border-top-width: 0px"
+                            />
+                            <input
+                              matInput
+                              *ngIf="editMode"
+                              type="number"
+                              min="0"
+                              formControlName="message_rep_def_days"
+                              [ngStyle]="{
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <span
+                        class="fw-bold mb-2"
+                        [ngStyle]="{
+                          'background-color': formBgColor,
+                          color: formFontColor || 'black',
+                          'font-family':
+                            formFont || 'Times New Roman, Times, serif'
+                        }"
+                        >Company View</span
+                      >
+                    </div>
+
+                    <div class="row mb-3">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 ms-2"
+                      >
+                  
+
+                        <mat-form-field
+                          *ngIf="!editMode"
+                          class="col-12"
+                          appearance="outline"
+                        >
+                          <mat-label
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'font-family':
+                                formFont || 'Times New Roman, Times, serif'
+                            }"
+                            >Company View</mat-label
+                          >
+                          <input
+                            matInput
+                            readonly
+                            disabled
+                            class=""
+                            formControlName="coyDirectory"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor
+                            }"
+                          />
+                        </mat-form-field>
+                        <app-combo-select-field
+                          *ngIf="editMode"
+                          placeholder="Company View"
+                          [options]="viewList"
+                          [defaultOption]="defaultOption"
+                          (selectionChange)="viewMode($event)"
+                        ></app-combo-select-field>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xl-5"
+                      >
+                        <label class="form-check-label"
+                          >Default Alert Method Setup</label
+                        >
+                      </div>
+                      <div class="row mb-3">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"
+                        >
+                          <input
+                            *ngIf="editMode"
+                            type="checkbox"
+                            formControlName="sms"
+                            class="me-2"
+                          />
+                          <input
+                            *ngIf="!editMode"
+                            readonly
+                            disabled
+                            type="checkbox"
+                            formControlName="sms"
+                            class="me-2"
+                          />
+                          <span>SMS Alert</span>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"
+                        >
+                          <input
+                            *ngIf="editMode"
+                            type="checkbox"
+                            formControlName="email"
+                            class="me-2"
+                          />
+                          <input
+                            *ngIf="!editMode"
+                            readonly
+                            disabled
+                            type="checkbox"
+                            formControlName="email"
+                            class="me-2"
+                          />
+                          <span>Email Alert</span>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"
+                        >
+                          <input
+                            *ngIf="editMode"
+                            type="checkbox"
+                            formControlName="phone"
+                            class="me-2"
+                          />
+                          <input
+                            *ngIf="!editMode"
+                            readonly
+                            disabled
+                            type="checkbox"
+                            formControlName="phone"
+                            class="me-2"
+                          />
+                          <span>Phone Call</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="permission$ | async as payload">
+                    <div class="col">
+                      <button
+                        *ngIf="editMode"
+                        [ngStyle]="{
+                          backgroundColor: '#fff',
+                          width: '10em',
+                          color: '#' + (primaryColour || '3D95F7'),
+                          fontSize: '16px',
+                          border: '1px solid #' + (primaryColour || '3D95F7'),
+                          borderRadius: '10px',
+                          height: '35px'
+                        }"
+                        (click)="cancel()"
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        class="float-end"
+                        *ngIf="editMode"
+                        [ngStyle]="{
+                          backgroundColor: '#' + (primaryColour || '3D95F7'),
+                          width: '10em',
+                          color: '#ffffff',
+                          fontSize: '16px',
+                          border: '0',
+                          borderRadius: '10px',
+                          height: '35px'
+                        }"
+                        (click)="update()"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

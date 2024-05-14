@@ -1,0 +1,70 @@
+<div
+  class="container-flud px-2"
+  [ngStyle]="{
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <div class="pt-2" [ngStyle]="{ color: formFontColor || 'black' }">
+    <app-title title="Oil and Gas" size="lg"></app-title>
+  </div>
+  <div class="card-body">
+    <ng-container *ngIf="tanks$ | progress | async as tanks">
+      <div class="row">
+        <ng-container *ngIf="!tanks.loading">
+          <ng-container *ngIf="!tanks.value?.length"
+            ><p [ngStyle]="{ color: formFontColor || 'black' }">
+              No tank simulation available
+            </p></ng-container
+          >
+          <ng-container *ngIf="tanks.value?.length">
+            <div
+              class="col-md-6 col-xl-4 mb-4 mt-4"
+              *ngFor="let dataSource of tanks.value; let i = index"
+            >
+              <app-tank-shape-css
+                [shape]="dataSource.shape"
+                [maxSize]="dataSource.max"
+                [level]="dataSource.level"
+                [deviceIndex]="i"
+                [title]="dataSource.title"
+                [tankId]="dataSource.tankId"
+                (tankDetails)="dataDetails($event)"
+              ></app-tank-shape-css>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <!-- <ng-container *ngIf="tanksAsset$ | progress | async as tank">
+      <div class="row">
+        <div
+          class="col-md-6 col-xl-4 mb-4 mt-4"
+          *ngFor="let dataSource of dataSources; let i = index"
+        >
+          <ng-container *ngIf="!dataSources.length"
+            >No tank simulation available</ng-container
+          >
+          <ng-container *ngIf="dataSources.length">
+            <app-corporate-tank-card
+              [dataSource]="dataSource"
+              [deviceIndex]="i"
+              [title]="dataSource.chart.caption"
+              (tankDetails)="dataDetails($event)"
+            ></app-corporate-tank-card>
+            <app-corporate-tank-shape
+              [shape]="data[i].shape"
+              [maxSize]="data[i].max"
+              [level]="data[i].level"
+              [deviceIndex]="i"
+              [title]="data[i].title"
+              [tankId]="data[i].tankId"
+              (tankDetails)="dataDetails($event)"
+            ></app-corporate-tank-shape>
+          </ng-container>
+        </div></div
+    ></ng-container> -->
+  </div>
+</div>

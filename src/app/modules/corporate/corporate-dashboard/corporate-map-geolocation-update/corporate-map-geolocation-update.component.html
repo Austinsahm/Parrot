@@ -1,0 +1,144 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="dashboardForm">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+          <div class="row">
+            <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> -->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+              <div class="row mb-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                  <label class="form-check-label">Name</label><label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <input class="form-control" formControlName="name" placeholder="Name">
+                  <app-control-error
+                    *ngIf="dashboardForm.get('name').invalid && dashboardForm.get('name').touched">
+                    <span *ngIf="dashboardForm.get('name').errors.required">
+                      This field is required.
+                    </span>
+                  </app-control-error>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                  <label class="form-check-label">Device ID</label><label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" *ngIf="dashboardResult" >
+                  {{dashboardResult.deviceName}}
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                  <label class="form-check-label">Visualization Type</label><label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" *ngIf="dashboardResult">
+                  {{dashboardResult.dashboardType}}
+                </div>
+              </div>
+
+              <div *ngIf="dashboardView" >
+                <div formGroupName="dashboardModel">
+                  <div class="row mb-4">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <label class="form-check-label">Static Chart Type</label><label style="color: red">*</label>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <app-static-chart-field formControlName="staticChart"
+                          placeholder="Select static chart type" >
+                        </app-static-chart-field>
+                        <app-control-error
+                          *ngIf="dashboardForm.get('dashboardModel.staticChart').invalid && dashboardForm.get('dashboardModel.staticChart').touched">
+                          <span *ngIf="dashboardForm.get('dashboardModel.staticChart').errors.required">
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+                    </div>
+
+                    <div class="row mb-4">
+                      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <label class="form-check-label">Time Chart Type</label><label style="color: red">*</label>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <app-time-chart-field formControlName="timeChart"
+                          placeholder="Select time chart type" >
+                        </app-time-chart-field>
+                        <app-control-error
+                          *ngIf="dashboardForm.get('dashboardModel.timeChart').invalid && dashboardForm.get('dashboardModel.timeChart').touched">
+                          <span *ngIf="dashboardForm.get('dashboardModel.timeChart').errors.required">
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+
+              <div *ngIf="geolocationView">
+                <div formGroupName="geolocationModel">
+                  <div class="row mb-4">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                      <label class="form-check-label">Marker Icon</label><label style="color: red">*</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <app-marker-icon-field formControlName="markerIcon"
+                        placeholder="Select marker icon " >
+                      </app-marker-icon-field>
+                      <app-control-error
+                        *ngIf="dashboardForm.get('geolocationModel.markerIcon').invalid && dashboardForm.get('geolocationModel.markerIcon').touched">
+                        <span *ngIf="dashboardForm.get('geolocationModel.markerIcon').errors.required">
+                          This field is required.
+                        </span>
+                      </app-control-error>
+                    </div>
+                  </div>
+
+                  <div class="row mb-4">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                      <label class="form-check-label">Speed</label><label style="color: red">*</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <input class="form-control" formControlName="speed" type="number" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                      <app-control-error *ngIf="dashboardForm.get('geolocationModel.speed').invalid && dashboardForm.get('geolocationModel.speed').touched">
+                        <span *ngIf="dashboardForm.get('geolocationModel.speed').errors.required">
+                          This field is required.
+                        </span>
+                      </app-control-error>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                  <label class="form-check-label">Owner</label><label style="color: red">*</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" *ngIf="dashboardResult">
+                  {{dashboardResult.dashboardOwner}}
+                </div>
+              </div>
+
+            </div>
+
+            <!-- </div> -->
+          </div>
+
+          <div class="row" *ngIf="permission$ | async as payload">
+            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+              <button (click)="cancel()" type="button" class="btn btn-danger">Cancel</button>
+              <button *ngIf="payload.dashboards.mapGeolocationDesign.updater" [disabled]="!dashboardForm.valid" (click)="submit()" type="button"
+                class="btn btn-secondary ms-2">Update</button>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

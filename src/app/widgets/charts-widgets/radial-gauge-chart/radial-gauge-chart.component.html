@@ -1,0 +1,16 @@
+<div class="container sample">
+  <span id="legendTitle"   [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: '#' + (formColor || 'ff9900')
+  }">{{ title }}</span>
+  <div class="container">
+    <igx-radial-gauge
+      #radialGauge
+      height="330px"
+      width="100%"
+      value="25"
+      interval="5"
+     
+    ></igx-radial-gauge>
+  </div>
+</div>

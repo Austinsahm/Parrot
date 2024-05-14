@@ -1,0 +1,89 @@
+<app-empty-data
+  *ngIf="errorExist; else data"
+  [text]="errorExist"
+  template="It seems you are offline"
+></app-empty-data>
+<ng-template #data
+  ><div class="card-body" style="overflow: auto">
+    <div *ngIf="permission$ | async as payload">
+      <div *ngIf="payload.companyManagement.company.menuAccess">
+        <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <app-title title="Company List" size="lg"></app-title>
+        </div>
+
+        <ngx-skeleton-loader count="5" *ngIf="loading"></ngx-skeleton-loader>
+        <p-organizationChart
+          [value]="companyOrgData"
+          styleClass="company"
+          selectionMode="single"
+        >
+          <ng-template let-node pTemplate="companies">
+            <div
+              [matMenuTriggerFor]="details"
+              [pTooltip]="showTooltip(node.data)"
+              [escape]="false"
+              style="width: 6em"
+            >
+              {{ node.label }}
+            </div>
+            <mat-menu #details="matMenu">
+              <button
+                mat-menu-item
+                *ngIf="
+                  node.data.grandParent &&
+                  payload.companyManagement.company.creater
+                "
+                (click)="onNavigateNew()"
+              >
+                <span>Add New Company</span>
+              </button>
+
+              <button
+                mat-menu-item
+                *ngIf="node.data.level < 3"
+                (click)="onNavigateDetails(node.data)"
+              >
+                <span>View company {{ node.data.companyName }}</span>
+              </button>
+            </mat-menu>
+          </ng-template>
+
+          <ng-template let-node pTemplate="company">
+            <div
+              style="width: 6em"
+              [pTooltip]="showTooltip(node.data)"
+              [escape]="false"
+            >
+              {{ node.label }}
+            </div>
+          </ng-template>
+        </p-organizationChart>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer" style="background-color: white">
+    <div class="row mt-2">
+      <div class="col-2">
+        <span class="partners"></span>
+        <span class="ms-2">Partner</span>
+      </div>
+      <div class="col-3">
+        <span class="corporates"></span>
+        <span class="ms-2">Corporate</span>
+      </div>
+      <div class="col-3">
+        <div class="individuals"></div>
+        <span class="ms-2">Individual</span>
+      </div>
+      <div class="col-2">
+        <div class="alls"></div>
+        <span class="ms-2">All</span>
+      </div>
+      <div class="col-2">
+        <div class="uncls"></div>
+        <span class="ms-2">Unclassified</span>
+      </div>
+    </div>
+  </div>
+</ng-template>

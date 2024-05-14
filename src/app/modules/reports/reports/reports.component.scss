@@ -1,0 +1,42 @@
+.div-border{
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+  }
+  .nav-link.active{
+    /* background-color: gray;
+    color: white 
+    background-color: #ea2ede;*/
+    color: white
+  }
+  
+  .nav-link{
+    color: black
+  }
+  
+  .navbar{
+    background-color: #f3b7cb;
+  }
+  
+  .navbar-height{
+    height: 100%;
+  }
+  
+  .link-width{
+    width: 100%;
+  }
+
+  input{
+    border: none;
+    border-bottom: 1px solid black;
+    border-radius: 5px;
+}
+// button{
+//     font-family: Times New Roman, Times, serif;
+// }
+button.btn-danger:hover{
+    background-color: red;
+}
+button.btn-success:hover{
+    background-color: green;
+}
+  

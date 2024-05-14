@@ -1,0 +1,350 @@
+<div *ngIf="permission$ | async as payload">
+  <div *ngIf="payload.reports.deviceHistory.menuAccess">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <div class="row">
+        <div class="col-6">
+          <app-title title="Device History" size="lg"></app-title>
+        </div>
+        <div class="col-6">
+          <form class="nosubmit float-end">
+            <input
+              type="text"
+              [formControl]="searchField"
+              style="
+                padding: 4px;
+                margin: 8px auto;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+              "
+              placeholder="Search..."
+              class="nosubmit"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="report$ | progress | async as payload">
+      <ng-container *ngIf="showDetails; else unclicked">
+        <div class="row">
+          <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7">
+            <!-- [ngStyle]="{
+            'font-family': formFont || 'Times New Roman, Times, serif',
+            color: '#' + (formColor || 'ff9900')
+          }" -->
+            <ngx-skeleton-loader
+              *ngIf="payload.loading"
+              [count]="5"
+            ></ngx-skeleton-loader>
+            <app-control-error *ngIf="payload.error"
+              >Unknown Error</app-control-error
+            >
+            <ng-container *ngIf="payload.value">
+              <ngx-datatable
+                class="bootstrap table-bordered table-striped table-hover"
+                #deviceHistory
+                [rows]="payload.value"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [limit]="10"
+                [columnMode]="'force'"
+                [loadingIndicator]="payload.loading"
+                [rowHeight]="'auto'"
+                style="font-size: 15px !important"
+              >
+                <ngx-datatable-column
+                  name="Manufacturer Device ID"
+                  prop="manufDeviceId"
+                >
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <a
+                      href="javascript:void(0);"
+                      (click)="openDetails(row)"
+                      placement="top"
+                    >
+                      {{ row["manufDeviceId"] }}
+                    </a>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Device Name" prop="deviceName">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row["deviceName"] }}
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </ng-container>
+          </div>
+
+          <div
+            class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 card"
+            style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px"
+            [formGroup]="form"
+          >
+            <!-- [ngStyle]="{
+            'font-family': formFont || 'Times New Roman, Times, serif',
+            color: '#' + (formColor || 'ff9900')
+          }" -->
+            <div class="card-body">
+              <h4
+                [ngStyle]="{
+                  'font-family': formFont || 'Times New Roman, Times, serif',
+                  color: '#' + (formColor || 'ff9900')
+                }"
+              >
+                {{ manufDeviceId }} - {{ deviceName }}
+              </h4>
+
+              <div
+                class="my-2"
+                [ngStyle]="{
+                  'font-family': formFont || 'Times New Roman, Times, serif',
+                  color: '#' + (formColor || 'ff9900')
+                }"
+              >
+                Enter the desired range for the history below
+              </div>
+
+              <!-- <div class="mb-3 mt-4">
+                <label class="form-label">From</label>
+                <div style="display: flex">
+                  <app-date-field
+                    #fromDate
+                    [max]="toDate?.rawValue"
+                    formControlName="from"
+                    placeholder="From Date"
+                  ></app-date-field>
+                  <ngb-timepicker
+                    class="ms-4"
+                    [spinners]="false"
+                    [seconds]="true"
+                    formControlName="fromTime"
+                  ></ngb-timepicker>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">To</label>
+                <div style="display: flex">
+                  <app-date-field
+                    #toDate
+                    [min]="fromDate?.rawValue"
+                    formControlName="to"
+                    placeholder="To Date"
+                  ></app-date-field>
+                  <ngb-timepicker
+                    class="ms-4"
+                    [spinners]="false"
+                    [seconds]="true"
+                    formControlName="toTime"
+                  ></ngb-timepicker>
+                </div>
+              </div> -->
+
+              <div class="mb-3">
+                <mat-form-field class="form-margin" appearance="outline">
+                  <mat-label
+                    [ngStyle]="{
+                      'font-family': formFont || 'Times New Roman, Times, serif',
+                      color: formFontColor || 'black'
+                    }"
+                    >Date Range</mat-label
+                  >
+                  <!-- [max]="toDate?.rawValue"
+                  [min]="fromDate?.rawValue" -->
+                  <mat-date-range-input
+                    [rangePicker]="picker"
+                    [max]="today"
+                    [ngStyle]="{
+                      'font-family': formFont || 'Times New Roman, Times, serif',
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                  >
+                    <input
+                      matStartDate
+                      readonly
+                      formControlName="from"
+                      placeholder="From Date"
+                      [ngStyle]="{
+                        'font-family':
+                          formFont || 'Times New Roman, Times, serif',
+                        color: formFontColor || 'black',
+                        'background-color': formBgColor
+                      }"
+                    />
+                    <input
+                      matEndDate
+                      readonly
+                      formControlName="to"
+                      placeholder="To Date"
+                      [ngStyle]="{
+                        'font-family':
+                          formFont || 'Times New Roman, Times, serif',
+                        color: formFontColor || 'black',
+                        'background-color': formBgColor
+                      }"
+                    />
+                  </mat-date-range-input>
+                  <mat-hint
+                    [ngStyle]="{
+                      'font-family': formFont || 'Times New Roman, Times, serif',
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                    >MM/DD/YYYY – MM/DD/YYYY</mat-hint
+                  >
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                  ></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+              </div>
+
+              <button
+                (click)="fetchDeviceMessages()"
+                [ngStyle]="{
+                  backgroundColor: '#' + (primaryColour || '3D95F7'),
+                  width: '10em',
+                  color: '#ffffff',
+                  fontSize: '16px',
+                  border: '0',
+                  borderRadius: '10px',
+                  height: '35px'
+                }"
+              >
+                Submit
+              </button>
+              <!-- [disabled]="form?.pristine"  -->
+              <app-control-error *ngIf="showError" class="float-end">
+                <span>All fields are required.</span>
+              </app-control-error>
+
+              <div
+                *ngIf="deviceMessages$ | progress | async as payload"
+                class="mt-4 max-height"
+              >
+                <ngx-skeleton-loader
+                  *ngIf="payload.loading"
+                  [count]="5"
+                ></ngx-skeleton-loader>
+                <app-control-error *ngIf="payload.error"
+                  >Unknown Error</app-control-error
+                >
+
+                <ng-container *ngIf="payload.value">
+                  <div *ngIf="payload.value.length == 0">
+                    <h5
+                      [ngStyle]="{
+                        'font-family':
+                          formFont || 'Times New Roman, Times, serif',
+                        color: formFontColor || 'black',
+                        'background-color': formBgColor
+                      }"
+                    >
+                      No Data Available!
+                    </h5>
+                  </div>
+
+                  <ngb-accordion [closeOthers]="true">
+                    <ngb-panel
+                      *ngFor="let parent of payload.value"
+                      title="{{ parent.id }}"
+                      [ngStyle]="{
+                        'font-family': formFont || 'Times New Roman, Times, serif',
+                        color: formFontColor || 'black',
+                        'background-color': formBgColor
+                      }"
+                    >
+                      <ng-template ngbPanelContent>
+                        <ul class="list-group">
+                          <li
+                            class="list-group-item d-flex justify-content-between align-items-center"
+                            *ngFor="let child of parent.value"
+                            [ngStyle]="{
+                              'font-family':
+                                formFont || 'Times New Roman, Times, serif',
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor
+                            }"
+                          >
+                            <span
+                              class="badge bg-primary rounded-pill text-white"
+                              [ngStyle]="{
+                                'font-family':
+                                  formFont || 'Times New Roman, Times, serif',
+                                color: formFontColor || 'black',
+                                'background-color': formBgColor
+                              }"
+                              >{{ child.attribute }}</span
+                            >
+                            {{ child.attributeValue }}
+                          </li>
+                        </ul>
+                      </ng-template>
+                    </ngb-panel>
+                  </ngb-accordion>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #unclicked>
+        <div class="col-12">
+          <!-- [ngStyle]="{
+            'font-family': formFont || 'Times New Roman, Times, serif',
+            color: '#' + (formColor || 'ff9900')
+          }" -->
+          <ngx-skeleton-loader
+            *ngIf="payload.loading"
+            [count]="5"
+          ></ngx-skeleton-loader>
+          <app-control-error *ngIf="payload.error"
+            >Unknown Error</app-control-error
+          >
+          <ng-container *ngIf="payload.value">
+            <ngx-datatable
+              class="bootstrap table-bordered table-striped table-hover"
+              #deviceHistory
+              [rows]="payload.value"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [limit]="10"
+              [columnMode]="'force'"
+              [loadingIndicator]="payload.loading"
+              [rowHeight]="'auto'"
+              style="font-size: 15px !important"
+            >
+              <ngx-datatable-column
+                name="Manufacture Device ID"
+                prop="manufDeviceId"
+              >
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <a
+                    href="javascript:void(0);"
+                    (click)="openDetails(row)"
+                    placement="top"
+                  >
+                    {{ row["manufDeviceId"] }}
+                  </a>
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="Device Name" prop="deviceName">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row["deviceName"] }}
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </ng-container>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

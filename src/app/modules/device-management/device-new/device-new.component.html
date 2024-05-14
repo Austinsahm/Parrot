@@ -1,0 +1,604 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <div
+        class="card col-12"
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif',
+          color: formFontColor || 'black',
+          border: '1px solid ' + formBgColor,
+          'background-color': formBgColor
+        }"
+      >
+        <div class="card-body box" style="overflow: auto">
+          <!-- <div
+      class="card-header font-weight-bold"
+      style="font-weight: bolder; font-size: 1.3em"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: '#' + (formColor || 'ff9900')
+      }"
+    >
+      Add Device
+    </div> -->
+          <div
+            class="card"
+            [ngStyle]="{
+              border: '1px solid ' + formBgColor,
+              'background-color': formBgColor
+            }"
+          >
+            <app-title
+              class="card-header"
+              title="Add Device"
+              size="lg"
+            ></app-title>
+            <div class="card-body">
+              <form [formGroup]="deviceForm">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="row">
+                      <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> -->
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                      >
+                        <div class="row mb-4">
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <app-device-network-field
+                              formControlName="networkId"
+                              placeholder="Select network..."
+                              [selectable]="true"
+                              (selectionChange)="onDeviceNetwork($event)"
+                            >
+                            </app-device-network-field>
+                            <app-control-error
+                              *ngIf="
+                                deviceForm.get('networkId').invalid &&
+                                deviceForm.get('networkId').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  deviceForm.get('networkId').errors.required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div>
+
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <mat-form-field class="col-12" appearance="outline"
+                              ><mat-label
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+
+                                  'font-family':
+                                    formFont || 'Times New Roman, Times, serif'
+                                }"
+                                >{{
+                                  onManufDeviceIdNetwork(
+                                    deviceForm.value?.networkId
+                                  )
+                                }}</mat-label
+                              >
+                              <input
+                                matInput
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor
+                                }"
+                                *ngIf="!readonly || !manufDeviceId"
+                                formControlName="manufDeviceId"
+                                [placeholder]="
+                                  onManufDeviceIdNetwork(
+                                    deviceForm.value?.networkId
+                                  )
+                                " />
+                              <input
+                                matInput
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor
+                                }"
+                                *ngIf="readonly && manufDeviceId"
+                                formControlName="manufDeviceId"
+                                readonly />
+                              <button
+                                *ngIf="!capturing"
+                                id="bcode"
+                                type="button"
+                                title="Scan QR Code"
+                                (click)="captureQr()"
+                              >
+                                <i
+                                  class="fa fa-qrcode"
+                                  [ngStyle]="{
+                                    color: formFontColor || 'black'
+                                  }"
+                                ></i></button
+                            ></mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row mb-2" *ngIf="capturing">
+                          <div class="col-6"></div>
+                          <div class="col-12">
+                            <app-qr-scanner
+                              (qrCodeEvent)="scan($event)"
+                            ></app-qr-scanner>
+                          </div>
+                        </div>
+
+                        <div class="row mb-4">
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <mat-form-field class="col-12" appearance="outline"
+                              ><mat-label
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+
+                                  'font-family':
+                                    formFont || 'Times New Roman, Times, serif'
+                                }"
+                                >Device Name</mat-label
+                              >
+                              <input
+                                matInput
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor
+                                }"
+                                placeholder="Device Name"
+                                formControlName="deviceName"
+                            /></mat-form-field>
+                            <app-control-error
+                              *ngIf="
+                                deviceForm.get('deviceName').invalid &&
+                                deviceForm.get('deviceName').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  deviceForm.get('deviceName').errors.required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div>
+
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <mat-form-field class="col-12" appearance="outline"
+                              ><mat-label
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+
+                                  'font-family':
+                                    formFont || 'Times New Roman, Times, serif'
+                                }"
+                                >{{
+                                  onPACNetwork(deviceForm.value?.networkId)
+                                }}</mat-label
+                              >
+                              <input
+                                matInput
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor
+                                }"
+                                *ngIf="!readonly || !devicePac"
+                                [placeholder]="
+                                  onPACNetwork(deviceForm.value?.networkId)
+                                "
+                                formControlName="devicePac" />
+
+                              <input
+                                matInput
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor
+                                }"
+                                *ngIf="readonly && devicePac"
+                                readonly
+                                placeholder="PAC"
+                                formControlName="devicePac"
+                            /></mat-form-field>
+                            <app-control-error
+                              *ngIf="
+                                deviceForm.get('devicePac').invalid &&
+                                deviceForm.get('devicePac').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  deviceForm.get('devicePac').errors.required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div>
+                        </div>
+
+                        <div class="row mb-4">
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <mat-form-field class="col-12" appearance="outline"
+                              ><mat-label
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+
+                                  'font-family':
+                                    formFont || 'Times New Roman, Times, serif'
+                                }"
+                                >Description</mat-label
+                              ><input
+                                matInput
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor
+                                }"
+                                placeholder="Description"
+                                formControlName="deviceDesc"
+                            /></mat-form-field>
+                            <app-control-error
+                              *ngIf="
+                                deviceForm.get('deviceDesc').invalid &&
+                                deviceForm.get('deviceDesc').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  deviceForm.get('deviceDesc').errors.required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div>
+
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <app-device-category-field
+                              [subdomain]="subdomain"
+                              [networkId]="deviceForm.value.networkId"
+                              formControlName="clientDeviceCategId"
+                              placeholder="Select company category..."
+                              [selectable]="true"
+                              (selectionChange)="
+                                deviceForm.patchValue({
+                                  clientDeviceCategId: $event.value
+                                })
+                              "
+                            >
+                            </app-device-category-field>
+                            <app-control-error
+                              *ngIf="
+                                deviceForm.get('clientDeviceCategId').invalid &&
+                                deviceForm.get('clientDeviceCategId').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  deviceForm.get('clientDeviceCategId').errors
+                                    .required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div>
+                        </div>
+
+                        <div class="row mb-4">
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <mat-form-field class="col-12" appearance="outline"
+                              ><mat-label
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+
+                                  'font-family':
+                                    formFont || 'Times New Roman, Times, serif'
+                                }"
+                                >{{
+                                  onCertNetwork(deviceForm.value?.networkId)
+                                }}</mat-label
+                              >
+                              <input
+                                matInput
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor
+                                }"
+                                [placeholder]="
+                                  onCertNetwork(deviceForm.value?.networkId)
+                                "
+                                formControlName="certificate"
+                            /></mat-form-field>
+                            <app-control-error
+                              *ngIf="
+                                deviceForm.get('certificate').invalid &&
+                                deviceForm.get('certificate').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  deviceForm.get('certificate').errors.required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div>
+
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <app-device-manufacturer-field
+                              formControlName="manufacturerId"
+                              placeholder="Select manufacturer..."
+                              [new]="true"
+                              (selectionChange)="
+                                deviceForm.patchValue({
+                                  manufacturerId: $event.value
+                                })
+                              "
+                            >
+                            </app-device-manufacturer-field>
+                            <app-control-error
+                              *ngIf="
+                                deviceForm.get('manufacturerId').invalid &&
+                                deviceForm.get('manufacturerId').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  deviceForm.get('manufacturerId').errors
+                                    .required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div>
+                        </div>
+
+                        <div class="row mb-3">
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <app-device-manufacturer-type-field
+                              formControlName="manufDeviceTypeId"
+                              placeholder="Select manufacturer device type..."
+                              [manufacturerId]="
+                                deviceForm.value?.manufacturerId
+                              "
+                              [new]="true"
+                              (selectionChange)="
+                                deviceForm.patchValue({
+                                  manufDeviceTypeId: $event.value
+                                })
+                              "
+                            >
+                            </app-device-manufacturer-type-field>
+                            <app-control-error
+                              *ngIf="
+                                deviceForm.get('manufDeviceTypeId').invalid &&
+                                deviceForm.get('manufDeviceTypeId').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  deviceForm.get('manufDeviceTypeId').errors
+                                    .required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div>
+
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <app-use-case-field
+                              formControlName="useCaseId"
+                              placeholder="Select device use case..."
+                              [new]="true"
+                              (selectionChange)="
+                                deviceForm.patchValue({
+                                  useCaseId: $event.value
+                                })
+                              "
+                            >
+                            </app-use-case-field>
+                            <app-control-error
+                              *ngIf="
+                                deviceForm.get('useCaseId').invalid &&
+                                deviceForm.get('useCaseId').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  deviceForm.get('useCaseId').errors.required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div>
+                        </div>
+
+                        <div class="row mb-3">
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <app-status-field
+                              formControlName="statusId"
+                              placeholder="Select device status..."
+                              [new]="true"
+                              (selectionChange)="
+                                deviceForm.patchValue({
+                                  statusId: $event.value
+                                })
+                              "
+                            >
+                            </app-status-field>
+                            <app-control-error
+                              *ngIf="
+                                deviceForm.get('statusId').invalid &&
+                                deviceForm.get('statusId').touched
+                              "
+                            >
+                              <span
+                                *ngIf="
+                                  deviceForm.get('statusId').errors.required
+                                "
+                              >
+                                This field is required.
+                              </span>
+                            </app-control-error>
+                          </div>
+
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <mat-form-field class="col-12" appearance="outline"
+                              ><mat-label
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+
+                                  'font-family':
+                                    formFont || 'Times New Roman, Times, serif'
+                                }"
+                                >Asset</mat-label
+                              ><input
+                                matInput
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor
+                                }"
+                                placeholder="Asset"
+                                readonly
+                                formControlName="assetId"
+                            /></mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row mb-4">
+                          <div class="col-xs-10 col-md-6 col-lg-6">
+                            <mat-form-field class="col-12" appearance="outline"
+                              ><mat-label
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+
+                                  'font-family':
+                                    formFont || 'Times New Roman, Times, serif'
+                                }"
+                                >Device Last Seen</mat-label
+                              ><input
+                                matInput
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor
+                                }"
+                                readonly
+                                placeholder="Last seen"
+                                readonly
+                                formControlName="lastSeenDate"
+                            /></mat-form-field>
+                          </div>
+
+                          <div class="row col-xs-5 col-md-3  align-self-center">
+                            <div class="col-7">
+                              <label style="white-space: nowrap"
+                                >Network Refresh</label
+                              >
+                            </div>
+                            <div class="col-5">
+                              <input
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor,
+                                  'border-bottom': '1px solid ' + formFontColor
+                                }"
+                                type="checkbox"
+                                formControlName="networkRefresh"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="row col-xs-5 col-md-3  align-self-center">
+                            <div class="col-7">
+                              <label style="white-space: nowrap"
+                                >Asset Tracker</label
+                              >
+                            </div>
+                            <div class="col-5">
+                              <input
+                                [ngStyle]="{
+                                  color: formFontColor || 'black',
+                                  'background-color': formBgColor,
+                                  'border-bottom': '1px solid ' + formFontColor
+                                }"
+                                type="checkbox"
+                                formControlName="assetTracker"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- </div> -->
+                    </div>
+                  </div>
+
+                  <div class="container-fluid">
+                    <div class="row rowing">
+                      <div class="col" style="padding: 1em 1em">
+                        <!-- <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6"> -->
+                        <!-- <button (click)="cancel()" type="button" class="btn btn-danger">
+                  Cancel
+                </button> -->
+                        <button
+                          [ngStyle]="{
+                            backgroundColor: '#fff',
+                            width: '10em',
+                            color: '#' + (primaryColour || '3D95F7'),
+                            fontSize: '16px',
+                            border: '1px solid #' + (primaryColour || '3D95F7'),
+                            borderRadius: '10px',
+                            height: '35px'
+                          }"
+                          (click)="cancel()"
+                        >
+                          Cancel
+                        </button>
+                        <!-- <button
+                  [disabled]="!deviceForm.valid"
+                  (click)="submit()"
+                  type="button"
+                  class="btn btn-success ms-2 float-end"
+                >
+                  Submit
+                </button> -->
+                        <button
+                          class="float-end"
+                          [disabled]="!deviceForm.valid"
+                          [ngStyle]="{
+                            backgroundColor: '#' + (primaryColour || '3D95F7'),
+                            width: '10em',
+                            color: '#ffffff',
+                            fontSize: '16px',
+                            border: '0',
+                            borderRadius: '10px',
+                            height: '35px'
+                          }"
+                          (click)="submit()"
+                        >
+                          Submit
+                        </button>
+                        <!-- </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

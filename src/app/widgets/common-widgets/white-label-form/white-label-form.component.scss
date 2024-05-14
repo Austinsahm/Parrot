@@ -1,0 +1,15 @@
+button:disabled {
+  opacity: 0.5;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+.file-input {
+  display: none;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}

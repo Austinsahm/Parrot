@@ -1,0 +1,877 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <div
+        class="card col-12"
+        [ngStyle]="{
+          border: '1px solid ' + formBgColor,
+          'background-color': formBgColor,
+          color: formFontColor || 'black',
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+      >
+        <div class="card-body box" style="overflow: auto">
+          <ng-container *ngIf="device$ | progress | async as payload">
+            <ngx-skeleton-loader
+              *ngIf="payload.loading"
+              [count]="5"
+            ></ngx-skeleton-loader>
+
+            <p *ngIf="payload.error">Unknow Error</p>
+            <div class="container-fluid" *ngIf="payload.value">
+              <div
+                class="card"
+                [ngStyle]="{
+                  border: '1px solid ' + formBgColor,
+                  'background-color': formBgColor,
+                  color: formFontColor || 'black',
+                  'font-family': formFont || 'Times New Roman, Times, serif'
+                }"
+              >
+                <app-title
+                  class="card-header"
+                  title="Device Details"
+                  size="lg"
+                  *ngIf="!editMode"
+                ></app-title>
+                <app-title
+                  class="card-header"
+                  title="Edit Device"
+                  size="lg"
+                  *ngIf="editMode"
+                ></app-title>
+                <div class="card-body">
+                  <div class="row" *ngIf="!editMode">
+                    <div
+                      class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2"
+                      *ngIf="permission$ | async as payload"
+                    >
+                      <!-- <button
+                        (click)="edit()"
+                        *ngIf="payload.deviceManagement.device.updater"
+                        class="btn btn-outline-secondary col-md-6 col-xl-4 col-lg-4 float-end"
+                      >
+                        Edit
+                      </button> -->
+                      <button
+                        *ngIf="payload.deviceManagement.device.updater"
+                        class="float-end"
+                        [ngStyle]="{
+                          backgroundColor: '#ffffff',
+                          width: '10em',
+                          color: '#' + (primaryColour || '3D95F7'),
+                          fontSize: '16px',
+                          border: '1px solid #' + (primaryColour || '3D95F7'),
+                          borderRadius: '10px',
+                          height: '35px'
+                        }"
+                        (click)="edit()"
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="!editMode">
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label"
+                              >Device Network</label
+                            >
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{ payload.value.device?.networkName }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label">{{
+                              onManufDeviceIdNetwork(
+                                deviceForm.value?.networkId
+                              )
+                            }}</label>
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{
+                              payload.value.device?.manufDeviceId
+                            }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label">Device Name</label>
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{ deviceName }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label">{{
+                              onPACNetwork(deviceForm.value?.networkId)
+                            }}</label>
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{ payload.value.device.devicePac }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label">Description</label>
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{ payload.value.device?.deviceDesc }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label"
+                              >Company Device Category</label
+                            >
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{
+                              payload.value.device?.deviceCategName
+                            }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label">{{
+                              onCertNetwork(deviceForm.value?.networkId)
+                            }}</label>
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{ payload.value.device?.certificate }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label">Use case</label>
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{ payload.value.device?.useCaseName }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label"
+                              >Device Manufacturer</label
+                            >
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{
+                              payload.value.device.manufacturerName
+                            }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label"
+                              >Manufacturer Device Type</label
+                            >
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{
+                              payload.value.device?.manufDeviceTypeId
+                            }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label">Status</label>
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{ payload.value.device.statusName }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label">Asset</label>
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{ payload.value.device.assetName }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <label class="form-check-label"
+                              >Device Last Seen</label
+                            >
+                          </div>
+
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4"
+                          >
+                            <span>{{
+                              payload.value.device?.lastSeenDate
+                            }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <div class="row">
+                          <div>
+                            <a
+                              href="javascript:void(0);"
+                              (click)="moreDetails(payload.value.device)"
+                              placement="top"
+                            >
+                              More device information...
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <form [formGroup]="deviceForm" *ngIf="editMode">
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <mat-form-field class="col-12" appearance="outline">
+                          <mat-label
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'font-family':
+                                formFont || 'Times New Roman, Times, serif'
+                            }"
+                            >Device Network</mat-label
+                          >
+                          <input
+                            matInput
+                            readonly
+                            disabled
+                            class=""
+                            placeholder="Device Network"
+                            [value]="payload.value.device?.networkName"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor
+                            }"
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <mat-form-field class="col-12" appearance="outline">
+                          <mat-label
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'font-family':
+                                formFont || 'Times New Roman, Times, serif'
+                            }"
+                            >{{
+                              onManufDeviceIdNetwork(
+                                deviceForm.value?.networkId
+                              )
+                            }}</mat-label
+                          >
+                          <input
+                            matInput
+                            readonly
+                            disabled
+                            class=""
+                            [placeholder]="
+                              onManufDeviceIdNetwork(
+                                deviceForm.value?.networkId
+                              )
+                            "
+                            [value]="payload.value.device?.manufDeviceId"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor
+                            }"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <mat-form-field class="col-12" appearance="outline">
+                          <mat-label
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'font-family':
+                                formFont || 'Times New Roman, Times, serif'
+                            }"
+                            >Device Name</mat-label
+                          >
+                          <input
+                            matInput
+                            class=""
+                            placeholder="Device Name"
+                            formControlName="deviceName"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor
+                            }"
+                          />
+                        </mat-form-field>
+                        <app-control-error
+                          *ngIf="
+                            deviceForm.get('deviceName').invalid &&
+                            deviceForm.get('deviceName').touched
+                          "
+                        >
+                          <span
+                            *ngIf="deviceForm.get('deviceName').errors.required"
+                          >
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <mat-form-field class="col-12" appearance="outline">
+                          <mat-label
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'font-family':
+                                formFont || 'Times New Roman, Times, serif'
+                            }"
+                            >{{
+                              onPACNetwork(deviceForm.value?.networkId)
+                            }}</mat-label
+                          >
+                          <input
+                            matInput
+                            class=""
+                            [placeholder]="
+                              onPACNetwork(deviceForm.value?.networkId)
+                            "
+                            formControlName="devicePac"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor
+                            }"
+                          />
+                        </mat-form-field>
+
+                        <app-control-error
+                          *ngIf="
+                            deviceForm.get('devicePac').invalid &&
+                            deviceForm.get('devicePac').touched
+                          "
+                        >
+                          <span
+                            *ngIf="deviceForm.get('devicePac').errors.required"
+                          >
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <mat-form-field class="col-12" appearance="outline">
+                          <mat-label
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'font-family':
+                                formFont || 'Times New Roman, Times, serif'
+                            }"
+                            >Description
+                          </mat-label>
+                          <input
+                            matInput
+                            class=""
+                            placeholder="Description"
+                            formControlName="deviceDesc"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor
+                            }"
+                          />
+                        </mat-form-field>
+
+                        <app-control-error
+                          *ngIf="
+                            deviceForm.get('deviceDesc').invalid &&
+                            deviceForm.get('deviceDesc').touched
+                          "
+                        >
+                          <span
+                            *ngIf="deviceForm.get('deviceDesc').errors.required"
+                          >
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <app-device-category-field
+                          [subdomain]="subdomain"
+                          placeholder="Company Device Category"
+                          formControlName="clientDeviceCategId"
+                          [defaultValue]="
+                            deviceForm.get('clientDeviceCategId').value
+                          "
+                          [selectable]="true"
+                          (selectionChange)="
+                            deviceForm.patchValue({
+                              clientDeviceCategId: $event.value
+                            })
+                          "
+                        >
+                        </app-device-category-field>
+                        <app-control-error
+                          *ngIf="
+                            deviceForm.get('clientDeviceCategId').invalid &&
+                            deviceForm.get('clientDeviceCategId').touched
+                          "
+                        >
+                          <span
+                            *ngIf="
+                              deviceForm.get('clientDeviceCategId').errors
+                                .required
+                            "
+                          >
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <mat-form-field class="col-12" appearance="outline">
+                          <mat-label
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'font-family':
+                                formFont || 'Times New Roman, Times, serif'
+                            }"
+                            >{{
+                              onCertNetwork(deviceForm.value?.networkId)
+                            }}</mat-label
+                          >
+                          <input
+                            matInput
+                            readonly
+                            disabled
+                            class=""
+                            [placeholder]="
+                              onCertNetwork(deviceForm.value?.networkId)
+                            "
+                            [value]="payload.value.device?.certificate"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor
+                            }"
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <app-use-case-field
+                          placeholder="Device Usecase..."
+                          formControlName="useCaseId"
+                          [new]="true"
+                          [defaultValue]="payload.value.device?.useCaseId"
+                          (selectionChange)="
+                            deviceForm.patchValue({ useCaseId: $event.value })
+                          "
+                        >
+                        </app-use-case-field>
+                        <app-control-error
+                          *ngIf="
+                            deviceForm.get('useCaseId').invalid &&
+                            deviceForm.get('useCaseId').touched
+                          "
+                        >
+                          <span
+                            *ngIf="deviceForm.get('useCaseId').errors.required"
+                          >
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <app-device-manufacturer-field
+                          formControlName="manufacturerId"
+                          placeholder="Device Manufacturer"
+                          [defaultValue]="
+                            deviceForm.get('manufacturerId').value
+                          "
+                          [new]="true"
+                          (selectionChange)="
+                            deviceForm.patchValue({
+                              manufacturerId: $event.value
+                            })
+                          "
+                        >
+                        </app-device-manufacturer-field>
+                        <app-control-error
+                          *ngIf="
+                            deviceForm.get('manufacturerId').invalid &&
+                            deviceForm.get('manufacturerId').touched
+                          "
+                        >
+                          <span
+                            *ngIf="
+                              deviceForm.get('manufacturerId').errors.required
+                            "
+                          >
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <app-device-manufacturer-type-field
+                          formControlName="manufDeviceTypeId"
+                          placeholder="Manufacturer Device Type"
+                          [manufacturerId]="deviceForm.value?.manufacturerId"
+                          [defaultValue]="
+                            deviceForm.get('manufDeviceTypeId').value
+                          "
+                          (selectionChange)="
+                            deviceForm.patchValue({
+                              manufDeviceTypeId: $event.value
+                            })
+                          "
+                          [new]="true"
+                        >
+                        </app-device-manufacturer-type-field>
+                        <app-control-error
+                          *ngIf="
+                            deviceForm.get('manufDeviceTypeId').invalid &&
+                            deviceForm.get('manufDeviceTypeId').touched
+                          "
+                        >
+                          <span
+                            *ngIf="
+                              deviceForm.get('manufDeviceTypeId').errors
+                                .required
+                            "
+                          >
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+                    </div>
+
+                    <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <app-status-field
+                          formControlName="statusId"
+                          placeholder="Status"
+                          [defaultValue]="deviceForm.get('statusId').value"
+                          [new]="true"
+                          (selectionChange)="
+                            deviceForm.patchValue({
+                              statusId: $event.value
+                            })
+                          "
+                        ></app-status-field>
+                        <app-control-error
+                          *ngIf="
+                            deviceForm.get('statusId').invalid &&
+                            deviceForm.get('statusId').touched
+                          "
+                        >
+                          <span
+                            *ngIf="deviceForm.get('statusId').errors.required"
+                          >
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <app-asset-field
+                          [subdomain]="subdomain"
+                          formControlName="assetId"
+                          placeholder="Asset"
+                          [new]="true"
+                          (selectionChange)="
+                            deviceForm.patchValue({
+                              assetId: $event.value
+                            })
+                          "
+                          [defaultValue]="deviceForm.get('assetId').value"
+                        >
+                        </app-asset-field>
+                        <app-control-error
+                          *ngIf="
+                            deviceForm.get('assetId').invalid &&
+                            deviceForm.get('assetId').touched
+                          "
+                        >
+                          <span
+                            *ngIf="deviceForm.get('assetId').errors.required"
+                          >
+                            This field is required.
+                          </span>
+                        </app-control-error>
+                      </div>
+                    </div>
+
+                    <!-- <div class="row mb-2">
+                      <div
+                        class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2"
+                      >
+                        <mat-form-field class="col-12" appearance="outline">
+                          <mat-label
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'font-family':
+                                formFont || 'Times New Roman, Times, serif'
+                            }"
+                            >Device Last Seen</mat-label
+                          >
+                          <input
+                            matInput
+                            class=""
+                            readonly
+                            formControlName="lastSeenDate"
+                            [ngStyle]="{
+                              color: formFontColor || 'black',
+                              'background-color': formBgColor
+                            }"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div> -->
+                  </form>
+
+                  {{ deviceForm.get("lastSeenDate").value }}
+
+                  <div class="container-fluid">
+                    <div class="row rowing">
+                      <div class="col" style="padding: 1em 0">
+                        <!-- <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6"> -->
+                        <!-- <button
+                          (click)="cancel()"
+                          type="button"
+                          class="btn btn-danger"
+                        >
+                          Cancel
+                        </button> -->
+                        <button
+                          class="ms-4"
+                          [ngStyle]="{
+                            backgroundColor: '#fff',
+                            width: '10em',
+                            color: '#' + (primaryColour || '3D95F7'),
+                            fontSize: '16px',
+                            border: '1px solid #' + (primaryColour || '3D95F7'),
+                            borderRadius: '10px',
+                            height: '35px'
+                          }"
+                          (click)="cancel()"
+                        >
+                          Cancel
+                        </button>
+                        <!-- <button
+                          *ngIf="editMode"
+                          [disabled]="!deviceForm.valid"
+                          (click)="submit()"
+                          type="button"
+                          class="btn btn-success ms-2 float-end"
+                        >
+                          Submit
+                        </button> -->
+                        <button
+                          class="float-end me-4"
+                          *ngIf="editMode"
+                          [disabled]="!deviceForm.valid"
+                          [ngStyle]="{
+                            backgroundColor: '#' + (primaryColour || '3D95F7'),
+                            width: '10em',
+                            color: '#ffffff',
+                            fontSize: '16px',
+                            border: '0',
+                            borderRadius: '10px',
+                            height: '35px'
+                          }"
+                          (click)="submit()"
+                        >
+                          Submit
+                        </button>
+                        <!-- </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

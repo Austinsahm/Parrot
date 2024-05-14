@@ -1,0 +1,53 @@
+<div
+  class="border border-dark"
+  style="border: 1px solid black"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: formFontColor || 'black',
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor
+  }"
+>
+  <div
+    class="modal-header font-weight-bold"
+    style="font-weight: bolder; font-size: 1.3em"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: formFontColor || 'black',
+      border: '1px solid ' + formBgColor,
+      'background-color': formBgColor
+    }"
+  >
+    <ng-content select="[mdTitle]"></ng-content>
+  </div>
+  <div class="modal-body">
+    <div
+      class="card"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif',
+        color: formFontColor || 'black',
+        border: '1px solid ' + formBgColor,
+        'background-color': formBgColor
+      }"
+    >
+      <div class="card-body">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal-footer"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif'
+    }"
+  >
+    <div class="container-fluid clearfix" style="padding: 0">
+      <div class="float-start">
+        <ng-content select="[mdLeftButtons]"></ng-content>
+      </div>
+      <div class="float-end">
+        <ng-content select="[mdRightButtons]"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

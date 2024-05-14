@@ -1,0 +1,26 @@
+.role-box {
+    width: 100%;
+    max-height: 20em;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+// label{
+//     font-family: Times New Roman, Times, serif;
+// }
+input{
+    border: none;
+    border-bottom: 1px solid black;
+    border-radius: 5px;
+}
+// button{
+//     font-family: Times New Roman, Times, serif;
+// }
+button.btn-danger:hover{
+    background-color: red;
+}
+button.btn-success:hover{
+    background-color: green;
+}
+.box{
+    box-shadow: rgb(50 50 93 / 25%) 0px 6px 12px -2px, rgb(0 0 0 / 30%) 0px 3px 7px -3px;
+  }

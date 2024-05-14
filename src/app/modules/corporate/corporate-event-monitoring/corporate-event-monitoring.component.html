@@ -1,0 +1,19 @@
+<div class="container-fluid" style="margin: 5px 0">
+  <div class="row justify-content-center align-items-center">
+    <div
+      class="card col-sm-12 col-xs-12 col-md-11"
+      style="
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+          rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+      "
+    >
+    <!-- [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }" -->
+      <div class="card-body" style="overflow: auto">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

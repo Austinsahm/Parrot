@@ -1,0 +1,68 @@
+<!-- <ngx-datatable
+  class="bootstrap table-bordered table-striped table-hover"
+  #myTable
+  [rows]="data"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [limit]="10"
+  [columnMode]="'force'"
+  [loadingIndicator]="loading"
+  [rowHeight]="'auto'"
+  style="font-size: 15px !important"
+>
+  <ngx-datatable-column name="Data">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <span>{{ row["data"] }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Value">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <span>{{ row["value"] }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Date">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <span>{{ row["date"] }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable> -->
+<table
+  mat-table
+  [dataSource]="dataSource"
+  class="mat-elevation-z8 tab"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: '#' + (formColor || 'ff9900')
+  }"
+>
+  <!-- <ng-container
+    matColumnDef="{{ column }}"
+    *ngFor="let column of columnsToDisplay"
+  >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+    <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+  </ng-container> -->
+
+  <ng-container matColumnDef="data">
+    <th mat-header-cell *matHeaderCellDef>Data</th>
+    <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="value">
+    <th mat-header-cell *matHeaderCellDef>Value</th>
+    <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Date</th>
+    <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+</table>
+
+<mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]">
+</mat-paginator>

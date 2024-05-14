@@ -1,0 +1,26 @@
+.map-container {
+    position: static;
+    height: 20em;
+  }
+  
+  .maps {
+    height: 100%;
+    background-color: transparent;
+    opacity: 0;
+    transition: opacity 150ms ease-in;
+  }
+  
+  .maps.visible {
+    opacity: 1;
+  }
+  
+  .pano {
+    position: absolute;
+    bottom: 2px;
+    left: 5%;
+    z-index: 5;
+    // padding: 5px;
+    text-align: center;
+    line-height: 30px;
+  }
+  

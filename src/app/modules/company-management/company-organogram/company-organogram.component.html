@@ -1,0 +1,123 @@
+<app-empty-data
+  *ngIf="errorExist; else data"
+  [text]="errorExist"
+  template="It seems you are offline"
+></app-empty-data>
+<ng-template #data
+  ><div class="card-body" style="overflow: auto">
+    <div *ngIf="permission$ | async as payload">
+      <div *ngIf="payload.companyManagement.company.menuAccess">
+        <!-- <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="row justify-content-center align-items-center">
+          <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <span
+              style="font-weight: bolder; font-size: 1.3em"
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: '#' + (formColor || 'ff9900')
+              }"
+            >
+              Company List
+            </span>
+          </div>
+        </div>
+      </div> -->
+
+        <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <app-title title="Company List" size="lg"></app-title>
+        </div>
+
+        <ngx-skeleton-loader count="5" *ngIf="loading"></ngx-skeleton-loader>
+
+        <p-tree
+          *ngIf="!loading"
+          [value]="companyOrgData"
+          layout="horizontal"
+          selectionMode="single"
+          [style]="{ background: 'none', border: '0px', padding: '0px' }"
+        >
+          <ng-template
+            let-node
+            pTemplate="companies"
+            *ngIf="payload.companyManagement.company.menuAccess"
+          >
+            <div
+              *ngIf="node.data.level < 3"
+              [matMenuTriggerFor]="details"
+              [class.partner]="node.data.companyType === 'PARTNER'"
+              [class.corporate]="node.data.companyType === 'CORPORATE'"
+              [class.individual]="node.data.companyType === 'INDIVIDUAL'"
+              [class.uncl]="node.data.companyType === 'uncl'"
+              [class.all]="node.data.companyType === 'ALL'"
+              [pTooltip]="showTooltip(node.data)"
+              [escape]="false"
+              [ngStyle]="{
+                'background-color': node.data.grandParent && 'black',
+                width: '8em'
+              }"
+            >
+              {{ node.label }}
+            </div>
+            <mat-menu #details="matMenu">
+              <button
+                mat-menu-item
+                *ngIf="
+                  node.data.grandParent &&
+                  payload.companyManagement.company.creater
+                "
+                (click)="onNavigateNew()"
+              >
+                <span>Add New Company</span>
+              </button>
+
+              <button
+                mat-menu-item
+                *ngIf="node.data.level < 3"
+                (click)="onNavigateDetails(node.data)"
+              >
+                <span>View company {{ node.data.companyName }}</span>
+              </button>
+            </mat-menu>
+
+            <div
+              *ngIf="node.data.level >= 3"
+              [class.partner]="node.data.companyType === 'PARTNER'"
+              [class.corporate]="node.data.companyType === 'CORPORATE'"
+              [class.individual]="node.data.companyType === 'INDIVIDUAL'"
+              [class.uncl]="node.data.companyType === 'uncl'"
+              [class.all]="node.data.companyType === 'ALL'"
+              [pTooltip]="showTooltip(node.data)"
+              [escape]="false"
+              style="width: 8em"
+            >
+              {{ node.label }}
+            </div>
+          </ng-template>
+        </p-tree>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-2">
+          <span class="partners"></span>
+          <span class="ms-2">Partner</span>
+        </div>
+        <div class="col-3">
+          <span class="corporates"></span>
+          <span class="ms-2">Corporate</span>
+        </div>
+        <div class="col-3">
+          <div class="individuals"></div>
+          <span class="ms-2">Individual</span>
+        </div>
+        <div class="col-2">
+          <div class="alls"></div>
+          <span class="ms-2">All</span>
+        </div>
+        <div class="col-2">
+          <div class="uncls"></div>
+          <span class="ms-2">Unclassified</span>
+        </div>
+      </div>
+    </div>
+  </div></ng-template
+>

@@ -1,0 +1,271 @@
+<app-modal-layout>
+  <app-title *ngIf="!editMode" title="Add Alert" size="lg" mdTitle></app-title>
+  <app-title *ngIf="editMode" title="Edit Alert" size="lg" mdTitle></app-title>
+
+  <div mdLeftButtons>
+    <button
+      type="button"
+      aria-label="Close"
+      (click)="modalRef.close()"
+      [ngStyle]="{
+        backgroundColor: '#fff',
+        width: '10em',
+        color: '#' + (primaryColour || '3D95F7'),
+        fontSize: '16px',
+        border: '1px solid #' + (primaryColour || '3D95F7'),
+        borderRadius: '10px',
+        height: '35px'
+      }"
+    >
+      Cancel
+    </button>
+  </div>
+
+  <div mdRightButtons>
+    <button
+      type="button"
+      class="float-end"
+      [disabled]="form.invalid || form.pristine"
+      (click)="saveHandler()"
+      [ngStyle]="{
+        backgroundColor: '#' + (primaryColour || '3D95F7'),
+        width: '10em',
+        color: '#ffffff',
+        fontSize: '16px',
+        border: '0',
+        borderRadius: '10px',
+        height: '35px'
+      }"
+    >
+      Save
+    </button>
+  </div>
+
+  <div
+    class="row"
+    style="max-width: 32em"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif'
+    }"
+  >
+    <div
+      class="container"
+      [formGroup]="form"
+      [ngStyle]="{
+        'font-family': formFont || 'Times New Roman, Times, serif'
+      }"
+    >
+      <div
+        class="row mb-3"
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+      >
+        <app-sensor-field
+          class="col-12"
+          [configId]="configId"
+          [device]="device"
+          (selectionChange)="onChangeSensor($event)"
+          formControlName="deviceSensorRefId"
+          placeholder="Select sensor"
+          new="true"
+          [defaultValue]="editSensorOption"
+        >
+        </app-sensor-field>
+        <app-control-error
+          *ngIf="
+            form.get('deviceSensorRefId').invalid &&
+            form.get('deviceSensorRefId').touched
+          "
+        >
+          <span *ngIf="form.get('deviceSensorRefId').errors.required"
+            >This field is required</span
+          >
+          <span *ngIf="form.get('deviceSensorRefId').errors.uniqueSensor"
+            >Duplicate sensor entry.</span
+          >
+        </app-control-error>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Min. Value</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              formControlName="minValue"
+              placeholder="Min. Value"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="form.get('minValue').invalid && form.get('minValue').touched"
+          >
+            <span *ngIf="form.get('minValue').errors.required"
+              >This field is required</span
+            >
+          </app-control-error>
+        </div>
+
+        <!-- <div class="col-2"></div> -->
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Max. Value</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              formControlName="maxValue"
+              placeholder="Max. Value"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="form.get('maxValue').invalid && form.get('maxValue').touched"
+          >
+            <span *ngIf="form.get('maxValue').errors.required"
+              >This field is required</span
+            >
+          </app-control-error>
+          <app-control-error *ngIf="isMaxValueInvalid">
+            <span>Min value cannot be greater than Max value</span>
+          </app-control-error>
+        </div>
+      </div>
+      <!-- <input
+          type="number"
+          formControlName="minValue"
+          
+          placeholder="Min. value"
+          [ngStyle]="{
+            color: formFontColor || 'black',
+            'background-color': formBgColor,
+            'border-bottom': '1px solid ' + formFontColor
+          }"
+        /> -->
+      <!-- <input
+        type="number"
+        formControlName="maxValue"
+        
+        placeholder="Max. value"
+        [ngStyle]="{
+          color: formFontColor || 'black',
+          'background-color': formBgColor,
+          'border-bottom': '1px solid ' + formFontColor
+        }"
+      /> -->
+
+      <div class="row mb-3">
+        <app-sensor-measure-field
+          class="col-12"
+          formControlName="measure"
+          (selectionChange)="onChangeMeasure($event)"
+          [configId]="configId"
+          [deviceSensorRefId]="form.value?.deviceSensorRefId"
+          new="true"
+          [defaultValue]="editSensorMeasure"
+        ></app-sensor-measure-field>
+        <app-control-error
+          *ngIf="form.get('measure').invalid && form.get('measure').touched"
+        >
+          <span *ngIf="form.get('measure').errors.required"
+            >This field is required</span
+          >
+        </app-control-error>
+      </div>
+
+      <div class="row mb-3 justify-content-between">
+        <div class="col-5">
+          <mat-form-field appearance="outline">
+            <mat-label
+              [ngStyle]="{
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                color: formFontColor || 'black'
+              }"
+              >Tol. Time</mat-label
+            >
+            <input
+              matInput
+              type="number"
+              formControlName="tolerableTime"
+              placeholder="Tolerable Time"
+              [ngStyle]="{
+                color: formFontColor || 'black',
+                'font-family': formFont || 'Times New Roman, Times, serif',
+                'background-color': formBgColor
+              }"
+            />
+          </mat-form-field>
+          <app-control-error
+            *ngIf="
+              form.get('tolerableTime').invalid &&
+              form.get('tolerableTime').touched
+            "
+          >
+            <span *ngIf="form.get('tolerableTime').errors.required"
+              >This field is required</span
+            >
+          </app-control-error>
+        </div>
+        <div class="col-5">
+          <app-combo-select-field
+            formControlName="tolerableMeasure"
+            (selectionChange)="onChangeTolerableMeasure($event)"
+            placeholder="Tol. Time Measure"
+            [options]="toltimeOptions"
+            [defaultSelection]="editSensorTolerable"
+          ></app-combo-select-field>
+          <app-control-error
+            *ngIf="
+              form.get('tolerableMeasure').invalid &&
+              form.get('tolerableMeasure').touched
+            "
+          >
+            <span *ngIf="form.get('tolerableMeasure').errors.required"
+              >This field is required</span
+            >
+          </app-control-error>
+        </div>
+      </div>
+      <!-- <input
+        type="number"
+        formControlName="tolerableTime"
+        
+        placeholder="Tolerable time"
+        [ngStyle]="{
+          color: formFontColor || 'black',
+          'background-color': formBgColor,
+          'border-bottom': '1px solid ' + formFontColor
+        }"
+      /> -->
+
+      <div class="row mb-3"></div>
+      <!-- <app-combo-box-field
+      formControlName="tolerableMeasure"
+      (change)="onChangeTolerableMeasure($event)"
+      placeholder="Tol. Time Measure"
+      [options]="toltimeOptions"
+    ></app-combo-box-field> -->
+    </div>
+  </div>
+</app-modal-layout>

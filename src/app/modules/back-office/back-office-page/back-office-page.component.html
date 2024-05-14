@@ -1,0 +1,21 @@
+<app-page-layout>
+    <div navigation class="main-header">
+        <div class="container">
+            <div class="navbar-expand-md navbar">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+                </button>
+                <ul class="collapse navbar-collapse navbar-menu" id="collapsibleNavbar">
+                    <li class="nav-item"><a class="nav-link" [routerLink]="['setup']"
+                            routerLinkActive="active">Setup</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" [routerLink]="['reports']"
+                            routerLinkActive="active">Reports</a></li>
+                    <li class="nav-item"><a class="nav-link" [routerLink]="['security']"
+                            routerLinkActive="active">Security</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</app-page-layout>

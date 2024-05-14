@@ -1,0 +1,809 @@
+<div
+  class="container-fluid col-md-11"
+  [ngStyle]="{
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <br />
+  <a *ngIf="!isLoading" [routerLink]="['../../use-cases']">
+    <mat-icon [ngStyle]="{ color: formFontColor || 'black' }"
+      >arrow_back</mat-icon
+    >
+  </a>
+  <br />
+  <div *ngIf="isLoading || isFiltering" class="spinner">
+    <loaders-css
+      [loader]="loader"
+      [scale]="3"
+      [bgColor]="bgColor"
+      [color]="color"
+    ></loaders-css>
+  </div>
+  <!-- <div class="overlay" *ngIf="isFiltering">
+    <div class="spinner-wrapper">
+      <app-spinner></app-spinner>
+    </div>
+  </div> -->
+
+  <div class="mb-2" *ngIf="devices && !isFiltering">
+    <app-card title="Devices" height="-1vh" [hover]="false">
+      <form [formGroup]="summaryForm">
+        <div class="row align-items-center justify-content-between mb-2">
+          <div class="col-sm-6 col-md-1">
+            <mat-form-field class="col-12" appearance="outline">
+              <mat-label
+                [ngStyle]="{
+                  'font-family': formFont || 'Times New Roman, Times, serif',
+                  color: formFontColor || 'black'
+                }"
+                >Days</mat-label
+              >
+              <input
+                matInput
+                type="number"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                formControlName="day"
+                placeholder="Day"
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+                  'font-family': formFont || 'Times New Roman, Times, serif',
+                  'background-color': formBgColor
+                }"
+              />
+            </mat-form-field>
+          </div>
+          <!-- <div class="col-sm-2 col-md-1">
+            <label class="form-check-label">Days:</label>
+          </div>
+          <div class="col-sm-4 col-md-1">
+            <input
+              class="form-control"
+              type="number"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+              formControlName="day"
+              placeholder="Day"
+            />
+          </div> -->
+          <div class="col-sm-6 col-md-1">
+            <button
+              [disabled]="!summaryForm.valid"
+              (click)="submit()"
+              type="button"
+              [ngStyle]="{
+                backgroundColor: '#' + (primaryColour || '3D95F7'),
+                color: '#ffffff',
+                fontSize: '16px',
+                border: '0',
+                borderRadius: '10px',
+                height: '35px'
+              }"
+            >
+              Submit
+            </button>
+          </div>
+          <div class="col-sm-2 col-md-2">
+            <app-device-category-field
+              placeholder="Device Category"
+              [selectable]="selectable"
+              [subdomain]="companyId"
+              (selectionChange)="changeDeviceCategoryId($event)"
+            ></app-device-category-field>
+          </div>
+          <div class="col-sm-2 col-md-2">
+            <ng-container *ngIf="!devCat; else category">
+              <app-dashboard-device-field
+                placeholder="Device"
+                [selectable]="selectable"
+                (selectionChange)="changeDeviceId($event)"
+              >
+              </app-dashboard-device-field>
+            </ng-container>
+
+            <ng-template #category>
+              <ng-container
+                *ngIf="deviceIdOptions$ | progress | async as payload"
+              >
+                <app-combo-select-field
+                  placeholder="Device"
+                  [options]="payload.value"
+                  [loading]="payload.loading"
+                  (selectionChange)="changeDeviceId($event)"
+                >
+                </app-combo-select-field>
+              </ng-container>
+            </ng-template>
+          </div>
+          <div class="col-sm-2 col-md-1">
+            <app-combo-select-field
+              placeholder="Status"
+              [options]="statusList"
+              (selectionChange)="changeStatus($event)"
+            ></app-combo-select-field>
+          </div>
+          <div class="col-sm-2 col-md-2">
+            <app-device-network-field
+              placeholder="Network"
+              [selectable]="selectable"
+              (selectionChange)="changeNetwork($event)"
+            >
+            </app-device-network-field>
+          </div>
+          <div class="col-sm-2 col-md-1">
+            <button (click)="filterDevices()" type="button" class="btn">
+              <mat-icon class="search">search</mat-icon>
+            </button>
+          </div>
+          <div class="col-1">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="toggleMaximizeAll()"
+              title="Minimize/Maximize All"
+            >
+              <fa-icon [icon]="['fas', 'expand-arrows-alt']"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-1">
+          <button
+            *ngIf="searchMode"
+            type="button"
+            title="Reset Filters"
+            (click)="reset()"
+            class="btn btn-primary"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+      <!-- <app-combo-select-field
+            placeholder="Device Category"
+            [options]="categoryList"
+            (selectionChange)="onGeofencingTask($event)"
+          ></app-combo-select-field> -->
+
+      <!-- <div class="col-md-4">
+              <select class="form-control" formControlName="deviceCatg">
+                <option ngValue="" disabled selected>Device Category</option>
+                <option ngValue="ALL">ALL</option>
+                <option
+                  *ngFor="let option of categoryList"
+                  [ngValue]="option.value"
+                  [disabled]="option.disabled"
+                >
+                  {{ option.label }}
+                </option>
+              </select>
+            </div> -->
+
+      <!-- <input
+              class="form-control"
+              formControlName="manufDeviceId"
+              type="text"
+              placeholder="Manuf Device ID"
+            /> -->
+
+      <!-- <select class="form-control" formControlName="status">
+              <option ngValue="ALL" selected>ALL</option>
+              <option ngValue="ACTIVE">ACTIVE</option>
+              <option ngValue="INACTIVE">INACTIVE</option>
+            </select> -->
+      <br />
+
+      <!-- <div *ngIf="isFiltering" class="spinner">
+        <loaders-css
+          [loader]="loader"
+          [scale]="3"
+          [bgColor]="bgColor"
+          [color]="color"
+        ></loaders-css>
+      </div> -->
+
+      <div class="row">
+        <div
+          class="col-md-6 col-xl-4 mb-4"
+          *ngFor="let device of devices; let deviceIndex = index"
+        >
+          <div
+            class="card pointer"
+            [ngStyle]="{
+              border: '1px solid ' + formBgColor,
+              color: cardText,
+              'font-family': formFont || 'Times New Roman, Times, serif'
+            }"
+          >
+            <div class="card-header">
+              <div class="d-flex justify-content-between" style="height: 40px">
+                <span>
+                  <!-- {{ device.companyName }} ({{ device.deviceName }}) ({{
+                    device.manufDeviceId
+                  }}) -->
+                  {{ device.deviceName }} ({{ device.manufDeviceId }})
+                  <img
+                    [src]="networkLogo(device.network_name)"
+                    class="logo"
+                    [ngClass]="{
+                      sig: device.network_name.toLowerCase() === 'sigfox',
+                      other: device.network_name.toLowerCase() !== 'sigfox'
+                    }"
+                  />
+                </span>
+                <!-- <div class="d-flex">
+                  <fa-icon
+                    [icon]="['fas', 'window-minimize']"
+                    class="mr-2 pointer"
+                    (click)="minimize(deviceIndex)"
+                  ></fa-icon>
+                  <fa-icon
+                    [icon]="['fas', 'expand']"
+                    class="pointer"
+                    (click)="maximize(deviceIndex)"
+                  ></fa-icon>
+                </div> -->
+                <div
+                  class="d-flex justify-content-center align-items-center float-end bg-icons"
+                >
+                  <button
+                    mat-icon-button
+                    (click)="minimize(deviceIndex)"
+                    aria-label="Minimize"
+                    class="icon-btn"
+                  >
+                    <mat-icon style="color: black">minimize</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    (click)="maximize(deviceIndex)"
+                    class="icon-btn"
+                    aria-label="Maximize"
+                  >
+                    <mat-icon style="color: black"
+                      >check_box_outline_blank</mat-icon
+                    >
+                  </button>
+
+                  <button
+                    [disabled]="!device.subscrValid"
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="menu"
+                    class="icon-btn"
+                  >
+                    <mat-icon style="color: black">more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <!-- <button mat-menu-item (click)="settings(device)">
+                      <mat-icon>settings</mat-icon>
+                      <span>Settings</span>
+                    </button> -->
+                    <button mat-menu-item (click)="dataDetails(device.device)">
+                      <mat-icon>insights</mat-icon>
+                      <span>Data Details</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+            </div>
+
+            <ng-container
+              *ngIf="device.subscrValid; else expired"
+              class="card-body"
+            >
+              <ul
+                ngbNav
+                #nav="ngbNav"
+                class="nav-tabs"
+                style="margin-top: 12px; padding: 0px 12px"
+              >
+                <li
+                  ngbNavItem
+                  *ngFor="
+                    let attribute of device.attributeList;
+                    let attributeIndex = index
+                  "
+                >
+                  <a ngbNavLink>
+                    <fa-icon [icon]="attribute.icon"></fa-icon>
+                  </a>
+
+                  <ng-template ngbNavContent>
+                    <br />
+                    <!-- <div
+                      style="
+                        max-height: 10em;
+                        min-height: 10em;
+                        overflow: auto;
+                        scrollbar-width: thin;
+                        padding: 15px;
+                      "
+                    > -->
+                    <div
+                      style="
+                        max-height: 250px;
+                        min-height: 250px;
+                        overflow: auto;
+                        scrollbar-width: thin;
+                        padding: 15px;
+                      "
+                    >
+                      <div *ngIf="attribute.type == 'dashboard0'">
+                        <div class="d-flex">
+                          <span class="col-md-7"> Last Seen Date </span>
+                          <span class="col-md-5 ml-2">
+                            {{ device.lastSeenDate }}
+                          </span>
+                        </div>
+                        <hr />
+
+                        <div class="d-flex">
+                          <span class="col-md-7">
+                            Device Status at {{ todayDate }}
+                          </span>
+                          <span class="col-md-5 ml-2">
+                            {{ device.deviceStatus }}
+                          </span>
+                        </div>
+                        <hr />
+
+                        <div *ngFor="let eachAttribute of attribute.data">
+                          <div class="d-flex">
+                            <span class="col-md-7">
+                              {{ eachAttribute.attribute }}
+                            </span>
+                            <span class="col-md-5 ml-2">
+                              {{ changeAttributeName(eachAttribute) }}
+                              <span *ngIf="eachAttribute.deviceIcon.length">
+                                <fa-icon
+                                  *ngIf="eachAttribute.deviceIcon[0] === 'fas'"
+                                  [icon]="eachAttribute.deviceIcon"
+                                  [style]="{ color: eachAttribute.iconColor }"
+                                >
+                                </fa-icon>
+                                <img
+                                  *ngIf="eachAttribute.deviceIcon[0] === ''"
+                                  [src]="eachAttribute.deviceIcon[1]"
+                                  [ngClass]="{
+                                    sig:
+                                      device.network_name.toLowerCase() ===
+                                      'sigfox',
+                                    humidity:
+                                      eachAttribute.deviceIcon[1].split(
+                                        '.'
+                                      )[1] === 'svg',
+                                    other:
+                                      device.network_name.toLowerCase() !==
+                                      'sigfox'
+                                  }"
+                                />
+                              </span>
+                            </span>
+                          </div>
+                          <hr />
+                        </div>
+                      </div>
+
+                      <div *ngIf="attribute.type == 'dashboard1'">
+                        <div *ngFor="let eachAttribute of attribute.data">
+                          <div class="d-flex">
+                            <span class="col-md-5">
+                              {{ eachAttribute.attribute }}
+                            </span>
+                            <span class="col-md-3">
+                              {{ eachAttribute.attributeValue }}
+                            </span>
+                            <span class="col-md-4">
+                              {{ eachAttribute.devNetwkTime }}
+                            </span>
+                          </div>
+                          <hr />
+                        </div>
+                      </div>
+
+                      <div *ngIf="attribute.type == 'static'">
+                        <!-- <div class="row">
+                          <div class="col-4">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input
+                                  type="radio"
+                                  class="form-check-input"
+                                  (change)="
+                                    changeStaticChartType(
+                                      'GAUGE',
+                                      deviceIndex,
+                                      attributeIndex
+                                    )
+                                  "
+                                  name="optionsRadios"
+                                  value="option2"
+                                />
+                                Gauge
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="col-4">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input
+                                  type="radio"
+                                  class="form-check-input"
+                                  (change)="
+                                    changeStaticChartType(
+                                      'PIE',
+                                      deviceIndex,
+                                      attributeIndex
+                                    )
+                                  "
+                                  name="optionsRadios"
+                                  value="option2"
+                                />
+                                Pie
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="col-4">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input
+                                  type="radio"
+                                  class="form-check-input"
+                                  (change)="
+                                    changeStaticChartType(
+                                      'DOUGHNUT',
+                                      deviceIndex,
+                                      attributeIndex
+                                    )
+                                  "
+                                  name="optionsRadios"
+                                  value="option2"
+                                />
+                                Doughnut
+                              </label>
+                            </div>
+                          </div>
+                        </div> -->
+
+                        <div
+                          *ngFor="
+                            let chart of attribute.data;
+                            let chartIndex = index
+                          "
+                        >
+                          <div class="col-md-6 mb-4">
+                            <!-- <app-guage-chart
+                              *ngIf="chart.chartType === GAUGE"
+                              [label]="chart.label"
+                              [percentage]="chart.percentage"
+                            ></app-guage-chart>
+                            <app-pie-chart
+                              *ngIf="chart.chartType === PIE"
+                              [label]="chart.label"
+                              [percentage]="chart.percentage"
+                            ></app-pie-chart>
+                            <app-doughnut-chart
+                              *ngIf="chart.chartType === DOUGHNUT"
+                              [label]="chart.label"
+                              [percentage]="chart.percentage"
+                            ></app-doughnut-chart> -->
+                            <app-radial-gauge-chart
+                              [data]="chart"
+                              [card]="true"
+                              [height]="'100px'"
+                            ></app-radial-gauge-chart>
+                            <!-- <strong
+                              >
+                              {{ chart.label }} ({{ chart[0].Value }})</strong
+                            > -->
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="attribute.type == 'timeSeries'">
+                        <!-- <div class="row">
+                          <div class="col-6">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input
+                                  type="radio"
+                                  class="form-check-input"
+                                  (change)="
+                                    changeTimeSeriesChartType(
+                                      'LINE',
+                                      deviceIndex,
+                                      attributeIndex
+                                    )
+                                  "
+                                  name="optionsRadios"
+                                  value="option2"
+                                />
+                                Line
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="col-6">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input
+                                  type="radio"
+                                  class="form-check-input"
+                                  (change)="
+                                    changeTimeSeriesChartType(
+                                      'BAR',
+                                      deviceIndex,
+                                      attributeIndex
+                                    )
+                                  "
+                                  name="optionsRadios"
+                                  value="option2"
+                                />
+                                Bar
+                              </label>
+                            </div>
+                          </div>
+                        </div> -->
+
+                        <div class="col-md-12 mb-5">
+                          <div>
+                            <ng-container *ngFor="let item of attribute.data">
+                              <app-line-chart-single-source
+                                [data]="item"
+                                [brushes]="chartColours"
+                              ></app-line-chart-single-source>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="attribute.type == 'assetTracker'">
+                        <div *ngIf="attribute.data.showMap">
+                          <app-device-asset-tracing
+                            [locationData]="attribute.data.locationData"
+                          ></app-device-asset-tracing>
+                          <!-- <app-device-asset-tracker
+                            [locationData]="attribute.data.locationData"
+                          ></app-device-asset-tracker> -->
+                        </div>
+                      </div>
+
+                      <div *ngIf="attribute.type == 'geolocation'">
+                        <div *ngIf="attribute.data.showMap">
+                          <div
+                            class="container pr-3"
+                            *ngIf="
+                              attribute.data.latitude == 0 &&
+                              attribute.data.longitude == 0
+                            "
+                          >
+                            <p class="lead">
+                              No Location data for this device at the moment
+                            </p>
+                          </div>
+                          <!-- <app-device-geolocation
+                            *ngIf="
+                              attribute.data.latitude != 0 &&
+                              attribute.data.longitude != 0
+                            "
+                            [latitude]="attribute.data.latitude"
+                            [longitude]="attribute.data.longitude"
+                            [address]="attribute.data.address"
+                            [container]="attribute.data.container"
+                          ></app-device-geolocation> -->
+
+                          <app-device-location
+                            *ngIf="
+                              attribute.data.latitude != 0 &&
+                              attribute.data.longitude != 0
+                            "
+                            [latitude]="attribute.data.latitude"
+                            [longitude]="attribute.data.longitude"
+                          ></app-device-location>
+                        </div>
+                      </div>
+
+                      <div *ngIf="attribute.type == 'alert'">
+                        <div
+                          class="jumbotron jumbotron-fluid ms-2"
+                          *ngIf="!attribute.data.length"
+                        >
+                          <div class="container pr-3">
+                            <p class="lead">
+                              No Alert message for this device at the moment
+                            </p>
+                          </div>
+                        </div>
+
+                        <div *ngIf="attribute.data.length">
+                          <div *ngFor="let eachAttribute of attribute.data">
+                            <div class="d-flex">
+                              <span class="col-md-6"> Message </span>
+                              <span class="col-md-6">
+                                {{ eachAttribute.message }}
+                              </span>
+                            </div>
+                            <div class="d-flex">
+                              <span class="col-md-6"> Alert Initial Time </span>
+                              <span class="col-md-6">
+                                {{ eachAttribute.alertInitTime }}
+                              </span>
+                            </div>
+                            <div class="d-flex">
+                              <span class="col-md-6"> Alert Current Time </span>
+                              <span class="col-md-6">
+                                {{ eachAttribute.alertCurTime }}
+                              </span>
+                            </div>
+                            <div class="d-flex">
+                              <span class="col-md-6"> Alert ACK. </span>
+                              <span class="col-md-6">
+                                {{ eachAttribute.alertAck }}
+                              </span>
+                            </div>
+                            <div class="d-flex">
+                              <span class="col-md-6"> Action Taken </span>
+                              <span class="col-md-6">
+                                {{ eachAttribute.actionTaken }}
+                              </span>
+                            </div>
+                            <hr />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </li>
+              </ul>
+
+              <div
+                [ngbNavOutlet]="nav"
+                class="mt-2"
+                #collapse="ngbCollapse"
+                [(ngbCollapse)]="device.isCollapsed"
+              ></div>
+            </ng-container>
+
+            <ng-template #expired>
+              <div class="card-body bg-image" style="padding: 0 !important">
+                <ul
+                  ngbNav
+                  #nav="ngbNav"
+                  class="nav-tabs"
+                  style="margin-top: 12px; padding: 0px 12px"
+                >
+                  <li
+                    ngbNavItem
+                    *ngFor="
+                      let attribute of device.attributeList;
+                      let attributeIndex = index
+                    "
+                  >
+                    <a ngbNavLink>
+                      <fa-icon [icon]="attribute.icon"></fa-icon>
+                    </a>
+
+                    <ng-template ngbNavContent>
+                      <br />
+                      <!-- <div
+                        style="
+                          max-height: 10em;
+                          min-height: 10em;
+                          overflow: auto;
+                          scrollbar-width: thin;
+                        "
+                      > -->
+                      <div
+                        style="
+                          max-height: 250px;
+                          min-height: 250px;
+                          overflow: auto;
+                          scrollbar-width: thin;
+                        "
+                      >
+                        <!-- <div *ngIf="attribute.type == 'dashboard0'">
+                          <div class="d-flex">
+                            <span class="col-md-6">Subscription expired</span>
+                          </div>
+                        </div> -->
+
+                        <!-- <div *ngIf="attribute.type == 'dashboard1'">
+                          <div class="d-flex">
+                            <span class="col-md-6">Subscription expired</span>
+                          </div>
+                        </div> -->
+
+                        <!-- <div *ngIf="attribute.type == 'static'">
+                          <div class="d-flex">
+                            <span class="col-md-6">Subscription expired</span>
+                          </div>
+                        </div> -->
+
+                        <!-- <div *ngIf="attribute.type == 'timeSeries'">
+                          <div class="d-flex">
+                            <span class="col-md-6">Subscription expired</span>
+                          </div>
+                        </div> -->
+
+                        <!-- <div *ngIf="attribute.type == 'assetTracker'">
+                          <div class="d-flex">
+                          <span class="col-md-6">Subscription expired</span>
+                          </div>
+                        </div> -->
+
+                        <!-- <div *ngIf="attribute.type == 'geolocation'">
+                          <div class="d-flex">
+                            <span class="col-md-6">Subscription expired</span>
+                          </div>
+                        </div> -->
+
+                        <!-- <div *ngIf="attribute.type == 'alert'">
+                          <div class="d-flex">
+                            <span class="col-md-6">Subscription expired</span>
+                          </div>
+                        </div> -->
+                      </div>
+                    </ng-template>
+                  </li>
+                </ul>
+
+                <div
+                  [ngbNavOutlet]="nav"
+                  class="mt-2"
+                  #collapse="ngbCollapse"
+                  [(ngbCollapse)]="device.isCollapsed"
+                ></div>
+              </div>
+              <div class="bg-text justify-content-center align-items-center">
+                <mat-icon
+                  style="color: red; height: 50px; width: 50px; font-size: 50px"
+                  class="material-symbols-outlined justify-content-center align-items-center"
+                  >sms_failed</mat-icon
+                >
+                <p>Subscription expired</p>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<!-- <app-combo-select-field
+            placeholder="Device Category"
+            [options]="categoryList"
+            (selectionChange)="onGeofencingTask($event)"
+          ></app-combo-select-field> -->
+
+<!-- <div class="col-md-4">
+              <select class="form-control" formControlName="deviceCatg">
+                <option ngValue="" disabled selected>Device Category</option>
+                <option ngValue="ALL">ALL</option>
+                <option
+                  *ngFor="let option of categoryList"
+                  [ngValue]="option.value"
+                  [disabled]="option.disabled"
+                >
+                  {{ option.label }}
+                </option>
+              </select>
+            </div> -->
+
+<!-- <input
+              class="form-control"
+              formControlName="manufDeviceId"
+              type="text"
+              placeholder="Manuf Device ID"
+            /> -->
+
+<!-- <select class="form-control" formControlName="status">
+              <option ngValue="ALL" selected>ALL</option>
+              <option ngValue="ACTIVE">ACTIVE</option>
+              <option ngValue="INACTIVE">INACTIVE</option>
+            </select> -->

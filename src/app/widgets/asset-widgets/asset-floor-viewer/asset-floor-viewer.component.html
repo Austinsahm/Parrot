@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col">
+    <app-title title="Asset Floor Details" size="md"></app-title>
+  </div>
+</div>
+<div class="row mb-4" *ngIf="floors$ | progress | async as floors">
+  <ngx-datatable
+    class="bootstrap table-bordered table-striped table-hover"
+    #floorListTable
+    [rows]="floors.value"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [limit]="10"
+    [loadingIndicator]="false"
+    [columnMode]="'force'"
+    [rowHeight]="'auto'"
+  >
+    <ngx-datatable-column name="Floor Number" prop="number">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <span>
+          {{ row["floorNumber"] }}
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Floor Name" prop="name">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <a href="javascript:void(0);" (click)="displayFloor(row)">
+          {{ row["floorName"] }}
+        </a>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>
+<div class="row">
+  <div class="col">
+    <button class="btn btn-primary float-end" (click)="getFloorDetails()">
+      Update Floors
+    </button>
+  </div>
+</div>

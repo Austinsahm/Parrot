@@ -1,0 +1,34 @@
+<ngx-datatable class="bootstrap table-bordered table-striped table-hover" [rows]="states" [headerHeight]="50"
+    [footerHeight]="50" [limit]="10" [loadingIndicator]="false" [columnMode]="'force'" [rowHeight]="'auto'">
+
+    <ngx-datatable-column name="State Name" prop="stateName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <a href="javascript:void(0);" (click)="onRowSelected.emit(row)">
+                {{ row.stateName }}
+            </a>
+        </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Description" prop="stateDesc">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.stateDesc }}
+        </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Country" prop="countryName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <a href="javascript:void(0);">
+                {{ row.countryName }}
+            </a>
+        </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Actions" [sortable]="false" *ngIf="editable">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <a href="javascript:void(0);" (click)="onRowDeleted.emit(row)"> 
+                Delete
+            </a>
+        </ng-template>
+    </ngx-datatable-column>
+
+</ngx-datatable>

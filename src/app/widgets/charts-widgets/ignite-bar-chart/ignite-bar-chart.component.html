@@ -1,0 +1,26 @@
+<div class="container sample">
+  <div class="options vertical">
+    <span id="legendTitle">{{ title }}</span>
+  </div>
+  <div class="container">
+    <igx-category-chart
+      [height]="height"
+      width="100%"
+      [dataSource]="data"
+      chartType="Column"
+      xAxisInterval="1"
+      yAxisMinimumValue="0"
+      isHorizontalZoomEnabled="false"
+      isVerticalZoomEnabled="false"
+      isCategoryHighlightingEnabled="false"
+      isItemHighlightingEnabled="false"
+      [brushes]="brushes"
+    >
+    </igx-category-chart>
+  </div>
+</div>
+<!-- yAxisTitleLeftMargin="10"
+        yAxisTitle="Temperature in Degrees Celsius"
+        yAxisInterval="1"
+        yAxisLabelLeftMargin="0"
+                yAxisTitleRightMargin="5" -->

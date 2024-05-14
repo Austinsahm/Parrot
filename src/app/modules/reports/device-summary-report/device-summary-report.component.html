@@ -1,0 +1,196 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: formFontColor || 'black'
+  }"
+>
+  <div
+    class="row justify-content-center align-items-center"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: formFontColor || 'black',
+      border: '1px solid ' + formBgColor,
+      'background-color': formBgColor
+    }"
+  >
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <div
+        class="card col-sm-12 col-xs-12 col-md-12"
+        style="
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        "
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif',
+          color: formFontColor || 'black',
+          border: '1px solid ' + formBgColor,
+          'background-color': formBgColor
+        }"
+      >
+        <div class="card-body" style="overflow: auto">
+          <div
+            class="card"
+            [ngStyle]="{
+              'font-family': formFont || 'Times New Roman, Times, serif',
+              color: formFontColor || 'black',
+              'background-color': formBgColor
+            }"
+          >
+            <!-- <div
+    class="card-header font-weight-bold"
+    style="font-weight: bolder; font-size: 1.3em"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }"
+  >
+    Device List Summary
+  </div> -->
+            <app-title
+              class="card-header"
+              title="Device List Summary"
+              size="lg"
+            ></app-title>
+            <div class="card-body">
+              <ng-container *ngIf="inFilterMode">
+                <!-- <h3>Device List Summary </h3> -->
+                <div>
+                  <app-device-summary-report-form
+                    [company]="company"
+                    #formElement
+                  ></app-device-summary-report-form>
+                </div>
+
+                <div class="container-fluid">
+                  <div
+                    class="row rowing"
+                    *ngIf="permission$ | async as payload"
+                  >
+                    <div class="col" style="padding: 1em 0">
+                      <!-- <button
+                        type="button"
+                        class="btn btn-danger"
+                        aria-label="Close"
+                        (click)="
+                          cancelHandler(
+                            formElement?.form,
+                            formElement?.form.value
+                          )
+                        "
+                      >
+                        Cancel
+                      </button> -->
+                      <button
+                        [ngStyle]="{
+                          backgroundColor: '#fff',
+                          width: '10em',
+                          color: '#' + (primaryColour || '3D95F7'),
+                          fontSize: '16px',
+                          border: '1px solid #' + (primaryColour || '3D95F7'),
+                          borderRadius: '10px',
+                          height: '35px'
+                        }"
+                        (click)="
+                          cancelHandler(
+                            formElement?.form,
+                            formElement?.form.value
+                          )
+                        "
+                      >
+                        Cancel
+                      </button>
+                      <!-- <button
+                        *ngIf="payload.reports.deviceSummary.reader"
+                        type="button"
+                        class="btn btn-success float-end"
+                        [disabled]="formElement?.form?.invalid"
+                        (click)="saveHandler(formElement?.form?.value)"
+                      >
+                        Submit
+                      </button> -->
+                      <button
+                        class="float-end"
+                        *ngIf="payload.reports.deviceSummary.reader"
+                        [ngStyle]="{
+                          backgroundColor: '#' + (primaryColour || '3D95F7'),
+                          width: '10em',
+                          color: '#ffffff',
+                          fontSize: '16px',
+                          border: '0',
+                          borderRadius: '10px',
+                          height: '35px'
+                        }"
+                        [disabled]="formElement?.form?.invalid"
+                        (click)="saveHandler(formElement?.form?.value)"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div class="container-fluid" *ngIf="!inFilterMode">
+                <ng-container *ngIf="report$ | progress | async as payload">
+                  <div
+                    class="col clearfix"
+                    style="padding: 1em 0"
+                    *ngIf="!payload.loading"
+                  >
+                    <!-- <button
+                      type="button"
+                      class="btn btn-secondary float-end ms-2"
+                      (click)="inFilterMode = true"
+                    >
+                      Filter
+                    </button> -->
+                    <button
+                      class="ms-2 mt-1 float-end"
+                      *ngIf="!payload.loading"
+                      [ngStyle]="{
+                        backgroundColor: '#fff',
+                        width: '10em',
+                        color: '#' + (primaryColour || '3D95F7'),
+                        fontSize: '16px',
+                        border: '1px solid #' + (primaryColour || '3D95F7'),
+                        borderRadius: '10px',
+                        height: '35px'
+                      }"
+                      (click)="inFilterMode = true"
+                    >
+                      Filter
+                    </button>
+                    <div class="float-end">
+                      <app-report-actions
+                        report="DeviceSummary"
+                        [data]="excelFormat(payload.value)"
+                      ></app-report-actions>
+                    </div>
+                  </div>
+
+                  <ngx-skeleton-loader
+                    [count]="5"
+                    *ngIf="payload.loading"
+                  ></ngx-skeleton-loader>
+                  <!-- <app-control-error *ngIf="payload.error">{{
+                    payload.error.message
+                  }}</app-control-error> -->
+                  <app-control-error *ngIf="payload.error"
+                    >Unknown Error</app-control-error
+                  >
+                  <app-device-summary-report-viewer
+                    *ngIf="payload.value"
+                    [records]="payload.value"
+                  >
+                  </app-device-summary-report-viewer>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

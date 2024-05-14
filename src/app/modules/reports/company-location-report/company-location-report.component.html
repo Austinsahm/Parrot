@@ -1,0 +1,84 @@
+<div
+  class="card"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <div
+    class="card-header font-weight-bold"
+    style="font-weight: bolder; font-size: 1.3em"
+    [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }"
+  >
+    Company List By Location
+  </div>
+  <div
+    class="card-body"
+  >
+    <ng-container *ngIf="inFilterMode">
+      <!-- <h3>Company List By Location</h3> -->
+      <div>
+        <app-company-location-report-form
+          #formElement
+        ></app-company-location-report-form>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row rowing" *ngIf="permission$ | async as payload">
+          <div class="col" style="padding: 1em 0">
+            <button
+              type="button"
+              class="btn btn-danger"
+              aria-label="Close"
+              (click)="cancelHandler()"
+            >
+              Cancel
+            </button>
+            <button
+              *ngIf="payload.reports.companyLocations.reader"
+              type="button"
+              class="btn btn-success float-end"
+              [disabled]="formElement?.form?.invalid"
+              (click)="saveHandler(formElement?.form?.value)"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="container-fluid" *ngIf="!inFilterMode">
+      <ng-container *ngIf="report$ | progress | async as payload">
+        <div
+          class="col clearfix"
+          style="padding: 1em 0"
+          *ngIf="!payload.loading"
+        >
+          <button
+            type="button"
+            class="btn btn-secondary float-end"
+            (click)="inFilterMode = true"
+          >
+            Filter
+          </button>
+        </div>
+
+        <ngx-skeleton-loader
+          [count]="5"
+          *ngIf="payload.loading"
+        ></ngx-skeleton-loader>
+        <!-- <app-control-error *ngIf="payload.error">{{
+          payload.error.message
+        }}</app-control-error> -->
+        <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+        <app-company-location-report-viewer
+          *ngIf="payload.value"
+          [records]="payload.value"
+        ></app-company-location-report-viewer>
+      </ng-container>
+    </div>
+  </div>
+</div>

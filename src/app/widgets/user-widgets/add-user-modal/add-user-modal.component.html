@@ -1,0 +1,304 @@
+<div
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: '#' + (formFontColor || 'ff9900')
+  }"
+>
+  <app-modal-layout>
+    <!-- <strong mdTitle       
+        style="font-weight: bolder; font-size: 1.3em;"
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif',
+          color: '#' + (formColor || 'ff9900')
+        }">Add User</strong> -->
+    <app-title mdTitle title="Add User" size="md"></app-title>
+    <div mdLeftButtons>
+      <!-- <button
+        type="button"
+        class="btn btn-danger"
+        aria-label="Close"
+        (click)="modalRef.close()"
+        id="cancel"
+      >
+        Cancel
+      </button> -->
+      <button
+        class="ms-4"
+        [ngStyle]="{
+          backgroundColor: '#fff',
+          width: '10em',
+          color: '#' + (primaryColour || '3D95F7'),
+          fontSize: '16px',
+          border: '1px solid #' + (primaryColour || '3D95F7'),
+          borderRadius: '10px',
+          height: '35px'
+        }"
+        (click)="modalRef.close()"
+      >
+        Cancel
+      </button>
+    </div>
+
+    <div mdRightButtons>
+      <!-- <button
+        type="button"
+        class="btn btn-success float-end"
+        [disabled]="form.invalid || form.pristine"
+        (click)="saveHandler()"
+        id="submit"
+      >
+        Save
+      </button> -->
+      <button
+        class="float-end me-4"
+        [disabled]="form.invalid || form.pristine"
+        [ngStyle]="{
+          backgroundColor: '#' + (primaryColour || '3D95F7'),
+          width: '10em',
+          color: '#ffffff',
+          fontSize: '16px',
+          border: '0',
+          borderRadius: '10px',
+          height: '35px'
+        }"
+        [style]="{
+          opacity: form.invalid || form.pristine ? '0.5' : ''
+        }"
+        (click)="saveHandler()"
+      >
+        Save
+      </button>
+    </div>
+
+    <div class="row">
+      <div class="container" [formGroup]="form">
+        <div class="row">
+          <div class="col-xs-10 col-lg-6 mb-2" *ngIf="companyType === 'PARTNER'">
+            <div class="mb-3 row" >
+              <app-company-field
+                [subdomain]="subdomain"
+                placeholder="Select Company..."
+                formControlName="companyId"
+                [selectable]="true"
+                (selectionChange)="form.patchValue({ companyId: $event.value })"
+              >
+              </app-company-field>
+              <app-control-error
+                *ngIf="
+                  form.get('companyId').invalid && form.get('companyId').touched
+                "
+              >
+                <span *ngIf="form.get('companyId').errors.required">
+                  This field is required.
+                </span>
+              </app-control-error>
+            </div>
+          </div>
+          <div class="col-xs-10 col-lg-6 mb-2">
+            <mat-form-field class="col-12" appearance="outline"
+              ><mat-label
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+
+                  'font-family': formFont || 'Times New Roman, Times, serif'
+                }"
+                >First name</mat-label
+              ><input
+                matInput
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+                  'background-color': formBgColor
+                }"
+                formControlName="firstName"
+                placeholder="First name"
+            /></mat-form-field>
+            <app-control-error
+              *ngIf="
+                form.get('firstName').invalid && form.get('firstName').touched
+              "
+            >
+              <span *ngIf="form.get('firstName').errors.required"
+                >This field is required</span
+              >
+            </app-control-error>
+          </div>
+
+          <div class="col-xs-10 col-lg-6 mb-2">
+            <mat-form-field class="col-12" appearance="outline"
+              ><mat-label
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+
+                  'font-family': formFont || 'Times New Roman, Times, serif'
+                }"
+                >Last name</mat-label
+              ><input
+                matInput
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+                  'background-color': formBgColor
+                }"
+                formControlName="lastName"
+                placeholder="Last name"
+            /></mat-form-field>
+          </div>
+
+          <div class="col-xs-10 col-lg-6 mb-2">
+            <mat-form-field class="col-12" appearance="outline"
+              ><mat-label
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+
+                  'font-family': formFont || 'Times New Roman, Times, serif'
+                }"
+                >Email Address</mat-label
+              ><input
+                matInput
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+                  'background-color': formBgColor
+                }"
+                formControlName="emailAddress"
+                placeholder="Email Address"
+            /></mat-form-field>
+          </div>
+
+          <div class="col-xs-10 col-lg-6 mb-2">
+            <app-user-type-field
+              formControlName="userTypeId"
+              placeholder="User type"
+              [selectable]="true"
+              (selectionChange)="form.patchValue({ userTypeId: $event.value })"
+            ></app-user-type-field>
+            <app-control-error
+              *ngIf="
+                form.get('userTypeId').invalid && form.get('userTypeId').touched
+              "
+            >
+              <span *ngIf="form.get('userTypeId').errors.required"
+                >This field is required</span
+              >
+            </app-control-error>
+          </div>
+
+          <div class="col-xs-10 col-lg-6 mb-2">
+            <app-branch-field
+              [companyId]="company?.companyId"
+              formControlName="locationId"
+              placeholder="Select Location"
+              [new]="true"
+              (selectionChange)="form.patchValue({ locationId: $event.value })"
+            >
+            </app-branch-field>
+            <app-control-error
+              *ngIf="
+                form.get('locationId').invalid && form.get('locationId').touched
+              "
+            >
+              <span *ngIf="form.get('locationId').errors.required"
+                >This field is required</span
+              >
+            </app-control-error>
+          </div>
+
+          <div class="col-xs-10 col-lg-6 mb-2">
+            <mat-form-field class="col-12" appearance="outline"
+              ><mat-label
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+
+                  'font-family': formFont || 'Times New Roman, Times, serif'
+                }"
+                >Primary Phone No.</mat-label
+              ><input
+                matInput
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+                  'background-color': formBgColor
+                }"
+                formControlName="pryPhoneNo"
+                placeholder="Primary Phone" /></mat-form-field
+            ><app-control-error
+              *ngIf="
+                form.get('pryPhoneNo').invalid && form.get('pryPhoneNo').touched
+              "
+            >
+              <span *ngIf="form.get('pryPhoneNo').errors.required"
+                >This field is required</span
+              >
+            </app-control-error>
+          </div>
+
+          <div class="col-xs-10 col-lg-6 mb-2">
+            <mat-form-field class="col-12" appearance="outline"
+              ><mat-label
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+
+                  'font-family': formFont || 'Times New Roman, Times, serif'
+                }"
+                >Alternate Phone No.</mat-label
+              ><input
+                matInput
+                [ngStyle]="{
+                  color: formFontColor || 'black',
+                  'background-color': formBgColor
+                }"
+                formControlName="altPhoneNo"
+                placeholder="Alternate Phone"
+            /></mat-form-field>
+          </div>
+
+          <div class="col-xs-10 col-lg-6 mb-2">
+            <app-status-field
+              formControlName="statusId"
+              placeholder="Status"
+              [new]="true"
+              (selectionChange)="form.patchValue({ statusId: $event.value })"
+            ></app-status-field>
+            <app-control-error
+              *ngIf="
+                form.get('statusId').invalid && form.get('statusId').touched
+              "
+            >
+              <span *ngIf="form.get('statusId').errors.required"
+                >This field is required</span
+              >
+            </app-control-error>
+          </div>
+
+          <ng-container *ngIf="requireCredentials">
+            <div class="col-xs-10 col-lg-6 mb-2">
+              <mat-form-field class="col-12" appearance="outline"
+                ><mat-label
+                  [ngStyle]="{
+                    color: formFontColor || 'black',
+
+                    'font-family': formFont || 'Times New Roman, Times, serif'
+                  }"
+                  >Login ID</mat-label
+                ><input
+                  matInput
+                  [ngStyle]="{
+                    color: formFontColor || 'black',
+                    'background-color': formBgColor
+                  }"
+                  formControlName="loginId"
+                  placeholder="login Id"
+              /></mat-form-field>
+              <app-control-error
+                *ngIf="
+                  form.get('loginId').invalid && form.get('loginId').touched
+                "
+              >
+                <span *ngIf="form.get('loginId').errors.required"
+                  >This field is required</span
+                >
+              </app-control-error>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </app-modal-layout>
+</div>

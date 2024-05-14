@@ -1,0 +1,159 @@
+<div
+  class="row"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: formFontColor || 'black',
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor
+  }"
+>
+  <div class="container" [formGroup]="form">
+    <div class="mb-1" *ngIf="!isAddModal">
+      <app-title
+        title="Edit Group/Role"
+        [size]="companyType === 'PARTNER' ? 'md' : 'lg'"
+      ></app-title>
+    </div>
+    <div class="row">
+      <div
+        class="col-xs-10 col-md-6 mb-3"
+        *ngIf="companyType === 'PARTNER'"
+        formGroupName="company"
+      >
+        <app-company-field
+          [subdomain]="subdomain"
+          placeholder="Select Company..."
+          formControlName="companyId"
+          [selectable]="true"
+          (selectionChange)="form.patchValue({ companyId: $event.value })"
+        >
+        </app-company-field>
+        <app-control-error
+          *ngIf="
+            form.get('company.companyId').invalid &&
+            form.get('company.companyId').touched
+          "
+        >
+          <span *ngIf="form.get('company.companyId').errors.required">
+            This field is required.
+          </span>
+        </app-control-error>
+      </div>
+
+    <!-- <div class="row mb-3 align-items-center" *ngIf="companyType !== 'PARTNER'">
+      <label class="col-4 col-form-label">Company</label>
+      <div class="col-8">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="companyName"
+          readonly
+          placeholder="Group/Role name"
+          [ngStyle]="{
+            color: formFontColor || 'black',
+            'background-color': formBgColor,
+            'border-bottom': '1px solid ' + formFontColor
+          }"
+        />
+      </div>
+    </div> -->
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-sm-10 col-md-6 mb-2">
+        <mat-form-field class="col-12" appearance="outline"
+          ><mat-label
+            [ngStyle]="{
+              color: formFontColor || 'black',
+
+              'font-family': formFont || 'Times New Roman, Times, serif'
+            }"
+            >Group/Role Name</mat-label
+          ><input
+            matInput
+            type="text"
+            formControlName="roleName"
+            placeholder="Group/Role Name"
+            [ngStyle]="{
+              color: formFontColor || 'black',
+              'font-family': formFont || 'Times New Roman, Times, serif',
+              'background-color': formBgColor
+            }"
+        /></mat-form-field>
+        <app-control-error
+          *ngIf="form.get('roleName').invalid && form.get('roleName').touched"
+        >
+          <span *ngIf="form.get('roleName').errors.required"
+            >This field is required</span
+          >
+        </app-control-error>
+      </div>
+      <div class="col-sm-10 col-md-6 mb-2">
+        <app-status-field
+          formControlName="statusId"
+          placeholder="Select status"
+          new="true"
+          (selectionChange)="form.patchValue({ statusId: $event.value })"
+        ></app-status-field>
+        <app-control-error
+          *ngIf="form.get('statusId').invalid && form.get('statusId').touched"
+        >
+          <span *ngIf="form.get('statusId').errors.required"
+            >This field is required</span
+          >
+        </app-control-error>
+      </div>
+    </div>
+    <!-- <input
+      type="text"
+      formControlName="roleDesc"
+      placeholder="Description"
+      [ngStyle]="{
+        color: formFontColor || 'black',
+        'background-color': formBgColor,
+        'border-bottom': '1px solid ' + formFontColor
+      }"
+    /> -->
+    <!-- <input
+      type="text"
+      class="form-control"
+      formControlName="roleName"
+      placeholder="Group/Role name"
+      [ngStyle]="{
+        color: formFontColor || 'black',
+        'background-color': formBgColor,
+        'border-bottom': '1px solid ' + formFontColor
+      }"
+    /> -->
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-12 mb-2">
+        <mat-form-field class="col-12" appearance="outline"
+          ><mat-label
+            [ngStyle]="{
+              color: formFontColor || 'black',
+
+              'font-family': formFont || 'Times New Roman, Times, serif'
+            }"
+            >Description</mat-label
+          ><input
+            matInput
+            type="text"
+            formControlName="roleDesc"
+            placeholder="Description"
+            [ngStyle]="{
+              color: formFontColor || 'black',
+              'font-family': formFont || 'Times New Roman, Times, serif',
+              'background-color': formBgColor
+            }"
+        /></mat-form-field>
+        <app-control-error
+          *ngIf="form.get('roleDesc').invalid && form.get('roleDesc').touched"
+        >
+          <span *ngIf="form.get('roleDesc').errors.required"
+            >This field is required</span
+          >
+        </app-control-error>
+      </div>
+    </div>
+  </div>
+</div>

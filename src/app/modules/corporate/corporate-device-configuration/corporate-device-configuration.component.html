@@ -1,0 +1,88 @@
+<!-- <div
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    'color': '#' + (formColor || 'ff9900')
+  }"
+> -->
+<div *ngIf="permission$ | async as payload" class="px-3">
+  <div *ngIf="payload.setup.deviceConfig.menuAccess">
+    <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="row">
+        <div class="col-10 mb-2">
+          <app-title
+            title="Device Configuration Directory"
+            size="lg"
+          ></app-title>
+        </div>
+        <div class="col-2">
+          <form class="nosubmit">
+            <input
+              type="text"
+              style="padding: 4px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px"
+              class="float-end nosubmit"
+              placeholder="Search..."
+              [formControl]="searchField"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div
+        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+        *ngIf="devices$ | progress | async as payload"
+      >
+        <ngx-skeleton-loader
+          *ngIf="payload.loading"
+          [count]="5"
+        ></ngx-skeleton-loader>
+        <!-- <div class="jumbotron jumbotron-fluid" *ngIf="payload.error">
+          <div class="container">
+            <h1 class="display-4">Devices</h1>
+            <p class="lead">No devices records yet.</p>
+          </div>
+        </div> -->
+        <ng-container >
+          <ngx-datatable
+            class="bootstrap table-bordered table-striped table-hover"
+            #companyListTable
+            [rows]="payload.value"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [limit]="10"
+            [columnMode]="'force'"
+            [loadingIndicator]="payload.loading"
+            [rowHeight]="'auto'"
+          >
+            <ngx-datatable-column name="Device" prop="deviceName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <a
+                  href="javascript:void(0);"
+                  (click)="openDetails(row)"
+                  placement="top"
+                  [ngbTooltip]="row.deviceId"
+                >
+                  {{ row["deviceName"] }}
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Asset" prop="assetName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["assetName"] }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Use Case" prop="useCaseName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row["useCaseName"] }}
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </div> -->

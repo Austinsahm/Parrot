@@ -1,0 +1,38 @@
+<div class="container-fluid" style="margin: 5px 0">
+  <div class="row justify-content-center align-items-center">
+    <!-- <router-outlet ></router-outlet> -->
+    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="container-fluid main-body">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12 div-border" style="margin-top: 5px;">
+          <div class="row">
+            <div *ngIf="permission$ | async as payload" class="col-sm-12 col-xs-12 col-md-3 col-lg-2 col-xl-2 nav-vertical" style="padding-top:15px;background-color: #fff;padding-bottom:15px">
+              <nav class=" navbar navbar-expand-lg navbar-light nav nav-pills flex-column " style="height: 100%;">
+                <a *ngIf="payload.dashboards.dashboardDesign.menuAccess" class="nav-link link-width mb-1" [routerLink]="['./dashboard']" routerLinkActive="active">Dashboard Design</a>
+                <a *ngIf="payload.dashboards.mapGeolocationDesign.menuAccess" class="nav-link link-width mb-1" [routerLink]="['./map-geolocation']" routerLinkActive="active">Map/Geolocation Design</a>
+                <a *ngIf="payload.dashboards.viewDashboard.menuAccess" class="nav-link link-width mb-1" [routerLink]="['./view-dashboard']" routerLinkActive="active">View Dashboard</a>
+                <a *ngIf="payload.dashboards.viewGeolocation.menuAccess" class="nav-link link-width mb-1" [routerLink]="['./view-geolocation']" routerLinkActive="active">View Geolocation</a>
+                <a *ngIf="payload.dashboards.assetTracker.menuAccess" class="nav-link link-width mb-1" [routerLink]="['./asset-tracker']" routerLinkActive="active">Asset Tracker</a>
+                <a  class="nav-link link-width mb-1" [routerLink]="['../']" >Use Cases Dashboard</a> -->
+    <!--<a class="nav-link link-width">Device Analyzer</a> -->
+    <!-- </nav>
+              
+            </div> -->
+    <!-- </div>
+            <div class="row"> -->
+    <div
+      class="card col-sm-12 col-xs-12 col-md-11 px-0"
+      style="
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+          rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+      "
+    >
+      <div class="card-bod" style="overflow: aut">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <!-- </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

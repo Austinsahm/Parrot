@@ -1,0 +1,19 @@
+<!-- <footer
+  class="page-footer font-small mt-3"
+  [ngStyle]="{ 'background-color': '#' + (domain?.footerColour || '000000') }"
+> -->
+<footer
+  class="page-footer font-small"
+  style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px"
+  [ngStyle]="{ 'background-color': domain?.footerColour || '#ffffff' }"
+>
+  <div
+    class="footer-copyright text-center py-3 clearfix"
+    [ngStyle]="{ color: domain?.footerFontColour || '#ffffff' }"
+  >
+    © Copyright 2023 DataNucleus Inc
+    <span class="float-end" style="font-weight: bolder; padding-right: 2em"
+      >Build #: 0.1.05</span
+    >
+  </div>
+</footer>

@@ -1,0 +1,11 @@
+<header *ngIf="loggedIn$ | progress | async as loginState">
+  <app-header></app-header>
+  <ng-container *ngIf="loginState.value">
+    <app-tabs *ngIf="isPartner"></app-tabs>
+    <app-tabcorporate *ngIf="isCorporate"></app-tabcorporate>
+  </ng-container>
+  <div [ngStyle]="{'min-height': loginState.value ? 'calc(100vh - 15.2em)' : 'calc(100vh - 3.7em)'}">
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer></app-footer>
+</header>

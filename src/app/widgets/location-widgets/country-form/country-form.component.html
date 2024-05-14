@@ -1,0 +1,104 @@
+<div [formGroup]="form" style="border: 1px dashed #ddd; padding: 1em; margin-bottom: 1.5em;">
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Country Code</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="countryId" placeholder="Country code">
+            <app-control-error *ngIf="form.get('countryId').invalid && form.get('countryId').touched">
+                <span *ngIf="form.get('countryId').errors.required">This field is required.</span>
+            </app-control-error>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="countryName" placeholder="Country name">
+            <app-control-error *ngIf="form.get('countryName').invalid && form.get('countryName').touched">
+                <span *ngIf="form.get('countryName').errors.required">This field is required.</span>
+            </app-control-error>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="countryDesc" placeholder="Country description">
+            <app-control-error *ngIf="form.get('countryDesc').invalid && form.get('countryDesc').touched">
+                <span *ngIf="form.get('countryDesc').errors.required">This field is required.</span>
+            </app-control-error>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Currency</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="currency" placeholder="Currency">
+            <app-control-error *ngIf="form.get('currency').invalid && form.get('currency').touched">
+                <span *ngIf="form.get('currency').errors.required">This field is required.</span>
+            </app-control-error>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">Currency Symbol</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="currencySymbol" placeholder="Currency Symbol">
+            <app-control-error *ngIf="form.get('currencySymbol').invalid && form.get('currencySymbol').touched">
+                <span *ngIf="form.get('currencySymbol').errors.required">This field is required.</span>
+            </app-control-error>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">US Exchange Rate</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="usExchangeRate" placeholder="US Exchange Rate">
+            <app-control-error *ngIf="form.get('usExchangeRate').invalid && form.get('usExchangeRate').touched">
+                <span *ngIf="form.get('usExchangeRate').errors.required">This field is required.</span>
+            </app-control-error>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">UK Exchange Rate</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="ukExchangeRate" placeholder="UK Exchange Rate">
+            <app-control-error *ngIf="form.get('ukExchangeRate').invalid && form.get('ukExchangeRate').touched">
+                <span *ngIf="form.get('ukExchangeRate').errors.required">This field is required.</span>
+            </app-control-error>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">EU Exchange Rate</label>
+        <div class="col-sm-4">
+            <input class="form-control" formControlName="euExchangeRate" placeholder="EU Exchange Rate">
+            <app-control-error *ngIf="form.get('euExchangeRate').invalid && form.get('euExchangeRate').touched">
+                <span *ngIf="form.get('euExchangeRate').errors.required">This field is required.</span>
+            </app-control-error>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col" style="padding: 1em 0;">
+                <button type="button" class="btn btn-secondary float-end" (click)="addStateHandler()">Add
+                    State</button>
+            </div>
+        </div>
+    </div>
+    <app-state-list-table [editable]="true" [states]="states" (onRowSelected)="onStateSelected.emit($event)"
+        (onRowDeleted)="stateDeleteHandler($event)"></app-state-list-table>
+</div>
+
+<div class="container-fluid">
+    <div class="row rowing">
+        <div class="col" style="padding: 1em 0;">
+            <button type="button" class="btn btn-danger" aria-label="Cancel" (click)="onCancel.emit()">
+                Cancel
+            </button>
+            <button type="button" class="btn btn-secondary float-end" [disabled]="form?.invalid || form?.pristine"
+                (click)="saveHandler()">Save</button>
+        </div>
+    </div>
+</div>

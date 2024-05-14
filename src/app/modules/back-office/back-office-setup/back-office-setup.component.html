@@ -1,0 +1,38 @@
+<div class="container-fluid" style="height:100%">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="container-fluid main-body">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12 div-border" style="margin-top: 5px;">
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 col-md-3 col-lg-2 col-xl-2 nav-vertical"
+                            style="padding-top:15px;background-color: #fff;padding-bottom:15px">
+                            <nav class=" navbar navbar-expand-lg navbar-light nav nav-pills flex-column "
+                                style="height: 100%;">
+                                <a class="nav-link link-width mb-1" [routerLink]="['countries']"
+                                    routerLinkActive="active">Country</a>
+
+                                <a class="nav-link link-width mb-1" [routerLink]="['states']"
+                                    routerLinkActive="active">State</a>
+
+                                <a class="nav-link link-width mb-1" [routerLink]="['cities']"
+                                    routerLinkActive="active">City</a>
+
+                                <a class="nav-link link-width mb-1" [routerLink]="['manufacturers']"
+                                    routerLinkActive="active">Manufacturer</a>
+
+                                <a class="nav-link link-width mb-1" [routerLink]="['manufacturer-device-types']"
+                                    routerLinkActive="active">Manuf. Dev. Type</a>
+                            </nav>
+                        </div>
+
+                        <div class="card col-sm-12 col-xs-12 col-md-9 col-lg-10 col-xl-10">
+                            <div class="card-body" style="overflow:auto">
+                                <router-outlet></router-outlet>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+input {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid black;
+  border-radius: 5px;
+}
+
+// button:hover#cancel {
+//     font-weight: bolder;
+//     background-color: #f11;
+// }
+
+// button:hover#submit {
+//     font-weight: bolder;
+//     background-color: #1f1;
+// }
+
+// .userAccessDevice:hover{
+//     box-shadow: 0 8px 12px 0 rgba(34, 60, 80, .16);
+//     transform: scale(1.01);
+//     transition: all .2s ease-in-out;
+// }
+
+button:disabled {
+  opacity: 0.5;
+}

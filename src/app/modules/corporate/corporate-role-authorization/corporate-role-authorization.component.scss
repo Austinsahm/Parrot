@@ -1,0 +1,27 @@
+.role-box {
+  width: 100%;
+  max-height: 20em;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+input {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid black;
+  border-radius: 5px;
+}
+
+// button:hover#submit {
+//     background-color: #1f1;
+//     font-weight: bolder;
+// }
+
+// button:hover#cancel {
+//     background-color: #f11;
+//     font-weight: bolder;
+// }
+
+button:disabled {
+  opacity: 0.5;
+}

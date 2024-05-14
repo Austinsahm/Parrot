@@ -1,0 +1,139 @@
+<div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+      <app-title title="Asset Tracker" size="lg"></app-title>
+      <!--<input type="text" class="float-end" placeholder="Search..." [formControl]="searchField" /> -->
+    </div>
+  </div>
+</div>
+
+<div class="row" style="height: 60vh">
+  <div
+    class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5"
+    *ngIf="geolocations$ | progress | async as payload"
+  >
+    <!-- [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      'color': '#' + (formColor || 'ff9900')
+    }" -->
+    <ngx-skeleton-loader
+      *ngIf="payload.loading"
+      [count]="5"
+    ></ngx-skeleton-loader>
+    <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+    <ng-container *ngIf="payload.value">
+      <ngx-datatable
+        class="bootstrap table-bordered table-striped table-hover"
+        #companyListTable
+        [rows]="payload.value"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [limit]="10"
+        [columnMode]="'force'"
+        [loadingIndicator]="payload.loading"
+        [rowHeight]="'auto'"
+        style="font-size: 15px !important"
+      >
+        <ngx-datatable-column name="Manuf Device ID" prop="manufDeviceId">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <a
+              href="javascript:void(0);"
+              (click)="openDetails(row)"
+              placement="top"
+              [ngbTooltip]="row.deviceId"
+            >
+              {{ row["manufDeviceId"] }}
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Device Name" prop="deviceName">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row["deviceName"] }}
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </ng-container>
+  </div>
+
+  <div
+    class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7"
+    *ngIf="showSelected"
+    [formGroup]="form"
+  >
+    <div class="card" style="border: 1px solid">
+      <!-- [ngStyle]="{
+      'background-color': '#' + (formBgColor || 'eee'),
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      'color': '#' + (formColor || 'ff9900')
+    }" -->
+      <div class="card-body">
+        <strong> {{ manufDeviceId }} - {{ deviceName }} </strong>
+
+        <div class="mb-3 mt-4">
+          <label class="form-label">From</label>
+          <div style="display: flex">
+            <app-date-field
+              #fromDate
+              [max]="toDate?.rawValue"
+              formControlName="from"
+              placeholder="From Date"
+            ></app-date-field>
+            <ngb-timepicker
+              class="ms-4"
+              [spinners]="false"
+              [seconds]="true"
+              formControlName="fromTime"
+            ></ngb-timepicker>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">To</label>
+          <div style="display: flex">
+            <app-date-field
+              #toDate
+              [min]="fromDate?.rawValue"
+              formControlName="to"
+              placeholder="To Date"
+            ></app-date-field>
+            <ngb-timepicker
+              class="ms-4"
+              [spinners]="false"
+              [seconds]="true"
+              formControlName="toTime"
+            ></ngb-timepicker>
+          </div>
+        </div>
+
+        <button
+          (click)="fetchAssetTracker()"
+          [ngStyle]="{
+            backgroundColor: '#' + (primaryColour || '3D95F7'),
+            width: '10em',
+            color: '#ffffff',
+            fontSize: '16px',
+            border: '0',
+            borderRadius: '10px',
+            height: '35px'
+          }"
+        >
+          Submit
+        </button>
+        <!-- [disabled]="form?.pristine"  -->
+        <app-control-error *ngIf="showError" class="float-end">
+          <span>All fields are required.</span>
+        </app-control-error>
+
+        <br /><br />
+
+        <div *ngIf="showMap">
+          <app-device-asset-tracker
+            [locationData]="locationData"
+            [markerIcon]="markerIcon"
+          ></app-device-asset-tracker>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

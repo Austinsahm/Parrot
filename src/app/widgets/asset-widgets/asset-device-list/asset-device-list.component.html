@@ -1,0 +1,28 @@
+<ngx-datatable class="bootstrap table-bordered table-striped table-hover" #deviceListTable [rows]="devices"
+    [headerHeight]="50" [footerHeight]="50" [limit]="10" [loadingIndicator]="false" [columnMode]="'force'"
+    [rowHeight]="'auto'">
+
+    <ngx-datatable-column name="Device ID" prop="deviceId">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <a href="javascript:void(0);" placement="top"  (click)="onNameSelected.emit(row)">
+                {{row['manufDeviceId']}}
+            </a>
+        </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Device" prop="deviceName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <a href="javascript:void(0);" placement="top"  (click)="onNameSelected.emit(row)">
+                {{row['deviceName']}}
+            </a>
+        </ng-template>
+    </ngx-datatable-column>    
+
+    <ngx-datatable-column name="Actions" [sortable]="false" *ngIf="editing">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+            <a href="javascript:void(0);" (click)="onDelete.emit(row)">
+                Delete
+            </a>
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>

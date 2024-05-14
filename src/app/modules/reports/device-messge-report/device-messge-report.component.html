@@ -1,0 +1,88 @@
+<div
+  class="card"
+  style="background-color: #eee; font-family: Times New Roman, Times, serif"
+>
+  <div
+    class="card-header"
+    style="
+      background-color: #eee;
+      font-family: Times New Roman, Times, serif;
+      color: #ff9900;
+      font-weight: bolder;
+    "
+  >
+    Device Message Report
+  </div>
+  <div class="card-body">
+    <ng-container *ngIf="inFilterMode">
+      <!-- <h3>Device Message Report</h3> -->
+      <div>
+        <app-device-message-report-form
+          [company]="company"
+          #formElement
+        ></app-device-message-report-form>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row rowing" *ngIf="permission$ | async as payload">
+          <div class="col" style="padding: 1em 0">
+            <button
+              type="button"
+              class="btn btn-danger"
+              aria-label="Close"
+              (click)="cancelHandler()"
+            >
+              Cancel
+            </button>
+            <button
+              *ngIf="payload.reports.deviceMessages.reader"
+              type="button"
+              class="btn btn-success float-end"
+              [disabled]="formElement?.form?.invalid"
+              (click)="saveHandler(formElement?.form?.value)"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="container-fluid" *ngIf="!inFilterMode">
+      <ng-container *ngIf="report$ | progress | async as payload">
+        <div
+          class="col clearfix"
+          style="padding: 1em 0"
+          *ngIf="!payload.loading"
+        >
+          <button
+            type="button"
+            class="btn btn-secondary float-end ms-2"
+            (click)="inFilterMode = true"
+          >
+            Filter
+          </button>
+          <div class="float-end">
+            <app-report-actions
+              report="DeviceListSumary"
+              [data]="payload.value"
+            ></app-report-actions>
+          </div>
+        </div>
+
+        <ngx-skeleton-loader
+          [count]="5"
+          *ngIf="payload.loading"
+        ></ngx-skeleton-loader>
+        <!-- <app-control-error *ngIf="payload.error">{{
+          payload.error.message
+        }}</app-control-error> -->
+        <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+        <app-device-messages-report-viewer
+          *ngIf="payload.value"
+          [records]="payload.value"
+        ></app-device-messages-report-viewer>
+      </ng-container>
+    </div>
+  </div>
+</div>

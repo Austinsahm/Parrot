@@ -1,0 +1,7 @@
+::ng-deep .mat-form-field-flex {
+  border-bottom: var(--input-border);
+}
+
+::ng-deep .mat-date-range-input-separator{
+  color: var(--seperator-color)
+}

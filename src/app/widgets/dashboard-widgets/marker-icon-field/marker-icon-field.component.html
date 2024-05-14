@@ -1,0 +1,3 @@
+<app-combo-box-field [formControl]="control" *ngIf="options$ | progress | async as payload" [options]="payload.value"
+    [loading]="payload.loading" [emptyMessage]="noContentMessage" [placeholder]="placeholder" (onBlur)="onTouched()">
+</app-combo-box-field>

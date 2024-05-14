@@ -1,0 +1,158 @@
+<app-empty-data
+  *ngIf="handleCustomErr$ | async as e; else data"
+  template="Oops, We hit a snag"
+  [text]="e"
+></app-empty-data>
+<ng-template #data>
+  <div class="container-fluid" style="margin: 5px 0">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-11">
+        <div class="row mb-2" style="height: 20%">
+          <div
+            class="col-md-4 mb-2 mr-2 pointer"
+            *ngIf="userStatTypeCharts.length"
+          >
+            <app-card height="20%">
+              <app-title title="User Type" size="md"></app-title>
+              <ng-container *ngIf="userStatTypeCharts.length">
+                <div [routerLink]="['../user-landing']">
+                  <app-ignite-bar-chart
+                    [data]="userStatTypeCharts"
+                    [brushes]="chartColours"
+                  ></app-ignite-bar-chart>
+                  <p>
+                    {{ userStatTypeCharts[0].label }}:
+                    <span> {{ userStatTypeCharts[0].value }} </span>
+                  </p>
+                  <p style="visibility: hidden">Move</p>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!userStatTypeCharts.length && !isLoading">
+                <div>
+                  <app-empty-data text="No data to show"></app-empty-data>
+                </div>
+              </ng-container>
+            </app-card>
+          </div>
+
+          <div class="col-md-4 pointer" *ngIf="userStatStatusCharts.length">
+            <app-card height="20%">
+              <app-title title="User Status" size="md"></app-title>
+              <ng-container *ngIf="userStatStatusCharts.length">
+                <div [routerLink]="['../user-landing']">
+                  <app-ignite-bar-chart
+                    [data]="userStatStatusCharts"
+                    [brushes]="chartColours"
+                  ></app-ignite-bar-chart>
+                  <p>
+                    {{ userStatStatusCharts[0].label | titlecase }}:
+                    <span> {{ userStatStatusCharts[0].value }} </span>
+                  </p>
+                  <p>
+                    {{ userStatStatusCharts[1].label | titlecase }}:
+                    <span> {{ userStatStatusCharts[1].value }} </span>
+                  </p>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!userStatStatusCharts.length && !isLoading">
+                <div>
+                  <app-empty-data text="No data to show"></app-empty-data>
+                </div>
+              </ng-container>
+            </app-card>
+          </div>
+
+          <div
+            class="col-md-4 justify-content-center pointer"
+            *ngIf="locationStatCharts.length"
+          >
+            <app-card width="80%" height="20%">
+              <app-title title="Locations" size="md"></app-title>
+              <ng-container *ngIf="locationStatCharts.length">
+                <div [routerLink]="['../location-landing']">
+                  <app-ignite-bar-chart
+                    [data]="locationStatCharts"
+                    [brushes]="chartColours"
+                  ></app-ignite-bar-chart>
+                  <p>
+                    {{ locationStatCharts[0].label | titlecase }}:
+                    <span> {{ locationStatCharts[0].value }} </span>
+                  </p>
+                  <p>
+                    {{ locationStatCharts[1].label | titlecase }}:
+                    <span> {{ locationStatCharts[1].value }} </span>
+                  </p>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!locationStatCharts.length && !isLoading">
+                <div>
+                  <app-empty-data text="No data to show"></app-empty-data>
+                </div>
+              </ng-container>
+            </app-card>
+          </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center mb-2">
+          <div class="col-md-4 pointer" *ngIf="assetStatCharts.length">
+            <app-card >
+              <app-title title="Assets" size="md"></app-title>
+              <ng-container *ngIf="assetStatCharts.length"
+                ><div [routerLink]="['../asset-landing']">
+                  <app-ignite-bar-chart
+                    [data]="assetStatCharts"
+                    [brushes]="chartColours"
+                  ></app-ignite-bar-chart>
+                  <p>
+                    {{ assetStatCharts[0].label | titlecase }}:
+                    <span> {{ assetStatCharts[0].value }} </span>
+                  </p>
+                  <p>
+                    {{ assetStatCharts[1].label | titlecase }}:
+                    <span> {{ assetStatCharts[1].value }} </span>
+                  </p>
+                </div></ng-container
+              >
+              <ng-container *ngIf="!assetStatCharts.length && !isLoading">
+                <div>
+                  <app-empty-data text="No data to show"></app-empty-data>
+                </div>
+              </ng-container>
+            </app-card>
+          </div>
+
+          <div class="col-md-4 pointer" *ngIf="deviceStatChart.length">
+            <app-card width="80%">
+              <app-title title="Devices" size="md"></app-title>
+              <ng-container *ngIf="deviceStatChart.length">
+                <div [routerLink]="['../use-cases']">
+                  <app-pie-guage-chart
+                    [data]="deviceStatChart"
+                    [brushes]="chartColours"
+                  ></app-pie-guage-chart>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!deviceStatChart.length && !isLoading">
+                <div>
+                  <app-empty-data text="No data to show"></app-empty-data>
+                </div>
+              </ng-container>
+            </app-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- <app-bar-chart [attribute]="userStatTypeCharts.attribute" [xAxesValues]="userStatTypeCharts.xAxesValues" [yAxesValues]="userStatTypeCharts.yAxesValues" ></app-bar-chart> -->
+<!-- <strong>{{userStatTypeCharts.attribute}}</strong> -->
+<!-- <app-bar-chart [attribute]="userStatStatusCharts.attribute" [xAxesValues]="userStatStatusCharts.xAxesValues" [yAxesValues]="userStatStatusCharts.yAxesValues" ></app-bar-chart> -->
+<!-- <strong>{{userStatStatusCharts.attribute}}</strong> -->
+<!-- <app-bar-chart [attribute]="assetStatCharts.attribute" [xAxesValues]="assetStatCharts.xAxesValues" [yAxesValues]="assetStatCharts.yAxesValues" ></app-bar-chart> -->
+<!-- <strong>{{assetStatCharts.attribute}}</strong> -->
+<!-- <app-bar-chart [attribute]="locationStatCharts.attribute" [xAxesValues]="locationStatCharts.xAxesValues" [yAxesValues]="locationStatCharts.yAxesValues"></app-bar-chart> -->
+<!-- <strong>{{locationStatCharts.attribute}}</strong> -->
+<!-- <app-pie-chart-main [labels]="deviceStatChart.labels" [values]="deviceStatChart.values" ></app-pie-chart-main> -->
+<!-- <strong>{{deviceStatChart.attribute}}</strong> -->
+<!-- <p> {{deviceStatChart.labels[0]}}: <span> {{deviceStatChart.values[0]}} </span> </p>
+      <p> {{deviceStatChart.labels[1]}}: <span> {{deviceStatChart.values[1]}} </span> </p> -->

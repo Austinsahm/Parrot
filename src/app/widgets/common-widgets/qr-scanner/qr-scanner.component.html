@@ -1,0 +1,12 @@
+<div>
+  <span class="close" (click)="qrResult()">X</span>
+  <ngx-scanner-qrcode
+    #action="scanner"
+    (data)="output = $event"
+    (error)="onError($event)"
+  ></ngx-scanner-qrcode>
+
+  <p *ngIf="output" (appQrResult)="qrResult(output)" [id]="output && 'update'">
+    {{ output }}
+  </p>
+</div>

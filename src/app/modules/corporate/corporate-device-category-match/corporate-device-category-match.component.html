@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header font-weight-bold">
+        Device Category Match
+    </div>
+    <div class="card-body">
+      <form [formGroup]="deviceForm">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+
+            <div class="row">
+                
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                    <div class="row mb-4">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <label class="form-check-label"> Company </label><label style="color: red">*</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <app-company-field [subdomain]="subdomain" placeholder="Select Company..." (change)="changeCompany($event)"
+                                formControlName="companyId">
+                            </app-company-field>
+                            <app-control-error  *ngIf="deviceForm.get('companyId').invalid && deviceForm.get('companyId').touched">
+                                <span *ngIf="deviceForm.get('companyId').errors.required">
+                                    This field is required.
+                                </span>
+                            </app-control-error>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <label class="form-check-label">Device Category</label><label style="color: red">*</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <app-device-category-field [subdomain]="subdomain" formControlName="clientDeviceCategId" placeholder="Select category...">
+                            </app-device-category-field>
+                            <app-control-error  *ngIf="deviceForm.get('clientDeviceCategId').invalid && deviceForm.get('clientDeviceCategId').touched">
+                                <span *ngIf="deviceForm.get('clientDeviceCategId').errors.required">  This field is required. </span>
+                            </app-control-error>
+                        </div>
+                    </div>
+                   
+                    <div class="row mb-4">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 card py-4" cdkDropList #initials="cdkDropList" [cdkDropListData]="names" [cdkDropListConnectedTo]="[finals]"  (cdkDropListDropped)="onDrop($event)" >
+                            <div *ngFor="let name of names" class="card mb-2 p-1" style="cursor:pointer" cdkDrag>
+                                {{name}}
+                            </div>
+                        </div>
+                        
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 card py-4 ms-4" cdkDropList #finals="cdkDropList" [cdkDropListData]="selectedNames" [cdkDropListConnectedTo]="initials" (cdkDropListDropped)="onDrop($event)" >
+                            <div *ngFor="let name of selectedNames" class="card mb-2 p-1" style="cursor:pointer" cdkDrag>
+                                {{name}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                <button (click)="cancel()" type="button" class="btn btn-danger">Cancel</button>
+                <button [disabled]="!deviceForm.valid" (click)="submit()" type="button" class="btn btn-secondary ms-2">Assign</button>
+                </div>
+            </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

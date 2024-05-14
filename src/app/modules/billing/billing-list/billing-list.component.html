@@ -1,0 +1,82 @@
+<div class="container-fluid" style="margin: 5px 0;padding-right: 0px; padding-left: 0px">
+    <div class="row justify-content-center align-items-center">
+      <div class="" style="padding-right: 0px; padding-left: 0px;">
+        <div class="card col-12">
+          <div class="card-body box" style="overflow: auto;">
+            <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="row justify-content-center align-items-center">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+                <app-title
+                  title="Company Billing List"
+                  size="lg"
+                ></app-title>
+                <div class="float-end">
+                  <form class="nosubmit">
+                    <input
+                      type="text"
+                      style="
+                        padding: 4px;
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                      "
+                      class="float-end"
+                      placeholder="Search..."
+                      [formControl]="searchField"
+                      class="nosubmit"
+                    />
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+            <div class="row">
+              <div
+                class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                *ngIf="companies$ | progress | async as payload"
+              >
+                <ngx-datatable
+                  class="bootstrap table-bordered table-striped table-hover"
+                  #companyListTable
+                  [rows]="payload.value"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [limit]="10"
+                  [columnMode]="'force'"
+                  [loadingIndicator]="payload.loading"
+                  [rowHeight]="'auto'"
+                >
+                  <ngx-datatable-column name="Company Name" prop="companyName">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <a
+                        href="javascript:void(0);"
+                        (click)="openDetails(row)"
+                        placement="top"
+                        [ngbTooltip]="row.companyId"
+                      >
+                        {{ row["companyName"] }}
+                      </a>
+                    </ng-template>
+                  </ngx-datatable-column>
+  
+                  <ngx-datatable-column name="Company Type" prop="companyType">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row["companyTypeId"] }}
+                    </ng-template>
+                  </ngx-datatable-column>
+  
+                  <ngx-datatable-column name="Status" prop="statusName">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row["statusName"] }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                </ngx-datatable>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+

@@ -1,0 +1,103 @@
+<ng-container *ngIf="inFilterMode">
+  <app-title title="Device List Summary" size="lg"></app-title>
+
+  <div style="border: 1px dashed #ddd; padding: 1em">
+    <app-corporate-device-list-report-form
+      [company]="company"
+      #formElement
+    ></app-corporate-device-list-report-form>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row rowing">
+      <div class="col" style="padding: 1em 0">
+        <!-- <button
+          type="button"
+          class="btn btn-danger"
+          aria-label="Close"
+          (click)="cancelHandler()"
+          id="cancel"
+        >
+          Cancel
+        </button> -->
+        <button
+          [ngStyle]="{
+            backgroundColor: '#fff',
+            width: '10em',
+            color: '#' + (primaryColour || '3D95F7'),
+            fontSize: '16px',
+            border: '1px solid #' + (primaryColour || '3D95F7'),
+            borderRadius: '10px',
+            height: '35px'
+          }"
+          (click)="cancelHandler()"
+        >
+          Cancel
+        </button>
+        <!-- <button
+          type="button"
+          class="btn btn-primary float-end"
+          (click)="saveHandler(formElement?.form?.value)"
+          id="submit"
+        >
+          Submit
+        </button> -->
+        <button
+          class="float-end"
+          [ngStyle]="{
+            backgroundColor: '#' + (primaryColour || '3D95F7'),
+            width: '10em',
+            color: '#ffffff',
+            fontSize: '16px',
+            border: '0',
+            borderRadius: '10px',
+            height: '35px'
+          }"
+          (click)="saveHandler(formElement?.form?.value)"
+        >
+          Submit
+        </button>
+        <!-- [disabled]="formElement?.form?.invalid || formElement?.form?.pristine"  -->
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="container-fluid" *ngIf="!inFilterMode">
+  <ng-container *ngIf="report$ | progress | async as payload">
+    <div class="col clearfix" style="padding: 1em 0" *ngIf="!payload.loading">
+      <button
+        class="float-end ms-2"
+        [ngStyle]="{
+          backgroundColor: '#' + (primaryColour || '3D95F7'),
+          width: '10em',
+          color: '#ffffff',
+          fontSize: '16px',
+          border: '0',
+          borderRadius: '10px',
+          height: '35px'
+        }"
+        (click)="inFilterMode = true"
+      >
+        Filter
+      </button>
+      <div class="float-end">
+        <app-report-actions
+          report="DeviceListSummary"
+          [data]="excelFormat(payload.value)"
+        ></app-report-actions>
+      </div>
+    </div>
+
+    <ngx-skeleton-loader
+      [count]="5"
+      *ngIf="payload.loading"
+    ></ngx-skeleton-loader>
+    <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+    <app-corporate-device-list-summary-report-viewer
+      *ngIf="payload.value"
+      [records]="payload.value"
+    >
+    </app-corporate-device-list-summary-report-viewer>
+  </ng-container>
+</div>

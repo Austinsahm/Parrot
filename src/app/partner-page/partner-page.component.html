@@ -1,0 +1,373 @@
+<app-page-layout>
+  <!-- <div navigation class="main-header">
+        <div class="container">
+            <div class="navbar-expand-md navbar">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+                </button>
+                <ul class="collapse navbar-collapse navbar-menu" id="collapsibleNavbar">
+                    <li class="nav-item"><a class="nav-link" [routerLink]="['company-management']"
+                            routerLinkActive="active">Company Management</a></li>
+                    <li class="nav-item"><a class="nav-link" [routerLink]="['device-management']"
+                            routerLinkActive="active">Device Management</a></li>
+                    <li class="nav-item"><a class="nav-link" [routerLink]="['reports']"
+                            routerLinkActive="active">Reports</a></li>
+                    <li class="nav-item"><a class="nav-link" [routerLink]="['utility']" routerLinkActive="active">Utility</a></li>
+                    <li class="nav-item"><a class="nav-link" [routerLink]="['security']"
+                            routerLinkActive="active">Security</a></li>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+
+  <mat-sidenav-container autosize>
+    <mat-sidenav
+      #sidenav
+      navigation
+      mode="side"
+      class="sidenav"
+      [ngStyle]="{ 'width.em': sidenavWidth }"
+      [style.background-color]="
+        domain?.sideBarColor ? domain?.sideBarColor : '#fff'
+      "
+      opened="true"
+      (mouseenter)="increase()"
+      (mouseleave)="decrease()"
+    >
+      <mat-list class="activ" navigation>
+        <a
+          mat-list-item
+          routerLinkActive="active"
+          [routerLink]="['./landing']"
+          class="nav-link text-dark hover"
+        >
+          <mat-icon mat-list-icon> home</mat-icon>
+          <p matLine *ngIf="sidenavWidth > 6">Home</p>
+        </a>
+
+        <mat-accordion hideToggle="{{ sidenavWidth < 6 }}">
+          <mat-expansion-panel
+            style="box-shadow: none; background-color: inherit"
+            [(expanded)]="close"
+          >
+            <mat-expansion-panel-header
+              routerLinkActive="active"
+              *ngIf="payload?.companyManagement?.company?.menuAccess"
+            >
+              <mat-panel-title *ngIf="sidenavWidth > 6">
+                <mat-icon class="me-3">business</mat-icon> Company Mangement
+              </mat-panel-title>
+              <mat-panel-title
+                *ngIf="sidenavWidth < 6"
+                style="overflow: visible"
+              >
+                <mat-icon>business</mat-icon>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a
+              *ngIf="payload?.companyManagement?.company?.menuAccess"
+              mat-list-item
+              [routerLink]="['./company-management/company']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">business</mat-icon> Company
+            </a>
+            <a
+              *ngIf="payload?.companyManagement?.summary?.menuAccess"
+              mat-list-item
+              [routerLink]="['./company-management/summary']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">summarize</mat-icon> Summary
+            </a>
+            <a
+              mat-list-item
+              [routerLink]="['./company-management/company-parameters']"
+              routerLinkActive="active"
+              class="nav-link text-dark hover"
+            >
+              <mat-icon class="me-2">rectangle</mat-icon> Company Parameters
+            </a>
+            <a
+              *ngIf="payload?.companyManagement?.whiteLabel?.menuAccess"
+              mat-list-item
+              [routerLink]="['./company-management/white-label']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">label</mat-icon> White Label
+            </a>
+            <!-- <a
+              *ngIf="payload?.companyManagement?.billing?.menuAccess"
+              mat-list-item
+              [routerLink]="[
+                './company-management/company-billing/company-billing-list'
+              ]"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">payment</mat-icon> Billing
+            </a> -->
+            <!-- <a
+            *ngIf="payload?.companyManagement?.billing?.menuAccess"
+              mat-list-item
+              [routerLink]="['./company-management/white-label']"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">payment</mat-icon> Billing
+            </a> -->
+          </mat-expansion-panel>
+
+          <mat-expansion-panel
+            style="box-shadow: none; background-color: inherit"
+            *ngIf="payload?.deviceManagement?.device?.menuAccess"
+            [(expanded)]="closeDev"
+          >
+            <mat-expansion-panel-header
+              *ngIf="payload?.deviceManagement?.device?.menuAccess"
+            >
+              <mat-panel-title *ngIf="sidenavWidth > 6">
+                <mat-icon class="me-3">graphic_eq</mat-icon> Device Mangement
+              </mat-panel-title>
+              <mat-panel-title
+                *ngIf="sidenavWidth < 6"
+                style="overflow: visible"
+              >
+                <mat-icon>graphic_eq</mat-icon>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a
+              *ngIf="payload?.companyManagement?.summary?.menuAccess"
+              mat-list-item
+              [routerLink]="['./device-management/device-category']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">cable</mat-icon> Device Category </a
+            ><a
+              *ngIf="payload?.deviceManagement?.device?.menuAccess"
+              mat-list-item
+              [routerLink]="['./device-management/device']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">water</mat-icon> Device
+            </a>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel
+            style="box-shadow: none; background-color: inherit"
+            *ngIf="payload?.companyManagement?.company?.menuAccess"
+            [(expanded)]="closeBill"
+          >
+            <mat-expansion-panel-header
+              *ngIf="payload?.deviceManagement?.device?.menuAccess"
+            >
+              <mat-panel-title *ngIf="sidenavWidth > 6">
+                <mat-icon class="me-3">payment</mat-icon> Billing
+              </mat-panel-title>
+              <mat-panel-title
+                *ngIf="sidenavWidth < 6"
+                style="overflow: visible"
+              >
+                <mat-icon>payment</mat-icon>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a
+              *ngIf="payload?.companyManagement?.billing?.menuAccess"
+              mat-list-item
+              [routerLink]="['./company-billing/calculator']"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">calculate</mat-icon> Billing Calculator
+            </a>
+            <a
+              *ngIf="payload?.companyManagement?.billing?.menuAccess"
+              mat-list-item
+              [routerLink]="['./company-billing/billing-list']"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">calculate</mat-icon> Client Billing
+            </a>
+            
+          </mat-expansion-panel>
+
+          <mat-expansion-panel
+            style="box-shadow: none; background-color: inherit"
+            [(expanded)]="closeReport"
+            *ngIf="payload?.reports?.companyLists?.menuAccess"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title *ngIf="sidenavWidth > 6">
+                <mat-icon class="me-3">report</mat-icon> Reports
+              </mat-panel-title>
+              <mat-panel-title
+                *ngIf="sidenavWidth < 6"
+                style="overflow: visible"
+              >
+                <mat-icon>report</mat-icon>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <!-- <a
+              *ngIf="payload?.reports?.companyLists?.menuAccess"
+              mat-list-item
+              [routerLink]="['./reports/device']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">report</mat-icon> Device Report
+            </a> -->
+            <a
+              *ngIf="payload?.reports?.companyLists?.menuAccess"
+              mat-list-item
+              [routerLink]="['./reports/company-lists']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">business</mat-icon> Company Lists
+            </a>
+            <!-- <a
+              *ngIf="payload?.reports?.companyLocations?.menuAccess"
+              mat-list-item
+              [routerLink]="['./reports/company-locations']"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">place</mat-icon> Company Locations
+            </a> -->
+            <a
+              mat-list-item
+              [routerLink]="['./reports/company-summaries']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">summarize</mat-icon> Company Summary
+            </a>
+            <a
+              *ngIf="payload?.reports?.companyBilling?.menuAccess"
+              mat-list-item
+              [routerLink]="['./reports/company-billings']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">payment</mat-icon> Company Billing
+            </a>
+            <a
+              *ngIf="payload?.reports?.deviceLists?.menuAccess"
+              mat-list-item
+              [routerLink]="['./reports/device-lists']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">important_devices</mat-icon> Device Lists
+            </a>
+            <a
+              *ngIf="payload?.reports?.deviceSummary?.menuAccess"
+              mat-list-item
+              [routerLink]="['./reports/device-summaries']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">monitor_heart</mat-icon> Device Summary
+            </a>
+            <!-- <a
+              *ngIf="payload?.reports?.deviceMessages?.menuAccess"
+              mat-list-item
+              [routerLink]="['./reports/device-messages']"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">display_settings</mat-icon> Device Messages
+            </a> -->
+          </mat-expansion-panel>
+
+          <mat-expansion-panel
+            style="box-shadow: none; background-color: inherit"
+            [(expanded)]="closeUtil"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title *ngIf="sidenavWidth > 6">
+                <mat-icon class="me-3">tune</mat-icon> Utility
+              </mat-panel-title>
+              <mat-panel-title
+                *ngIf="sidenavWidth < 6"
+                style="overflow: visible"
+              >
+                <mat-icon>tune</mat-icon>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a
+              mat-list-item
+              [routerLink]="['./utility']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">devices_other</mat-icon> Bulk Device Load
+            </a>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel
+            style="box-shadow: none; background-color: inherit"
+            [(expanded)]="closeSet"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title *ngIf="sidenavWidth > 6">
+                <mat-icon class="me-3">security</mat-icon> Security
+              </mat-panel-title>
+              <mat-panel-title
+                *ngIf="sidenavWidth < 6"
+                style="overflow: visible"
+              >
+                <mat-icon>security</mat-icon>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a
+              mat-list-item
+              [routerLink]="['./security/users']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">supervised_user_circle</mat-icon> Users
+            </a>
+            <a
+              mat-list-item
+              [routerLink]="['./security/user-device-access']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">location_searching</mat-icon> User Device
+              Access
+            </a>
+            <a
+              mat-list-item
+              [routerLink]="['./security/user-groups']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">group_work</mat-icon> Group/Roles
+            </a>
+            <a
+              mat-list-item
+              [routerLink]="['./security/role-authorization']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">supervisor_account</mat-icon> Role
+              Authorization
+            </a>
+            <a
+              *ngIf="payload?.security?.changePassword?.menuAccess"
+              mat-list-item
+              [routerLink]="['./security/change-password']"
+              routerLinkActive="active"
+              class="nav-link text-dark"
+            >
+              <mat-icon class="me-2">lock</mat-icon> Change Password
+            </a>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content style="display: grid; margin-left: 40px">
+      <router-outlet></router-outlet> </mat-sidenav-content
+  ></mat-sidenav-container>
+</app-page-layout>

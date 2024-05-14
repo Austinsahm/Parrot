@@ -1,0 +1,125 @@
+<!-- <ngx-datatable
+  class="bootstrap table-bordered table-striped table-hover"
+  #myTable
+  [rows]="logs"
+  [loadingIndicator]="loading"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [limit]="10"
+  [columnMode]="'force'"
+  [rowHeight]="'auto'"
+  style="font-size: 15px !important"
+>
+  <ngx-datatable-row-detail
+    [rowHeight]="100"
+    #data
+    rowIndex="rowIndex"
+    (toggle)="toggle($event)"
+  >
+    <ng-template
+      let-row="row"
+      let-expanded="expanded"
+      let-rowIndex="rowIndex"
+      ngx-datatable-row-detail-template
+      ><span>{{ row.data }}</span>
+    </ng-template>
+  </ngx-datatable-row-detail>
+
+  <ngx-datatable-column name="Actions">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <span>{{ row["action"] }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Date">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <span>{{ row["date"] }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Type">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <span>{{ row["type"] }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Sequence #">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <span>{{ row["sequence"] }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column [width]="25">
+    <ng-template
+      let-row="row"
+      let-rowIndex="rowIndex"
+      ngx-datatable-cell-template
+    >
+      <mat-icon (click)="toggle(row)" class="expand">expand_more</mat-icon>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable> -->
+
+<table
+  mat-table
+  [dataSource]="dataSource"
+  multiTemplateDataRows
+  class="mat-elevation-z8 tab"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: '#' + (formColor || 'ff9900')
+  }"
+>
+  <ng-container
+    matColumnDef="{{ column }}"
+    *ngFor="let column of columnsToDisplay"
+  >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="column === 'Menu'">
+        <mat-icon class="text-dark">{{
+          expandedElement !== element
+            ? "keyboard_arrow_up"
+            : "keyboard_arrow_down"
+        }}</mat-icon>
+      </div>
+      {{ element[column] }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="columnsToDisplay.length"
+    >
+      <div
+        class="attribute-value"
+        [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'"
+      >
+        <div>{{ element.Data }}</div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr
+    mat-row
+    *matRowDef="let element; columns: columnsToDisplay"
+    class="element-row"
+    [class.expanded-row]="expandedElement === element"
+    (click)="expandedElement = expandedElement === element ? null : element"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="attribute-details"
+  ></tr>
+</table>
+
+<mat-paginator
+  #paginator
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25, 50, 100]"
+>
+</mat-paginator>

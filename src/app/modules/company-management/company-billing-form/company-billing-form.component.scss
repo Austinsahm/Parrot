@@ -1,0 +1,21 @@
+input {
+    // border: none;
+    outline: none;
+    // border-bottom: 1px solid black;
+    border-radius: 5px;
+}
+
+button.btn-success:hover {
+    // background-color: green;
+    
+    font-weight: bolder;
+}
+
+button.btn-danger:hover {
+    // background-color: red;
+    font-weight: bolder;
+}
+
+// ::ng-deep .mat-select-placeholder {
+//     font-weight: 400 !important;
+// }

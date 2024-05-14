@@ -1,0 +1,31 @@
+.sig {
+  width: 15px;
+}
+
+.other {
+  width: 60px;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+.humidity {
+  color: blue;
+  width: 10px;
+}
+
+.no-left {
+  margin: -0.8rem;
+}
+
+.draggable:hover {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+::ng-deep .mat-expansion-indicator::after {
+  color: var(--arrow-color)
+}

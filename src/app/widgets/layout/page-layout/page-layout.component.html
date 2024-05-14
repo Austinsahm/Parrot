@@ -1,0 +1,46 @@
+<!-- <header *ngIf="page$ | progress | async as payload">
+    <app-page-layout-header [domain]="payload.value?.company" [user]="payload.value?.user"
+        [loggedIn]="payload.value?.loggedIn" [loginDate]="loggedDate" (onLogin)="login()" (onLogout)="logout()">
+    </app-page-layout-header>
+    <ng-container *ngIf="payload.value?.loggedIn">
+        <ng-content select="[navigation]"></ng-content>
+    </ng-container>
+    <div [ngStyle]="{'min-height': payload.value?.loggedIn ? 'calc(100vh - 15.2em)' : 'calc(100vh - 3.7em)'}">
+        <div>
+            <ng-content></ng-content>
+        </div>
+    </div>
+    <app-page-layout-footer [domain]="payload.value?.company" [user]="payload.value?.user"></app-page-layout-footer>
+</header> -->
+
+<!-- <mat-drawer-container> -->
+  <ng-container *ngIf="page$ | progress | async as payload">
+    <app-page-layout-header
+      [domain]="payload.value?.company"
+      [user]="payload.value?.user"
+      [loggedIn]="payload.value?.loggedIn"
+      [loginDate]="loggedDate"
+      (onLogin)="login()"
+      (onLogout)="logout()"
+      style="overflow: hidden,"
+    >
+    </app-page-layout-header>
+
+    <app-error-message></app-error-message>
+
+    <ng-container *ngIf="payload.value?.loggedIn">
+      <ng-content select="[navigation]"></ng-content>
+    </ng-container>
+    <!-- <div [class.layout]="!payload.value?.loggedIn"> -->
+
+    <div class="layout">
+      <div class="body">
+        <ng-content></ng-content>
+      </div>
+      <app-page-layout-footer
+        [domain]="payload.value?.company"
+        [user]="payload.value?.user"
+      ></app-page-layout-footer>
+    </div>
+  </ng-container>
+<!-- </mat-drawer-container> -->

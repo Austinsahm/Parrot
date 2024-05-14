@@ -1,0 +1,70 @@
+.form-margin {
+  margin-top: 5.3px;
+}
+
+.maps {
+  height: 60vh;
+  background-color: transparent;
+  opacity: 0;
+  transition: opacity 150ms ease-in;
+}
+
+.maps.visible {
+  opacity: 1;
+}
+
+// mat-form-field {
+//   width: 80%;
+//   font-size: small;
+//   font-weight: normal;
+// }
+
+.center {
+  display: flex;
+  align-content: center;
+}
+
+.pano {
+  position: absolute;
+  bottom: 18px;
+  left: 5%;
+  z-index: 5;
+  // padding: 5px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.bottom {
+  bottom: 46px;
+}
+
+.wifi {
+  height: 5px;
+  width: 5px;
+  background-color: #0000ff;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.gps {
+  height: 5px;
+  width: 5px;
+  background-color: #00ff00;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.sigfox {
+  height: 5px;
+  width: 5px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  display: inline-block;
+}
+// ::ng-deep .mat-form-field-flex {
+//   border-bottom: var(--input-border);
+// }
+
+::ng-deep .mat-date-range-input-separator{
+  color: var(--seperator-color)
+}

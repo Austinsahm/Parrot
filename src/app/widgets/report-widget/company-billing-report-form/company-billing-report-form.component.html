@@ -1,0 +1,135 @@
+<div [formGroup]="form">
+  <!-- <div class="row mb-3">
+    <label class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-4">
+      <strong>From</strong>
+    </div>
+    <div class="col-sm-4">
+      <strong>To</strong>
+    </div>
+  </div> -->
+
+  <div class="row mb-3">
+
+    <div class="col-sm-4">
+      <app-company-field
+        [subdomain]="company?.companyId"
+        formControlName="fromCompany"
+        placeholder="Select From Company"
+        [selectable]="true"
+        (selectionChange)="
+          form.patchValue({
+            fromCompany: $event.value
+          })
+        "
+      ></app-company-field>
+      <app-control-error
+        *ngIf="
+          form.get('fromCompany').invalid && form.get('fromCompany').touched
+        "
+      >
+        <span *ngIf="form.get('fromCompany').errors.required"
+          >This field is required.</span
+        >
+      </app-control-error>
+    </div>
+    <div class="col-sm-4">
+      <app-company-field
+        [subdomain]="company?.companyId"
+        formControlName="toCompany"
+        placeholder="Select To Company"
+        [selectable]="true"
+        (selectionChange)="
+          form.patchValue({
+            toCompany: $event.value
+          })
+        "
+      ></app-company-field>
+      <app-control-error
+        *ngIf="form.get('toCompany').invalid && form.get('toCompany').touched"
+      >
+        <span *ngIf="form.get('toCompany').errors.required"
+          >This field is required.</span
+        >
+      </app-control-error>
+    </div>
+  </div>
+
+  <div class="row mb-3 align-items-center">
+    <!-- <label class="col-sm-2 col-form-label">Date</label>
+        <div class="col-sm-4">
+            <app-date-field #fromDate [max]="toDate?.rawValue" formControlName="from" placeholder="From">
+            </app-date-field>
+            <app-control-error *ngIf="form.get('from').invalid && form.get('from').touched">
+                <span *ngIf="form.get('from').errors.required">This field is required.</span>
+            </app-control-error>
+        </div>
+        <div class="col-sm-4">
+            <app-date-field #toDate [min]="fromDate?.rawValue" formControlName="to" placeholder="To"></app-date-field>
+            <app-control-error *ngIf="form.get('to').invalid && form.get('to').touched">
+                <span *ngIf="form.get('to').errors.required">This field is required.</span>
+            </app-control-error>
+        </div> -->
+    <div class="col-sm-6 col-md-4">
+      <mat-form-field
+        appearance="outline"
+        [ngStyle]="{
+          'font-family': formFont || 'Times New Roman, Times, serif'
+        }"
+        class="w-100"
+        [style.--input-border]="'1px solid ' + formFontColor"
+      >
+        <mat-label
+          [ngStyle]="{
+            color: formFontColor || 'black'
+          }"
+          >Date range</mat-label
+        >
+        <mat-date-range-input [max]="today" [rangePicker]="picker">
+          <input
+            matStartDate
+            readonly
+            formControlName="from"
+            placeholder="Start date"
+          />
+          <input
+            matEndDate
+            readonly
+            formControlName="to"
+            placeholder="End date"
+          />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker"
+          [ngStyle]="{
+            color: formFontColor || 'black'
+          }"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-sm-6 col-md-4">
+      <app-status-field
+        formControlName="statusId"
+        placeholder="Select Status"
+        [new]="true"
+        (selectionChange)="
+          form.patchValue({
+            statusId: $event.value
+          })
+        "
+      ></app-status-field>
+      <app-control-error
+        *ngIf="form.get('statusId').invalid && form.get('statusId').touched"
+      >
+        <span *ngIf="form.get('statusId').errors.required"
+          >This field is required.</span
+        >
+      </app-control-error>
+    </div>
+  </div>
+</div>

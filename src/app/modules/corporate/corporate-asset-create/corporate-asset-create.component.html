@@ -1,0 +1,27 @@
+<div
+  class="container-fluid"
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: formFontColor || 'black',
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor
+  }"
+>
+  <app-title title="Add Asset" size="lg"></app-title>
+  <!-- <div
+    class="card"
+    > -->
+  <!-- [ngStyle]="{
+      'font-family': formFont || 'Times New Roman, Times, serif',
+      color: '#' + (formColor || 'ff9900')
+    }" -->
+  <div class="card-body">
+    <app-asset-form
+      [company]="company"
+      (onSave)="submit($event)"
+      (onDevicesChanged)="onDevicesChanged($event)"
+      (onClose)="cancel()"
+    ></app-asset-form>
+  </div>
+  <!-- </div> -->
+</div>

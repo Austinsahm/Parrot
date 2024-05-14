@@ -1,0 +1,266 @@
+<form
+  [formGroup]="form"
+  autocomplete="off"
+  [ngStyle]="{
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <div class="modal-header">
+    <app-title [title]="formTitle || 'Contact'" size="md"></app-title>
+  </div>
+  <div class="modal-body">
+    <div
+      class="card"
+      [ngStyle]="{
+        border: '1px solid ' + formBgColor,
+        'background-color': formBgColor,
+        color: formFontColor || 'black',
+        'font-family': formFont || 'Times New Roman, Times, serif'
+      }"
+    >
+      <div class="card-body">
+        <div class="row">
+          <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> -->
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="row mb-3">
+              <!-- <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                <label class="form-check-label">First name</label
+                ><label style="color: red">*</label>
+              </div> -->
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <mat-form-field class="col-12" appearance="outline"
+                  ><mat-label
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+
+                      'font-family': formFont || 'Times New Roman, Times, serif'
+                    }"
+                    >First name</mat-label
+                  >
+                  <input
+                    matInput
+                    class=""
+                    formControlName="firstName"
+                    placeholder="Name"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                  />
+                </mat-form-field>
+                <!-- <input
+                  class="form-control"
+                  formControlName="firstName"
+                  placeholder="Name"
+                  [ngStyle]="{
+                    color: formFontColor || 'black',
+                    'background-color': formBgColor,
+                    'border-bottom': '1px solid ' + formFontColor
+                  }"
+                /> -->
+                <app-control-error
+                  *ngIf="
+                    form.get('firstName').invalid &&
+                    form.get('firstName').touched
+                  "
+                >
+                  <span *ngIf="form.get('firstName').errors.required"
+                    >This field is required.</span
+                  >
+                </app-control-error>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <mat-form-field class="col-12" appearance="outline"
+                  ><mat-label
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+
+                      'font-family': formFont || 'Times New Roman, Times, serif'
+                    }"
+                    >Last name</mat-label
+                  >
+                  <input
+                    matInput
+                    class=""
+                    formControlName="lastName"
+                    placeholder="lastName"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                  />
+                </mat-form-field>
+
+                <!-- <input
+                  class="form-control"
+                  formControlName="lastName"
+                  placeholder="lastName"
+                  [ngStyle]="{
+                    color: formFontColor || 'black',
+                    'background-color': formBgColor,
+                    'border-bottom': '1px solid ' + formFontColor
+                  }"
+                /> -->
+                <app-control-error
+                  *ngIf="
+                    form.get('lastName').invalid && form.get('lastName').touched
+                  "
+                >
+                  <span *ngIf="form.get('lastName').errors.required"
+                    >This field is required.</span
+                  >
+                </app-control-error>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <!-- <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                <label class="form-check-label">Email</label
+                ><label style="color: red">*</label>
+              </div> -->
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <mat-form-field class="col-12" appearance="outline"
+                  ><mat-label
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+
+                      'font-family': formFont || 'Times New Roman, Times, serif'
+                    }"
+                    >Email</mat-label
+                  >
+                  <input
+                    matInput
+                    class=""
+                    type="email"
+                    formControlName="emailAddress"
+                    placeholder="Email"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                  />
+                </mat-form-field>
+                <!-- <input
+                  class="form-control"
+                  type="email"
+                  formControlName="emailAddress"
+                  placeholder="Email"
+                  [ngStyle]="{
+                    color: formFontColor || 'black',
+                    'background-color': formBgColor,
+                    'border-bottom': '1px solid ' + formFontColor
+                  }"
+                /> -->
+                <app-control-error
+                  *ngIf="
+                    form.get('emailAddress').invalid &&
+                    form.get('emailAddress').touched
+                  "
+                >
+                  <span *ngIf="form.get('emailAddress').errors.required"
+                    >This field is required.</span
+                  >
+                  <span *ngIf="form.get('emailAddress').errors.email"
+                    >A valid email address is required.</span
+                  >
+
+                  <span *ngIf="form.get('emailAddress').errors.uniqueUserEmail">
+                    Duplicate email address.
+                  </span>
+                </app-control-error>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <app-branch-field
+                  [companyId]="subdomain"
+                  formControlName="locationId"
+                  [new]="true"
+                  [defaultValue]="form.get('locationId').value"
+                  (selectionChange)="
+                    form.patchValue({ locationId: $event.value })
+                  "
+                  placeholder="Location"
+                ></app-branch-field>
+                <app-control-error
+                  *ngIf="
+                    form.get('locationId').invalid &&
+                    form.get('locationId').touched
+                  "
+                >
+                  <span *ngIf="form.get('locationId').errors.required"
+                    >This field is required.</span
+                  >
+                  <span *ngIf="form.get('locationId').errors.email"
+                    >A valid email address is required.</span
+                  >
+                </app-control-error>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+          <button
+            class="ms-3"
+            [ngStyle]="{
+              backgroundColor: '#fff',
+              width: '7em',
+              color: '#' + (primaryColour || '3D95F7'),
+              fontSize: '12px',
+              border: '1px solid #' + (primaryColour || '3D95F7'),
+              borderRadius: '10px',
+              height: '35px'
+            }"
+            (click)="closeHandler()"
+          >
+            Close
+          </button>
+
+          <!-- <button
+            type="button"
+            class="btn btn-danger"
+            aria-label="Close"
+            (click)="closeHandler()"
+          >
+            Close
+          </button> -->
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+          <!-- <button
+            type="button"
+            (click)="saveHander()"
+            class="btn btn-success float-end"
+            [disabled]="form.invalid || form.pristine"
+          >
+            Save
+          </button> -->
+          <button
+            class="float-end"
+            [disabled]="form.invalid || form.pristine"
+            [ngStyle]="{
+              backgroundColor: '#' + (primaryColour || '3D95F7'),
+              width: '7em',
+              color: '#ffffff',
+              fontSize: '12px',
+              border: '0',
+              borderRadius: '10px',
+              height: '35px'
+            }"
+            (click)="saveHander()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

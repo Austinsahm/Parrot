@@ -1,0 +1,132 @@
+<div
+  class="px-3"
+  [ngStyle]="{
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <app-title title="Floor Plan View" size="lg"></app-title>
+  <div class="row" *ngIf="smartHome$ | progress | async as payload">
+    <!-- Floor dropdown -->
+    <div class="row">
+      <div class="col-sm-6 col-md-8"></div>
+      <div class="col-xs-12 col-sm-6 col-md-4 pe-0">
+        <app-combo-select-field
+          [defaultOption]="payload.value?.floor[0]"
+          placeholder="Select Floor"
+          [options]="payload.value?.floor"
+          (selectionChange)="onFloorSelect($event)"
+        ></app-combo-select-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- (Draggable) Device List -->
+      <!-- <div class="col-3" (dragend)="onUpdateDrop()" (dragstart)="onUpdateDrop()">
+      <div style="max-height: 30em" class="col-12 card">
+        <div class="card-header text-white bg-primary mb-2">Devices</div>
+
+        <input
+          type="text"
+          placeholder="Search..."
+          class="mb-3"
+          (keyup)="availableDeviceSearch($event)"
+        />
+
+        <div *ngIf="deviceAccessForm.length" style="overflow: auto">
+          <div
+            *ngFor="let device of deviceAccessForm"
+            draggable="true"
+            (drag)="onDrop($event, device)"
+            class="userAccessDevice card mb-2 p-1 draggable"
+            style="cursor: pointer; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px"
+          >
+            {{ device.deviceName }}
+          </div>
+        </div>
+
+        <div *ngIf="!deviceAccessForm.length">
+          No device available for User...
+        </div>
+      </div>
+    </div> -->
+
+      <!-- Floor Plan -->
+      <div class="col-8" *ngIf="payload.value?.devices[floorIndex]">
+        <app-corporate-floor-plan
+          (selectedDevice)="toggle($event, payload.value?.devices[floorIndex])"
+          [floorId]="payload.value?.floorIds[floorIndex]"
+          [device]="droppedDevice"
+          [devices]="payload.value?.devices[floorIndex]"
+        ></app-corporate-floor-plan>
+      </div>
+
+      <!-- Device Details -->
+      <div class="col-4" *ngIf="payload.value?.devices[floorIndex]">
+        <mat-accordion>
+          <mat-expansion-panel
+            *ngFor="let device of payload.value?.devices[floorIndex]"
+            [(ngModel)]="device.expanded"
+            [expanded]="device.expanded"
+            ngDefaultControl
+            (opened)="deviceAttributes(device.attributes)"
+            [ngStyle]="{
+              'background-color': formBgColor,
+              color: formFontColor || 'black',
+              'font-family': formFont || 'Times New Roman, Times, serif'
+            }"
+           [style.--arrow-color]="formFontColor" 
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title [ngStyle]="{ color: formFontColor || 'black' }"
+                >{{ device.deviceName }} ({{
+                  device.manufDeviceId
+                }})</mat-panel-title
+              >
+            </mat-expansion-panel-header>
+            <div class="row">
+              <div class="col-12 mb-2" *ngFor="let att of deviceAttr">
+                <div class="d-flex">
+                  <span class="col-6">{{ att.attribute }}</span>
+                  <span class="me-2 col-6"
+                    >{{ att.attributeValue }}
+                    <span *ngIf="att.icon.length">
+                      <fa-icon
+                        *ngIf="att.icon[0] === 'fas'"
+                        [icon]="att.icon"
+                        [style]="{ color: att.color }"
+                      >
+                      </fa-icon>
+                      <img
+                        *ngIf="att.icon[0] === ''"
+                        [src]="att.icon[1]"
+                        [ngClass]="{
+                          sig: device.networkName.toLowerCase() === 'sigfox',
+                          humidity: att.icon[1].split('.')[1] === 'svg',
+                          other: device.networkName.toLowerCase() !== 'sigfox'
+                        }"
+                      /> </span
+                  ></span>
+                </div>
+              </div>
+              <div *ngIf="deviceAttr?.length > 1" class="col-12">
+                <a
+                  href="javascript:void(0);"
+                  (click)="openDetails(device, deviceAttr)"
+                >
+                  view details</a
+                >
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!-- {{ payload.value?.devices[floorIndex] | json }} -->
+      </div>
+    </div>
+
+    <!-- {{ payload.value | json }} -->
+  </div>
+</div>
+
+<!-- <div class="" mat-raised-button (opened)="try">here</div> -->

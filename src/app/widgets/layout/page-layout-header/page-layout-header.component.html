@@ -1,0 +1,78 @@
+<mat-toolbar style=""
+  ><div
+    class="top-header"
+    style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px"
+    [ngStyle]="{ 'background-color': domain?.headerColour || 'white' }"
+  >
+    <div class="row justify-content-center">
+      <div class="header col-11 px-0">
+        <div class="logo">
+          <a [routerLink]="['./']">
+            <div class="image">
+              <!-- <img
+                style="height: 100px; width: 150px; margin-top: 5px"
+                src="assets/images/SaviPro-IoT@3x.png"
+              /> -->
+
+              <img
+                style="height: 100px; width: 150px; margin-top: 5px"
+                src="assets/images/Parrot 8@3x.png"
+              />
+
+              <!-- <img
+            style="height: 100px; width: 150px; margin-top: 5px"
+            src="assets/images/Parrot 9@3x.png"
+          /> -->
+            </div>
+          </a>
+        </div>
+        <div class="info" style="margin-top: -7px" *ngIf="loggedIn">
+          <div
+            class="details"
+            [ngStyle]="{ color: domain?.headerFontColour || '#000000' }"
+          >
+            <div class="data">
+              <span
+                class=""
+                [ngStyle]="{ color: domain?.headerFontColour || '#000000' }"
+                >{{ user?.firstName | titlecase }}
+                {{ user?.lastName | titlecase }}</span
+              >
+              <span
+                class=""
+                style="font-size: 14px; margin-top: -10px"
+                [ngStyle]="{ color: domain?.headerFontColour || '#000000' }"
+                *ngIf="balance$ | progress | async as balance"
+                >Balance: {{ checkBalance(balance.value) }}</span
+              >
+            </div>
+            <img
+              style="height: 50px; width: 50px"
+              [src]="domain?.logo || 'assets/images/logo.png'"
+            />
+            <button
+              class="ms-3"
+              [ngStyle]="{
+                backgroundColor: '#' + (domain?.primaryColour || '3D95F7'),
+                width: '7em',
+                color: '#ffffff',
+                fontSize: '12px',
+                border: '0',
+                borderRadius: '10px'
+              }"
+              (click)="onLogout.emit()"
+            >
+              Logout
+            </button>
+            <!-- <app-button styles="ms-3" text="Logout" btnSize="md" (action)="onLogout.emit()"></app-button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <h2> -->
+    <!-- <h2 [ngStyle]="{ color: '#' + (domain?.headerFontColour || '000000') }"> -->
+    <!-- SaviPro-IoT -->
+    <!-- </h2> -->
+    <!-- </div> -->
+  </div>
+</mat-toolbar>

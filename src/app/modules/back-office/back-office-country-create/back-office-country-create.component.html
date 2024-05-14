@@ -1,0 +1,15 @@
+<div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-bottom: 1em;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <strong style="font-size: 1.2em;">New Country</strong>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <app-country-form (onSave)="saveHandler($event)" (onCancel)="cancelHandler()"
+            (onStatesChanged)="statesChangedHandler($event)" (onStateSelected)="stateSelectedHandler($event)">
+        </app-country-form>
+    </div>
+</div>

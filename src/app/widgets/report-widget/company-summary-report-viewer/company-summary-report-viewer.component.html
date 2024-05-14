@@ -1,0 +1,8 @@
+<app-report-viewer
+  reportTitile="Company Summary Report"
+  [report]="report"
+  (onPrint)="printHandler()"
+  (onSave)="saveHandler()"
+  (onExport)="exportHandler()"
+  (onDelete)="deleteHandler()"
+></app-report-viewer>

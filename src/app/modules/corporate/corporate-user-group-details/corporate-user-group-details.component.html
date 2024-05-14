@@ -1,0 +1,178 @@
+<ng-container *ngIf="source$ | progress | async as payload">
+  <ngx-skeleton-loader
+    *ngIf="payload.loading"
+    [count]="5"
+  ></ngx-skeleton-loader>
+  <app-control-error *ngIf="payload.error">Unknown Error</app-control-error>
+
+  <ng-container *ngIf="payload.value">
+    <div style="border: 1px dashed #ddd; padding: 1em; margin-bottom: 2em">
+      <ng-container *ngIf="edit">
+        <app-user-group-form
+          [group]="payload.value?.group"
+        ></app-user-group-form>
+      </ng-container>
+
+      <ng-container *ngIf="!edit">
+        <div
+          class="row"
+          style="padding-bottom: 1em"
+          *ngIf="permission$ | async as payload"
+        >
+          <div class="col-md-12">
+            <app-title title="Group/Role Details" size="lg"></app-title>
+            <button
+              *ngIf="payload.security.groupRoles.updater"
+              type="button"
+              class="float-end"
+              (click)="edit = !edit"
+              [ngStyle]="{
+                backgroundColor: '#fff',
+                width: '10em',
+                color: '#' + (primaryColour || '3D95F7'),
+                fontSize: '16px',
+                border: '1px solid #' + (primaryColour || '3D95F7'),
+                borderRadius: '10px',
+                height: '35px'
+              }"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <div class="row" style="max-width: 36em">
+            <div class="container">
+              <div class="row mb-3">
+                <label class="col-3">Group/Role</label>
+                <div class="col-9">
+                  {{ payload.value?.group?.roleName }}
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label class="col-3">Description</label>
+                <div class="col-9">
+                  {{ payload.value.group?.roleDesc }}
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label class="col-3">Status</label>
+                <div class="col-9">
+                  {{ payload.value.group?.statusName }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div>
+      <div
+        *ngIf="edit"
+        class="row"
+        style="padding-bottom: 1em; text-align: right"
+      >
+        <div class="col" style="text-align: right">
+          <button
+            type="button"
+            class="float-end"
+            (click)="addUserHandler()"
+            [ngStyle]="{
+              backgroundColor: '#' + (primaryColour || '3D95F7'),
+              width: '10em',
+              color: '#ffffff',
+              fontSize: '16px',
+              border: '0',
+              borderRadius: '10px',
+              height: '35px'
+            }"
+          >
+            Add User
+          </button>
+        </div>
+      </div>
+
+      <ngx-datatable
+        class="bootstrap table-bordered table-striped table-hover"
+        #companyListTable
+        [rows]="payload.value?.users"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [limit]="10"
+        [columnMode]="'force'"
+        [loadingIndicator]="payload.loading"
+        [rowHeight]="'auto'"
+      >
+        <ngx-datatable-column name="Name" prop="firstName">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <!-- <a
+              href="javascript:void(0);"
+              placement="top"
+              [ngbTooltip]="row.deviceId"
+            > -->
+            {{ row["firstName"] }} {{ row["lastName"] }}
+            <!-- </a> -->
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Email" prop="emailAddress">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row["emailAddress"] }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <!-- <ngx-datatable-column name="Actions" [sortable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <a href="javascript:void(0);" (click)="userDeleteHandler(row)"
+              >Delete</a
+            >
+          </ng-template> 
+        </ngx-datatable-column>-->
+      </ngx-datatable>
+    </div>
+  </ng-container>
+
+  <div class="container-fluid" *ngIf="!payload.loading">
+    <div class="row rowing">
+      <div class="col" style="padding: 1em 0">
+        <button
+          type="button"
+          aria-label="Close"
+          (click)="cancelHandler()"
+          [ngStyle]="{
+            backgroundColor: '#fff',
+            width: '10em',
+            color: '#' + (primaryColour || '3D95F7'),
+            fontSize: '16px',
+            border: '1px solid #' + (primaryColour || '3D95F7'),
+            borderRadius: '10px',
+            height: '35px'
+          }"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          *ngIf="edit"
+          class="float-end"
+          (click)="saveHandler()"
+          [ngStyle]="{
+            backgroundColor: '#' + (primaryColour || '3D95F7'),
+            width: '10em',
+            color: '#ffffff',
+            fontSize: '16px',
+            border: '0',
+            borderRadius: '10px',
+            height: '35px'
+          }"
+        >
+          Save
+        </button>
+        <!-- [disabled]="formElement?.form?.invalid || formElement?.form?.pristine" -->
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,110 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <div class="card col-12">
+        <div class="card-body box" style="overflow: auto">
+          <div *ngIf="permission$ | async as payload">
+            <div clas="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="row justify-content-center align-items-center">
+                <div class="col-md-4">
+                  <app-title title="Device Category" size="lg"></app-title>
+                </div>
+                <div class="col-md-6">
+                  <form class="nosubmit float-end">
+                    <input
+                      type="text"
+                      [formControl]="searchField"
+                      style="
+                        padding: 4px;
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                      "
+                      placeholder="Search..."
+                      class="nosubmit"
+                    />
+                  </form>
+                </div>
+                <div class="col-md-2">
+                  <!-- <button
+        class="btn btn-secondary"
+        *ngIf="payload.deviceManagement.deviceCategory.creater"
+        style="
+          background-color: #a7dce3 !important;
+          padding: 4px;
+          margin-left: 1em;
+        "
+        (click)="addDeviceType()"
+      >
+        Add
+      </button> -->
+                  <button
+                    *ngIf="payload.deviceManagement.deviceCategory.creater"
+                    [ngStyle]="{
+                      backgroundColor: '#' + (primaryColour || '3D95F7'),
+                      width: '10em',
+                      color: '#ffffff',
+                      fontSize: '16px',
+                      border: '0',
+                      borderRadius: '10px',
+                      height: '35px'
+                    }"
+                    (click)="addDeviceType()"
+                  >
+                    Add Device Category
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div
+                class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                *ngIf="categories$ | progress | async as payload"
+              >
+                <ngx-datatable
+                  class="bootstrap table-bordered table-striped table-hover"
+                  #deviceTypeListTable
+                  [rows]="payload.value"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [limit]="10"
+                  [loadingIndicator]="payload.loading"
+                  [columnMode]="'force'"
+                  [rowHeight]="'auto'"
+                >
+                  <ngx-datatable-column
+                    name="Device Category"
+                    prop="deviceCategName"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <a
+                        href="javascript:void(0);"
+                        (click)="goToDeviceTypeDetail(row)"
+                        [ngbTooltip]="row.deviceCategId"
+                      >
+                        {{ row["deviceCategName"] }}
+                      </a>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Company Name" prop="companyName">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row["companyName"] }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column name="Network" prop="networkName">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row["networkName"] }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

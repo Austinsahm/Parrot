@@ -1,0 +1,7 @@
+<div class="row" *ngIf="latitude != 0 && longitude != 0">
+  <div class="col-12">
+    <div id="map"></div>
+  </div>
+</div>
+
+<app-empty-data *ngIf="latitude == 0 && longitude == 0"></app-empty-data>

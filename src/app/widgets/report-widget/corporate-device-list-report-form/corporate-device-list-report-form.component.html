@@ -1,0 +1,156 @@
+<div
+  [ngStyle]="{
+    'font-family': formFont || 'Times New Roman, Times, serif',
+    color: '#' + (formFontColor || 'ff9900')
+  }"
+>
+  <div [formGroup]="form">
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <div class="col-12">
+          <strong>From</strong>
+        </div>
+        <app-device-category-field
+          [subdomain]="company?.companyId"
+          formControlName="fromCategory"
+          (selectionChange)="fromCategFn($event)"
+          placeholder="Select Category..."
+          [selectable]="selectable"
+        ></app-device-category-field>
+      </div>
+      <div class="col-md-4">
+        <div class="col-12">
+          <strong>To</strong>
+        </div>
+        <app-device-category-field
+          [subdomain]="company?.companyId"
+          (selectionChange)="toCategFn($event)"
+          formControlName="toCategory"
+          placeholder="Select Category..."
+          [selectable]="selectable"
+        ></app-device-category-field>
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <app-device-network-field
+          placeholder="Select Device Network..."
+          [selectable]="selectable"
+          formControlName="networkId"
+          (selectionChange)="changeNetwork($event)"
+        >
+        </app-device-network-field>
+      </div>
+      <div class="col-md-4">
+        <app-combo-select-field
+          placeholder="Select Status..."
+          [options]="statusList"
+          formControlName="statusId"
+          (selectionChange)="changeStatus($event)"
+        ></app-combo-select-field>
+      </div>
+    </div>
+    
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <mat-form-field
+          appearance="outline"
+          [ngStyle]="{
+            'font-family': formFont || 'Times New Roman, Times, serif'
+          }"
+          class="w-100"
+        >
+        <mat-label
+        [ngStyle]="{
+          color: formFontColor || 'black'
+        }"
+        >Date Range</mat-label
+      >
+
+          <mat-date-range-input [max]="today" [rangePicker]="picker">
+            <input
+              matStartDate
+              readonly
+              formControlName="from"
+              placeholder="Start date"
+            />
+            <input
+              matEndDate
+              readonly
+              formControlName="to"
+              placeholder="End date"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+            [ngStyle]="{
+              color: formFontColor || 'black'
+            }"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <app-control-error
+    *ngIf="
+      form.get('fromCategory').invalid && form.get('fromCategory').touched
+    "
+  >
+    <span *ngIf="form.get('fromCategory').errors.required"
+      >This field is required.</span
+    >
+  </app-control-error> -->
+<!-- <app-control-error
+    *ngIf="form.get('toCatogery').invalid && form.get('toCatogery').touched"
+  >
+    <span *ngIf="form.get('toCatogery').errors.required"
+      >This field is required.</span
+    >
+  </app-control-error> -->
+<!--
+    <app-date-field
+      #fromDate
+      [max]="toDate?.rawValue"
+      formControlName="from"
+      placeholder="From"
+    >
+    </app-date-field>
+    <app-control-error
+      *ngIf="form.get('from').invalid && form.get('from').touched"
+    >
+      <span *ngIf="form.get('from').errors.required"
+        >This field is required.</span
+      >
+    </app-control-error>
+  </div>
+  <div class="col-md-4">
+    <app-date-field
+      #toDate
+      [min]="fromDate?.rawValue"
+      formControlName="to"
+      placeholder="To"
+    ></app-date-field>
+    <app-control-error
+      *ngIf="form.get('to').invalid && form.get('to').touched"
+    >
+      <span *ngIf="form.get('to').errors.required"
+        >This field is required.</span
+      >
+    </app-control-error>
+  </div> -->
+<!-- 
+    (selectionChange)="changeStatus($event)"
+    <app-status-field formControlName="statusId"></app-status-field>
+    <app-control-error
+      *ngIf="form.get('statusId').invalid && form.get('statusId').touched"
+    >
+      <span *ngIf="form.get('statusId').errors.required"
+        >This field is required.</span
+      >
+    </app-control-error>
+  </div> -->

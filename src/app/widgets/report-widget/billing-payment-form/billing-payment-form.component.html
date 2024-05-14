@@ -1,0 +1,44 @@
+<div [formGroup]="form">
+  <div class="row mb-3">
+    <label class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-4">
+      <input
+        type="email"
+        class="form-control"
+        formControlName="email"
+        readonly
+        placeholder="Enter Email Address"
+      />
+      <app-control-error
+        *ngIf="form.get('email').invalid && form.get('email').touched"
+      >
+        <span *ngIf="form.get('email').errors.required"
+          >This field is required.</span
+        >
+      </app-control-error>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label class="col-sm-2 col-form-label">Amount</label>
+    <div class="col-sm-4">
+      <input
+        appCurrency
+        type="text"
+        class="form-control"
+        formControlName="amount"
+        placeholder="Enter Amount"
+      />
+
+      <app-control-error
+        *ngIf="form.get('amount').invalid && form.get('amount').touched"
+      >
+        <span *ngIf="form.get('amount').errors.required"
+          >This field is required.</span
+        >
+        <span *ngIf="form.get('amount').errors.minlength">
+          Amount too small.</span
+        >
+      </app-control-error>
+    </div>
+  </div>
+</div>

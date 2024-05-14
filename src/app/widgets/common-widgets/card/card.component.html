@@ -1,0 +1,23 @@
+<mat-card
+  [class.landing-card]="hover"
+  style="box-shadow: 0 8px 12px 0 #223c5029"
+  [ngStyle]="{
+    minHeight: height ? height : '45vh',
+    width: width,
+    marginLeft: marginLeft,
+    height: actHeight,
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <mat-card-header>
+    <mat-card-title style="font-size: 1.2em; font-weight: bold">{{
+      title
+    }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-content></ng-content>
+  </mat-card-content>
+</mat-card>

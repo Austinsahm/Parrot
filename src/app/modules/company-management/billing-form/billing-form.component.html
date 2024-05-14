@@ -1,0 +1,275 @@
+<div
+  class="container-fluid"
+  style="margin: 5px 0; padding-right: 0px; padding-left: 0px"
+>
+  <div class="row justify-content-center align-items-center">
+    <div class="" style="padding-right: 0px; padding-left: 0px">
+      <div
+        class="card col-sm-12 col-xs-12 col-md-12"
+        style="
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        "
+      >
+        <div class="card-body" style="overflow: auto">
+          <ng-container>
+            <div class="card">
+              <app-title
+                class="card-header"
+                title="Subscription calculator"
+                size="lg"
+              ></app-title>
+              <div class="card-body">
+                <form [formGroup]="formData">
+                  <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                    <div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Number of devices</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="number"
+                            min="1"
+                            max="999"
+                            formControlName="devices"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-item"
+                            >Number of years of subscription</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="number"
+                            min="1"
+                            max="2"
+                            formControlName="subscrYears"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">
+                            Number of Text messages to be received</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="text"
+                            formControlName="messages"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Number of phone calls to be received</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="text"
+                            formControlName="phoneCall"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Number of users</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <input
+                            class="form-control"
+                            type="text"
+                            formControlName="user"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Returning Client</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <app-combo-select-field
+                            [options]="clientType"
+                            [defaultOption]="clientType[0]"
+                            (selectionChange)="statusSelectionChange($event)"
+                          >
+                          </app-combo-select-field>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Billing Currency</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <ng-container
+                          *ngIf="currency$ | progress | async as currency"
+                        >
+                          <div
+                            class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <app-combo-select-field
+                              [options]="currency.value"
+                              [defaultOption]="currency.value[1]"
+                              (selectionChange)="
+                                currencySelectionChange($event)
+                              "
+                            ></app-combo-select-field></div
+                        ></ng-container>
+                        <!-- <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                        <app-combo-select-field  [options]="currency" [defaultSelection]="formData.get('valCurrency').value" (selectionChange)="currencySelectionChange($event)" ></app-combo-select-field>
+                        </div> -->
+                      </div>
+                      <div
+                        class="row mb-3 ms-2"
+                        *ngIf="formData.get('clientStatus').value === 'return'"
+                      >
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Platform Access fees</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          {{ formData.get("platformFees").value }}
+                        </div>
+                      </div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label">Subscription</label>
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                          *ngIf="showValue"
+                        >
+                          {{ formData.get("result").value }}
+                        </div>
+                      </div>
+                      <div class="row mb-3 ms-2">
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                        >
+                          <label class="form-check-label"
+                            >Monthly Subscription</label
+                          >
+                          <label style="color: red">*</label>
+                        </div>
+                        <div
+                          class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+                          *ngIf="showValue"
+                        >
+                          {{ formData.get("resultMonth").value }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-5 ms-2">
+                    <div class="col mt-3 mb-3">
+                      <!-- <button
+                        type="button"
+                        class="btn btn-danger"
+                        [ngStyle]="{
+                          backgroundColor: '#fff',
+                          width: '10em',
+                          color: '#' + ('3D95F7'),
+                          fontSize: '16px',
+                          border: '1px solid #' + ('3D95F7'),
+                          borderRadius: '10px',
+                          height: '40px'
+                        }"
+                         (click)="getCurr()">
+                        Cancel
+                     </button>  -->
+
+                      <button
+                        type="button"
+                        class="btn btn-danger float-end"
+                        [ngStyle]="{
+                          backgroundColor: '#fff',
+                          width: '10em',
+                          color: '#' + '3D95F7',
+                          fontSize: '16px',
+                          border: '1px solid #' + '3D95F7',
+                          borderRadius: '10px',
+                          height: '40px'
+                        }"
+                        (click)="submit()"
+                      >
+                        Calculate
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

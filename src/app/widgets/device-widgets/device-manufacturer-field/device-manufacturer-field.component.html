@@ -1,0 +1,25 @@
+<ng-container *ngIf="!new; else fine">
+  <app-combo-box-field
+    [formControl]="control"
+    *ngIf="manufacturers$ | progress | async as payload"
+    [options]="payload.value"
+    [loading]="payload.loading"
+    [emptyMessage]="noContentMessage"
+    [placeholder]="placeholder"
+    (onBlur)="onTouched()"
+  ></app-combo-box-field>
+</ng-container>
+
+<ng-template #fine>
+  <app-combo-select-field
+    [formControl]="control"
+    *ngIf="manufacturers$ | progress | async as payload"
+    [options]="payload.value"
+    [loading]="payload.loading"
+    [emptyMessage]="noContentMessage"
+    [placeholder]="placeholder"
+    (onBlur)="onTouched()"
+    (selectionChange)="onSelectionChange($event)"
+    [defaultSelection]="defaultValue"
+  ></app-combo-select-field>
+</ng-template>

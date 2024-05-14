@@ -1,0 +1,389 @@
+<div
+  [formGroup]="locationForm"
+  [ngStyle]="{
+    border: '1px solid ' + formBgColor,
+    'background-color': formBgColor,
+    color: formFontColor || 'black',
+    'font-family': formFont || 'Times New Roman, Times, serif'
+  }"
+>
+  <div class="modal-header">
+    <app-title title="Add Branch or Location" size="md"></app-title>
+  </div>
+  <div class="modal-body">
+    <div
+      class="card"
+      [ngStyle]="{
+        border: '1px solid ' + formBgColor,
+        'background-color': formBgColor,
+        color: formFontColor || 'black',
+        'font-family': formFont || 'Times New Roman, Times, serif'
+      }"
+    >
+      <div class="card-body">
+        <div class="row">
+          <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"> -->
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="row mb-3">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <mat-form-field appearance="outline">
+                  <mat-label
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+
+                      'font-family': formFont || 'Times New Roman, Times, serif'
+                    }"
+                    >Branch Name</mat-label
+                  >
+                  <input
+                    matInput
+                    class=""
+                    placeholder="Branch Name"
+                    formControlName="locationName"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                  />
+                </mat-form-field>
+
+                <!-- <input
+                  class="form-control"
+                  placeholder="Branch Name"
+                  formControlName="locationName"
+                  [ngStyle]="{
+                    color: formFontColor || 'black',
+                    'background-color': formBgColor,
+                    'border-bottom': '1px solid ' + formFontColor
+                  }"
+                /> -->
+                <app-control-error
+                  *ngIf="
+                    locationForm.get('locationName').invalid &&
+                    locationForm.get('locationName').touched
+                  "
+                >
+                  <span *ngIf="locationForm.get('locationName').errors.required"
+                    >This field required.</span
+                  >
+                  <span
+                    *ngIf="locationForm.get('locationName').errors.uniqueName"
+                    >Duplicate name.</span
+                  >
+                </app-control-error>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <mat-form-field appearance="outline">
+                  <mat-label
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+
+                      'font-family': formFont || 'Times New Roman, Times, serif'
+                    }"
+                    >Branch Description</mat-label
+                  >
+                  <input
+                    matInput
+                    class=""
+                    placeholder="Branch Description"
+                    formControlName="locationDesc"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                  />
+                </mat-form-field>
+
+                <!-- <input
+                  class="form-control"
+                  placeholder="Branch Description"
+                  formControlName="locationDesc"
+                  [ngStyle]="{
+                    color: formFontColor || 'black',
+                    'background-color': formBgColor,
+                    'border-bottom': '1px solid ' + formFontColor
+                  }"
+                /> -->
+                <app-control-error
+                  *ngIf="
+                    locationForm.get('locationDesc').invalid &&
+                    locationForm.get('locationDesc').touched
+                  "
+                >
+                  <span *ngIf="locationForm.get('locationDesc').errors.required"
+                    >This field required.</span
+                  >
+                </app-control-error>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <mat-form-field appearance="outline">
+                  <mat-label
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+
+                      'font-family': formFont || 'Times New Roman, Times, serif'
+                    }"
+                    >Address 1</mat-label
+                  >
+                  <input
+                    matInput
+                    class=""
+                    placeholder="Address 1"
+                    formControlName="locationAddress1"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                  />
+                </mat-form-field>
+
+                <!-- <input
+                  class="form-control"
+                  placeholder="Address 1"
+                  formControlName="locationAddress1"
+                  [ngStyle]="{
+                    color: formFontColor || 'black',
+                    'background-color': formBgColor,
+                    'border-bottom': '1px solid ' + formFontColor
+                  }"
+                /> -->
+                <app-control-error
+                  *ngIf="
+                    locationForm.get('locationAddress1').invalid &&
+                    locationForm.get('locationAddress1').touched
+                  "
+                >
+                  <span
+                    *ngIf="locationForm.get('locationAddress1').errors.required"
+                    >This field required.</span
+                  >
+                </app-control-error>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <mat-form-field appearance="outline">
+                  <mat-label
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+
+                      'font-family': formFont || 'Times New Roman, Times, serif'
+                    }"
+                    >Address 2</mat-label
+                  >
+                  <input
+                    matInput
+                    class=""
+                    placeholder="Address 2"
+                    formControlName="locationAddress2"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                  />
+                </mat-form-field>
+                <!-- <input
+                  class="form-control"
+                  placeholder="Address 2"
+                  formControlName="locationAddress2"
+                  [ngStyle]="{
+                    color: formFontColor || 'black',
+                    'background-color': formBgColor,
+                    'border-bottom': '1px solid ' + formFontColor
+                  }"
+                /> -->
+                <app-control-error
+                  *ngIf="
+                    locationForm.get('locationAddress2').invalid &&
+                    locationForm.get('locationAddress2').touched
+                  "
+                >
+                  <span
+                    *ngIf="locationForm.get('locationAddress2').errors.required"
+                    >This field required.</span
+                  >
+                </app-control-error>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <mat-form-field appearance="outline">
+                  <mat-label
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+
+                      'font-family': formFont || 'Times New Roman, Times, serif'
+                    }"
+                    >Company</mat-label
+                  >
+                  <input
+                    matInput
+                    readonly
+                    disabled
+                    class=""
+                    placeholder=""
+                    [value]="companyName"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <app-state-field
+                  formControlName="stateId"
+                  [new]="true"
+                  placeholder="State"
+                  (selectionChange)="
+                    locationForm.patchValue({ stateId: $event.value })
+                  "
+                ></app-state-field>
+                <app-control-error
+                  *ngIf="
+                    locationForm.get('stateId').invalid &&
+                    locationForm.get('stateId').touched
+                  "
+                >
+                  <span *ngIf="locationForm.get('stateId').errors.required"
+                    >This field required.</span
+                  >
+                </app-control-error>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <app-city-field
+                  formControlName="cityId"
+                  placeholder="City"
+                  [new]="true"
+                  (selectionChange)="
+                    locationForm.patchValue({ cityId: $event.value })
+                  "
+                  [stateId]="locationForm.value?.stateId"
+                ></app-city-field>
+                <app-control-error
+                  *ngIf="
+                    locationForm.get('cityId').invalid &&
+                    locationForm.get('cityId').touched
+                  "
+                >
+                  <span *ngIf="locationForm.get('cityId').errors.required"
+                    >This field required.</span
+                  >
+                </app-control-error>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <mat-form-field class="col-12" appearance="outline"
+                  ><mat-label
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+
+                      'font-family': formFont || 'Times New Roman, Times, serif'
+                    }"
+                    >Postal Code</mat-label
+                  ><input
+                    matInput
+                    placeholder="Postal Code"
+                    formControlName="postalCode"
+                    [ngStyle]="{
+                      color: formFontColor || 'black',
+                      'background-color': formBgColor
+                    }"
+                /></mat-form-field>
+                <!-- <input
+                  class="form-control"
+                  placeholder="Postal Code"
+                  formControlName="postalCode"
+                  [ngStyle]="{
+                    color: formFontColor || 'black',
+                    'background-color': formBgColor,
+                    'border-bottom': '1px solid ' + formFontColor
+                  }"
+                /> -->
+                <app-control-error
+                  *ngIf="
+                    locationForm.get('postalCode').invalid &&
+                    locationForm.get('postalCode').touched
+                  "
+                >
+                  <span *ngIf="locationForm.get('postalCode').errors.required"
+                    >This field required.</span
+                  >
+                </app-control-error>
+              </div>
+            </div>
+          </div>
+
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+          <button
+            class="ms-3"
+            [ngStyle]="{
+              backgroundColor: '#fff',
+              width: '7em',
+              color: '#' + (primaryColour || '3D95F7'),
+              fontSize: '12px',
+              border: '1px solid #' + (primaryColour || '3D95F7'),
+              borderRadius: '10px',
+              height: '35px'
+            }"
+            (click)="close()"
+          >
+            Cancel
+          </button>
+
+          <!-- <button
+            type="button"
+            class="btn btn-danger"
+            aria-label="Close"
+            (click)="close()"
+          >
+            Close
+          </button> -->
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
+          <button
+            class="float-end"
+            [disabled]="!locationForm.valid"
+            [ngStyle]="{
+              backgroundColor: '#' + (primaryColour || '3D95F7'),
+              width: '7em',
+              color: '#ffffff',
+              fontSize: '12px',
+              border: '0',
+              borderRadius: '10px',
+              height: '35px'
+            }"
+            (click)="save()"
+          >
+            Save
+          </button>
+
+          <!-- <button
+            [disabled]="!locationForm.valid"
+            (click)="save()"
+            type="submit"
+            class="btn btn-success float-end"
+          >
+            Save
+          </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
